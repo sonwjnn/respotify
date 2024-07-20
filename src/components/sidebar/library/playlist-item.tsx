@@ -6,13 +6,13 @@ import { useParams, useRouter } from 'next/navigation'
 import { useLoadImage } from '@/hooks/use-load-image'
 import { usePlayer } from '@/store/use-player'
 import { MusicNote, SoundIconSolid } from '@/public/icons'
-import type { Playlist } from '@/types/types'
+import { PlaylistType, PlaylistWithUser } from '@/types/types'
 import { cn } from '@/lib/utils'
 import { buckets } from '@/utils/constants'
 import { useTheme } from 'next-themes'
 
 type PlaylistItemProps = {
-  data: Playlist
+  data: PlaylistWithUser
   type?: 'myPlaylist' | 'otherPlaylist'
 }
 
@@ -21,14 +21,14 @@ export const PlaylistItem = ({ data }: PlaylistItemProps) => {
   const router = useRouter()
 
   const { playlistPlayingId, isPlaying } = usePlayer()
-  const imageUrl = useLoadImage(data.image_path, buckets.playlist_images)
+  const imageUrl = useLoadImage(data.imagePath || '', buckets.playlist_images)
   const { id } = useParams()
 
   const onClick = (): void => {
     router.push(`/playlist/${data.id}`)
   }
 
-  const fullName = data.users?.full_name
+  const fullName = data.user?.name
   const isActived = playlistPlayingId === data.id
   const isDark = theme === 'dark'
   return (

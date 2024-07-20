@@ -1,11 +1,11 @@
 'use client'
 
-import type { Playlist } from '@/types/types'
+import { PlaylistWithUser } from '@/types/types'
 
 import { PlaylistItem } from '@/components/sidebar/library/playlist-item'
 
 type PlaylistListProps = {
-  data: Playlist[]
+  data: PlaylistWithUser[]
 }
 export const PlaylistList = ({ data }: PlaylistListProps) => {
   return (

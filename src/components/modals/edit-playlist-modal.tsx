@@ -17,7 +17,7 @@ import { usePlaylist } from '@/store/use-playlist'
 // import { useUser } from '@/hooks/use-user'
 import { useUserStore } from '@/store/use-user-store'
 import { DeleteIcon, MusicNote } from '@/public/icons'
-import type { Playlist } from '@/types/types'
+import { PlaylistWithUser } from '@/types/types'
 import { cn } from '@/lib/utils'
 import { buckets } from '@/utils/constants'
 
@@ -40,7 +40,7 @@ export const EditPlaylistModal = () => {
   const authModal = useAuthModal()
 
   const initImageUrl = useLoadImage(
-    playlist?.image_path || '',
+    playlist?.imagePath || '',
     buckets.playlist_images
   )
   // const { user } = useUser()
@@ -136,10 +136,10 @@ export const EditPlaylistModal = () => {
         }
 
         // Remove old images
-        if (playlist?.image_path) {
+        if (playlist?.imagePath) {
           const { error: oldImageError } = await supabaseClient.storage
             .from(buckets.playlist_images)
-            .remove([playlist?.image_path])
+            .remove([playlist?.imagePath])
 
           if (oldImageError) {
             setIsLoading(false)
@@ -170,10 +170,10 @@ export const EditPlaylistModal = () => {
         setBgColorStore(bgColor)
         // router.refresh()
       } else if (isRemove) {
-        if (playlist?.image_path) {
+        if (playlist?.imagePath) {
           const { error: oldImageError } = await supabaseClient.storage
             .from(buckets.playlist_images)
-            .remove([playlist?.image_path])
+            .remove([playlist?.imagePath])
 
           if (oldImageError) {
             setIsLoading(false)
@@ -231,7 +231,7 @@ export const EditPlaylistModal = () => {
   }
   useEffect(() => {
     if (playlist) {
-      updatePlaylist(playlist as Playlist)
+      updatePlaylist(playlist as PlaylistWithUser)
     }
   }, [playlist])
 

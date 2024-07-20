@@ -10,13 +10,13 @@ import { useLoadImage } from '@/hooks/use-load-image'
 import { useMainLayout } from '@/store/use-main-layout'
 // import { useUser } from '@/hooks/use-user'
 import { MusicNote } from '@/public/icons'
-import type { Playlist } from '@/types/types'
+import { PlaylistType } from '@/types/types'
 import { cn } from '@/lib/utils'
 import { buckets } from '@/utils/constants'
 import { useCurrentUser } from '@/hooks/use-current-user'
 
 type UserHeaderContentProps = {
-  data?: Playlist[]
+  data?: PlaylistType[]
 }
 export const UserHeaderContent = ({ data }: UserHeaderContentProps) => {
   const { width } = useMainLayout()

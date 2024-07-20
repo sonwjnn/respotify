@@ -9,12 +9,12 @@ import { useLoadImage } from '@/hooks/use-load-image'
 import { useMainLayout } from '@/store/use-main-layout'
 // import { useUser } from '@/hooks/use-user'
 import { SingleMusicNote } from '@/public/icons'
-import type { Playlist } from '@/types/types'
+import { PlaylistType } from '@/types/types'
 import { buckets } from '@/utils/constants'
 import { useCurrentUser } from '@/hooks/use-current-user'
 
 type UserContentProp = {
-  data: Playlist[]
+  data: PlaylistType[]
   id: string
 }
 

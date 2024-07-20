@@ -8,7 +8,7 @@ import { useHeader } from '@/store/use-header'
 import { useLoadImage } from '@/hooks/use-load-image'
 import { useMainLayout } from '@/store/use-main-layout'
 // import { useUser } from '@/hooks/use-user'
-import type { Playlist } from '@/types/types'
+import { PlaylistType } from '@/types/types'
 import { cn } from '@/lib/utils'
 import { buckets } from '@/utils/constants'
 import { useTheme } from 'next-themes'
@@ -16,7 +16,7 @@ import { useTheme } from 'next-themes'
 type HeaderProps = {
   children: React.ReactNode
   className?: string
-  data?: Playlist
+  data?: PlaylistType
   bgColor?: string
   type?: string
 }
@@ -54,7 +54,7 @@ export const Header = memo(
     }, [dataColor])
     const isDark = theme === 'dark'
     const defaultBgColor = isDark ? bgColor || '#171717' : '#F1F2F4'
-    const bgColorFinal = data?.bg_color || defaultBgColor
+    const bgColorFinal = data?.bgColor || defaultBgColor
 
     let backgroundColor
     if (type === 'home') {

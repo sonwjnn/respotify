@@ -22,13 +22,13 @@ import { useSubscribeModal } from '@/store/modals/use-subcribe-modal'
 // import { useUser } from '@/hooks/use-user'
 import { useUserStore } from '@/store/use-user-store'
 import { DeleteIcon } from '@/public/icons'
-import type { Playlist } from '@/types/types'
+import { PlaylistType } from '@/types/types'
 import { buckets } from '@/utils/constants'
 import { useConfirm } from '@/hooks/use-confirm'
 import { useCurrentUser } from '@/hooks/use-current-user'
 
 type PlaylistDropdownProps = {
-  data: Playlist
+  data: PlaylistType
   className?: string
 }
 
@@ -71,10 +71,10 @@ export const PlaylistDropdown = ({
 
     setRequired(true)
 
-    if (data.image_path) {
+    if (data.imagePath) {
       const { error: oldImageError } = await supabaseClient.storage
         .from(buckets.playlist_images)
-        .remove([data.image_path])
+        .remove([data.imagePath])
 
       if (oldImageError) {
         setRequired(false)

@@ -79,7 +79,11 @@ export const getLikedPlaylists = cache(async () => {
   const data = await db.query.likedPlaylists.findMany({
     where: eq(likedPlaylists.userId, self.id),
     with: {
-      playlist: true,
+      playlist: {
+        with: {
+          user: true,
+        },
+      },
     },
     orderBy: (likedPlaylists, { desc }) => [desc(likedPlaylists.createdAt)],
   })

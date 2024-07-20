@@ -9,14 +9,14 @@ import { useHeader } from '@/store/use-header'
 import { useLoadImage } from '@/hooks/use-load-image'
 // import { useUser } from '@/hooks/use-user'
 import { MusicNote } from '@/public/icons'
-import type { Playlist } from '@/types/types'
+import { PlaylistType } from '@/types/types'
 import { buckets } from '@/utils/constants'
 
 import { PlayButton } from '@/components/play-button'
 import { useCurrentUser } from '@/hooks/use-current-user'
 
 type RecommendPlaylistProps = {
-  data: Playlist
+  data: PlaylistType
   index: number
   isHover: boolean
   setHover: React.Dispatch<React.SetStateAction<boolean>>
@@ -33,12 +33,12 @@ export const RecommendPlaylist = ({
   const user = useCurrentUser()
   const { bgBase, bgColor, setBgColor } = useHeader()
 
-  const imageUrl = useLoadImage(data.image_path, buckets.playlist_images)
+  const imageUrl = useLoadImage(data.imagePath || '', buckets.playlist_images)
 
   const handleHover = (): void => {
     if (!isHover) setHover(true)
 
-    setBgColor(data?.bg_color || bgColor)
+    setBgColor(data?.bgColor || bgColor)
   }
   const onClick = (): void => {
     if (!user) {

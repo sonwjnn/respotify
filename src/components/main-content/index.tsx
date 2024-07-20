@@ -14,13 +14,14 @@ import { Sidebar } from '@/components/sidebar'
 import { MainLayout } from '@/components/main-content/main-layout'
 import { useCurrentUser } from '@/hooks/use-current-user'
 import { playlists, songs } from '@/db/schema'
+import { PlaylistWithUser } from '@/types/types'
 
 type MainContentProps = {
   children: React.ReactNode
   songs: (typeof songs.$inferSelect)[] | null
-  playlists: (typeof playlists.$inferSelect)[] | null
+  playlists: PlaylistWithUser[] | null
   likedSongs: (typeof songs.$inferSelect)[] | null
-  likedPlaylists: (typeof playlists.$inferSelect)[] | null
+  likedPlaylists: PlaylistWithUser[] | null
 }
 
 export const MainContent = ({

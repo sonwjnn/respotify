@@ -1,27 +1,27 @@
 import { create } from 'zustand'
 
-import type { PlaylistType, SongType, UserDetails } from '@/types/types'
+import type { PlaylistWithUser, SongType, UserDetails } from '@/types/types'
 import { playlists, songs } from '@/db/schema'
 
 type UserStore = {
   userDetails: UserDetails | null
   likedSongs: SongType[]
-  playlists: PlaylistType[]
-  likedPlaylists: PlaylistType[]
+  playlists: PlaylistWithUser[]
+  likedPlaylists: PlaylistWithUser[]
   setUserDetails: (userDetails: UserDetails | null) => void
   setFullName: (full_name: string) => void
   setAvatarUrl: (avatar_url: string) => void
   setBgColor: (bgColor: string) => void
   setLikedSongs: (songs: SongType[]) => void
-  setLikedPlaylists: (playlists: PlaylistType[]) => void
-  setPlaylists: (playlists: PlaylistType[]) => void
+  setLikedPlaylists: (playlists: PlaylistWithUser[]) => void
+  setPlaylists: (playlists: PlaylistWithUser[]) => void
   addLikedSong: (song: SongType) => void
-  addLikedPlaylist: (playlist: PlaylistType) => void
-  addPlaylist: (playlist: PlaylistType) => void
+  addLikedPlaylist: (playlist: PlaylistWithUser) => void
+  addPlaylist: (playlist: PlaylistWithUser) => void
   removeLikedSong: (id: string) => void
   removeLikedPlaylist: (id: string) => void
   removePlaylist: (id: string) => void
-  updatePlaylist: (updatedPlaylist: PlaylistType) => void
+  updatePlaylist: (updatedPlaylist: PlaylistWithUser) => void
   reset: () => void
 }
 

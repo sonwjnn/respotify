@@ -3,19 +3,22 @@ import Link from 'next/link'
 
 import { useLoadImage } from '@/hooks/use-load-image'
 import { MusicNote } from '@/public/icons'
-import type { Playlist } from '@/types/types'
+import { PlaylistType } from '@/types/types'
 import { buckets } from '@/utils/constants'
 
 type CollapseListProps = {
-  playlists: Playlist[]
+  playlists: PlaylistType[]
 }
 
 type CollapseListItemProps = {
-  playlist: Playlist
+  playlist: PlaylistType
 }
 
 const CollapseListItem = ({ playlist }: CollapseListItemProps) => {
-  const imageUrl = useLoadImage(playlist.image_path, buckets.playlist_images)
+  const imageUrl = useLoadImage(
+    playlist.imagePath || '',
+    buckets.playlist_images
+  )
   return (
     <div className="flex items-center justify-center  rounded-lg  py-2  transition hover:bg-neutral-800 ">
       {imageUrl ? (

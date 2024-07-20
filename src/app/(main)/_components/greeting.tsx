@@ -4,13 +4,13 @@ import { memo, useEffect, useMemo, useState } from 'react'
 
 import { useHeader } from '@/store/use-header'
 import { useMainLayout } from '@/store/use-main-layout'
-import type { Playlist } from '@/types/types'
+import { PlaylistType } from '@/types/types'
 import { cn } from '@/lib/utils'
 
 import { RecommendPlaylist } from './recommend-playlist'
 
 type GreetingProps = {
-  playlists: Playlist[]
+  playlists: PlaylistType[]
 }
 
 // eslint-disable-next-line react/display-name
@@ -32,8 +32,8 @@ export const Greeting = memo(({ playlists }: GreetingProps) => {
 
   useEffect(() => {
     if (isHover) {
-      if (playlists[0]?.bg_color) {
-        setBgBase(playlists[0]?.bg_color)
+      if (playlists[0]?.bgColor) {
+        setBgBase(playlists[0]?.bgColor)
       }
     }
   }, [isHover, setBgBase, playlists])
@@ -57,7 +57,7 @@ export const Greeting = memo(({ playlists }: GreetingProps) => {
       >
         {playlists
           ?.slice(0, 6)
-          .map((item: Playlist, index) => (
+          .map((item, index) => (
             <RecommendPlaylist
               key={index}
               data={item}
