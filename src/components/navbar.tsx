@@ -16,7 +16,7 @@ import { usePlayer } from '@/store/use-player'
 import { useSelectedPlayer } from '@/store/use-selected-player'
 // import { useUser } from '@/hooks/use-user'
 import type { Playlist, Song } from '@/types/types'
-import { buckets } from '@/utils/constants'
+import { buckets } from '@/data/ui'
 
 import { PlayButton } from '@/components/play-button'
 import { PremiumButton } from '@/components/premium-button'

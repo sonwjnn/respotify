@@ -10,7 +10,7 @@ import { useMainLayout } from '@/store/use-main-layout'
 // import { useUser } from '@/hooks/use-user'
 import { SingleMusicNote } from '@/public/icons'
 import { PlaylistType } from '@/types/types'
-import { buckets } from '@/utils/constants'
+import { buckets } from '@/data/ui'
 import { useCurrentUser } from '@/hooks/use-current-user'
 
 type UserContentProp = {

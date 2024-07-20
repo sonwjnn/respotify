@@ -8,7 +8,7 @@ import { usePlayer } from '@/store/use-player'
 import { MusicNote, SoundIconSolid } from '@/public/icons'
 import { PlaylistType, PlaylistWithUser } from '@/types/types'
 import { cn } from '@/lib/utils'
-import { buckets } from '@/utils/constants'
+import { buckets } from '@/data/ui'
 import { useTheme } from 'next-themes'
 
 type PlaylistItemProps = {

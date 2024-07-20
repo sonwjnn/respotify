@@ -8,7 +8,7 @@ import { usePlayer } from '@/store/use-player'
 // import { useUser } from '@/hooks/use-user'
 import { MusicNote } from '@/public/icons'
 import { PlaylistType } from '@/types/types'
-import { buckets } from '@/utils/constants'
+import { buckets } from '@/data/ui'
 
 import { PlayButton } from '@/components/play-button'
 

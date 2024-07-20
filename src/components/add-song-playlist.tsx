@@ -56,7 +56,7 @@ export const AddSongPlaylist = ({ song, playlist }: AddSongPlaylistProps) => {
 
     const { error: playlistError } = await supabaseClient
       .from('playlists')
-      .update({ duration_ms: updatedDuration })
+      .update({ duration: updatedDuration })
       .eq('id', playlist.id)
 
     if (playlistError) {

@@ -23,7 +23,7 @@ import { useSubscribeModal } from '@/store/modals/use-subcribe-modal'
 import { useUserStore } from '@/store/use-user-store'
 import { DeleteIcon } from '@/public/icons'
 import { PlaylistType } from '@/types/types'
-import { buckets } from '@/utils/constants'
+import { buckets } from '@/data/ui'
 import { useConfirm } from '@/hooks/use-confirm'
 import { useCurrentUser } from '@/hooks/use-current-user'
 

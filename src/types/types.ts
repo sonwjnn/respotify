@@ -25,7 +25,7 @@ export type SongType = typeof songs.$inferSelect
 //   title: string
 //   song_path: string
 //   image_path: string
-//   duration_ms: number
+//   duration: number
 //   created_at: string
 // }
 
@@ -40,7 +40,7 @@ export type SongType = typeof songs.$inferSelect
 //   bg_color?: string
 //   created_at: string
 //   likes?: number
-//   duration_ms?: number
+//   duration?: number
 // }
 
 export type Product = {

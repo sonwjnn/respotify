@@ -19,13 +19,13 @@ import { useUploadModal } from '@/store/modals/use-upload-modal'
 import { usePlaylist } from '@/store/use-playlist'
 // import { useUser } from '@/hooks/use-user'
 import { DeleteIcon } from '@/public/icons'
-import type { Playlist, Song } from '@/types/types'
+import { PlaylistType, SongType } from '@/types/types'
 import { useConfirm } from '@/hooks/use-confirm'
 import { useCurrentUser } from '@/hooks/use-current-user'
 
 type MediaDropdownProps = {
-  song: Song
-  playlist: Playlist
+  song: SongType
+  playlist: PlaylistType
   className?: string
 }
 
@@ -76,12 +76,13 @@ export const MediaDropdown = ({
       toast.error(error.message)
       return
     }
+    const songDuration = song.duration || 0
 
-    const updatedDuration = (playlist?.duration_ms || 0) - song.duration_ms
+    const updatedDuration = (playlist?.duration || 0) - songDuration
 
     const { error: playlistError } = await supabaseClient
       .from('playlists')
-      .update({ duration_ms: updatedDuration })
+      .update({ duration: updatedDuration })
       .eq('id', playlist.id)
 
     if (playlistError) {

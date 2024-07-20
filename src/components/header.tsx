@@ -10,7 +10,7 @@ import { useMainLayout } from '@/store/use-main-layout'
 // import { useUser } from '@/hooks/use-user'
 import { PlaylistType } from '@/types/types'
 import { cn } from '@/lib/utils'
-import { buckets } from '@/utils/constants'
+import { buckets } from '@/data/ui'
 import { useTheme } from 'next-themes'
 
 type HeaderProps = {

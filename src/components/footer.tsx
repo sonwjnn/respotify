@@ -2,11 +2,7 @@
 
 import { memo } from 'react'
 
-import {
-  bottomLinks,
-  socialNetworkLinks,
-  topLinkGroups,
-} from '@/utils/constants'
+import { bottomLinks, socialNetworkLinks, topLinkGroups } from '@/data/ui'
 
 import { LinkGroup } from '@/components/link-group'
 

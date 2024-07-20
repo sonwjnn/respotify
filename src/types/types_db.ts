@@ -216,7 +216,7 @@ export type Database = {
         Row: {
           author: string | null
           created_at: string | null
-          duration_ms: number | null
+          duration: number | null
           id: number
           image_path: string | null
           song_path: string | null
@@ -226,7 +226,7 @@ export type Database = {
         Insert: {
           author?: string | null
           created_at?: string | null
-          duration_ms?: number | null
+          duration?: number | null
           id?: number
           image_path?: string | null
           song_path?: string | null
@@ -236,7 +236,7 @@ export type Database = {
         Update: {
           author?: string | null
           created_at?: string | null
-          duration_ms?: number | null
+          duration?: number | null
           id?: number
           image_path?: string | null
           song_path?: string | null

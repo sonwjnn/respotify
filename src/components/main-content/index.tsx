@@ -3,9 +3,7 @@
 import { useEffect, useState } from 'react'
 
 import { usePlayer } from '@/store/use-player'
-// import { useUser } from '@/hooks/use-user'
 import { useUserStore } from '@/store/use-user-store'
-// import type { Playlist, Song } from '@/types/types'
 import { cn } from '@/lib/utils'
 
 import { GlobalLoading } from '@/components/loading-layout/global-loading'
@@ -13,7 +11,7 @@ import { PlayingView } from '@/components/playing-view'
 import { Sidebar } from '@/components/sidebar'
 import { MainLayout } from '@/components/main-content/main-layout'
 import { useCurrentUser } from '@/hooks/use-current-user'
-import { playlists, songs } from '@/db/schema'
+import { songs } from '@/db/schema'
 import { PlaylistWithUser } from '@/types/types'
 
 type MainContentProps = {

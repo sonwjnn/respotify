@@ -13,7 +13,7 @@ import { usePlaylist } from '@/store/use-playlist'
 // import { useUser } from '@/hooks/use-user'
 import { MusicNote } from '@/public/icons'
 import { cn } from '@/lib/utils'
-import { buckets } from '@/utils/constants'
+import { buckets } from '@/data/ui'
 import { getDurationSong } from '@/utils/duration-convertor'
 import { useCurrentUser } from '@/hooks/use-current-user'
 

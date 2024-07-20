@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { useLoadImage } from '@/hooks/use-load-image'
 import { MusicNote } from '@/public/icons'
 import { SongType } from '@/types/types'
-import { buckets } from '@/utils/constants'
+import { buckets } from '@/data/ui'
 
 import { LikeButton } from '@/components/like-button'
 

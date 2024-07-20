@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useLoadImage } from '@/hooks/use-load-image'
 import { MusicNote } from '@/public/icons'
 import { PlaylistType } from '@/types/types'
-import { buckets } from '@/utils/constants'
+import { buckets } from '@/data/ui'
 
 type CollapseListProps = {
   playlists: PlaylistType[]

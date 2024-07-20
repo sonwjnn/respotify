@@ -117,7 +117,7 @@ export const UploadSongModal = () => {
           author: values.author,
           image_path: imageData ? imageData.path : null,
           song_path: songData.path,
-          duration_ms: duration,
+          duration: duration,
         })
       if (supabaseError) {
         setIsLoading(false)

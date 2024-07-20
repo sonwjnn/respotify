@@ -10,7 +10,7 @@ import { usePlayer } from '@/store/use-player'
 import { PlayIcon, SingleMusicNote } from '@/public/icons'
 import type { MediaItemProps } from '@/types/track'
 import { cn } from '@/lib/utils'
-import { buckets } from '@/utils/constants'
+import { buckets } from '@/data/ui'
 import { getDurationSong } from '@/utils/duration-convertor'
 
 import { LikeButton } from '@/components/like-button'
@@ -27,7 +27,7 @@ export const MediaItem = ({
   hasAddTrackBtn = false,
 }: MediaItemProps) => {
   const { width } = useMainLayout()
-  const imageUrl = useLoadImage(song.image_path, buckets.images)
+  const imageUrl = useLoadImage(song.imagePath || '', buckets.images)
   const player = usePlayer()
 
   const [isHover, setHover] = useState<boolean>(false)
@@ -139,7 +139,7 @@ export const MediaItem = ({
                 'select-none text-sm text-zinc-500 dark:text-neutral-400'
               }
             >
-              {dayjs(song.created_at).format('DD-MM-YYYY')}
+              {dayjs(song.createdAt).format('DD-MM-YYYY')}
             </div>
           )}
         </>
@@ -155,7 +155,7 @@ export const MediaItem = ({
               }
             >
               {getDurationSong({
-                milliseconds: song?.duration_ms ? song?.duration_ms : 0,
+                milliseconds: song?.duration ? song?.duration : 0,
               })}
             </div>
           </>
