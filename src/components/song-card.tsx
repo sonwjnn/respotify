@@ -18,7 +18,7 @@ export const SongCard = ({ data, onClick }: SongCardProps) => {
   const { currentTrack, isPlaying, handlePlay } = usePlayer()
 
   const isPlayingCurrentTrack = currentTrack?.id === data.id && isPlaying
-  const imagePath = useLoadImage(data.imagePath || '', 'images')
+  const imagePath = useLoadImage(data.imagePath, 'images')
   return (
     <div
       onClick={() => onClick(data.id)}

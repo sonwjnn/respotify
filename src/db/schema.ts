@@ -91,8 +91,8 @@ export const songs = pgTable('songs', {
   title: text('title').notNull(),
   author: text('author').notNull(),
   duration: integer('duration'),
-  songPath: text('song_path'),
-  imagePath: text('image_path'),
+  songPath: text('song_path').notNull(),
+  imagePath: text('image_path').notNull().default('/images/note.svg'),
   userId: uuid('user_id')
     .notNull()
     .references(() => users.id),
@@ -115,7 +115,7 @@ export const playlists = pgTable('playlists', {
   imagePath: text('image_path'),
   description: text('description'),
   duration: integer('duration'),
-  bgColor: text('bg_color'),
+  bgColor: text('bg_color').notNull().default('#171717'),
   createdAt: timestamp('created_at', { mode: 'date' }).notNull(),
 })
 

@@ -15,10 +15,7 @@ type CollapseListItemProps = {
 }
 
 const CollapseListItem = ({ playlist }: CollapseListItemProps) => {
-  const imageUrl = useLoadImage(
-    playlist.imagePath || '',
-    buckets.playlist_images
-  )
+  const imageUrl = useLoadImage(playlist.imagePath, buckets.playlist_images)
   return (
     <div className="flex items-center justify-center  rounded-lg  py-2  transition hover:bg-neutral-800 ">
       {imageUrl ? (

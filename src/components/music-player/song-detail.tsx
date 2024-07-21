@@ -14,7 +14,7 @@ type SongDetailsProps = {
 }
 
 export const SongDetails = ({ data }: SongDetailsProps) => {
-  const imageUrl = useLoadImage(data.imagePath || '', buckets.images)
+  const imageUrl = useLoadImage(data.imagePath, buckets.images)
 
   return (
     <div className="flex w-full items-center gap-x-4   md:pr-6">

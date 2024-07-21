@@ -23,7 +23,7 @@ import { usePlayer } from '@/store/use-player'
 // import { useUser } from '@/hooks/use-user'
 import { useUserStore } from '@/store/use-user-store'
 import { Tooltip } from '@/components/ui/tooltip'
-import ThemeSelect from '@/components/theme-select'
+import { ThemeOptions } from '@/components/theme-options'
 import { useCurrentUser } from '@/hooks/use-current-user'
 import { LogoutButton } from './logout-button'
 type UserButtonProps = {
@@ -104,7 +104,7 @@ export const UserButton = ({ url }: UserButtonProps) => {
             Profile
           </DropdownMenuItem>
 
-          <ThemeSelect />
+          <ThemeOptions />
           <DropdownMenuSeparator className="mx-1 bg-zinc-300 dark:bg-neutral-800" />
 
           <LogoutButton>

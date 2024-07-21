@@ -33,7 +33,7 @@ export const RecommendPlaylist = ({
   const user = useCurrentUser()
   const { bgBase, bgColor, setBgColor } = useHeader()
 
-  const imageUrl = useLoadImage(data.imagePath || '', buckets.playlist_images)
+  const imageUrl = useLoadImage(data.imagePath, buckets.playlist_images)
 
   const handleHover = (): void => {
     if (!isHover) setHover(true)

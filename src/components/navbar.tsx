@@ -15,7 +15,7 @@ import { useOnPlay } from '@/hooks/use-on-play'
 import { usePlayer } from '@/store/use-player'
 import { useSelectedPlayer } from '@/store/use-selected-player'
 // import { useUser } from '@/hooks/use-user'
-import type { Playlist, Song } from '@/types/types'
+import { PlaylistType, SongType } from '@/types/types'
 import { buckets } from '@/data/ui'
 
 import { PlayButton } from '@/components/play-button'
@@ -37,10 +37,10 @@ type NavbarProps = {
     | 'genre'
     | 'playlist'
     | 'user'
-  songs?: Song[]
+  songs?: SongType[]
   className?: string
   darker?: boolean
-  data?: Playlist
+  data?: PlaylistType
   bgColor?: string
   hasPlayBtn?: boolean
   hasUsername?: boolean
@@ -72,7 +72,7 @@ export const Navbar = (props: NavbarProps) => {
   const { setSelected } = useSelectedPlayer()
   const { width } = useMainLayout()
 
-  const onPlay = useOnPlay(songs as Song[])
+  const onPlay = useOnPlay(songs as SongType[])
   const [isPlaying, setPlaying] = useState(false)
   const [bgColorUser, setBgColorUser] = useState<string>('#171717')
 
@@ -83,24 +83,6 @@ export const Navbar = (props: NavbarProps) => {
     crossOrigin: 'Anonymous',
     quality: 100,
   })
-
-  // const routes = useMemo(
-  //   () => [
-  //     {
-  //       icon: HomeIcon,
-  //       label: 'Home',
-  //       active: pathname === '/',
-  //       href: '/',
-  //     },
-  //     {
-  //       icon: SearchIcon,
-  //       label: 'Search',
-  //       active: pathname.includes('/search'),
-  //       href: '/search',
-  //     },
-  //   ],
-  //   [pathname]
-  // )
 
   useEffect(() => {
     if (
@@ -149,22 +131,22 @@ export const Navbar = (props: NavbarProps) => {
               ? bgColorHome
               : type === 'user'
                 ? bgColorUser
-                : bgColor || data?.bg_color,
+                : bgColor || data?.bgColor,
         }}
       ></div>
 
       <div
         className={` absolute inset-x-0 top-0 z-10 mb-4 flex  h-full w-full  items-center justify-between  px-6`}
       >
-        <div className="hidden min-w-0 items-center gap-x-2  md:flex ">
+        <div className="hidden min-w-0 items-center gap-x-2  md:!flex ">
           <button
-            className="items-center justify-center rounded-full  bg-black transition active:scale-95 disabled:cursor-not-allowed disabled:select-none"
+            className="items-center justify-center rounded-full  bg-[#171717] dark:bg-black transition active:scale-95 disabled:cursor-not-allowed disabled:select-none"
             onClick={() => router.back()}
           >
             <RxCaretLeft className="text-white" size={35} />
           </button>
           <button
-            className="items-center justify-center rounded-full bg-black transition active:scale-95"
+            className="items-center justify-center rounded-full bg-[#171717] dark:bg-black transition active:scale-95"
             onClick={() => router.forward()}
           >
             <RxCaretRight className="text-white" size={35} />
@@ -200,31 +182,6 @@ export const Navbar = (props: NavbarProps) => {
           ) : null}
         </div>
 
-        {/* <div className="flex items-center gap-x-2 md:hidden ">
-          {routes.map((item, index) => {
-            const Icon:
-              | ((props: Partial<IconProps>) => JSX.Element)
-              | undefined = item.icon
-            return (
-              <Link
-                key={index}
-                href={item.href}
-                className={twMerge(
-                  `flex h-10 w-10 items-center justify-center rounded-full bg-white p-2 transition hover:opacity-75`
-                )}
-              >
-                {Icon ? (
-                  <Icon
-                    size={22}
-                    color="#000000"
-                    className="animate-none"
-                    active={item.active ? true : false}
-                  />
-                ) : null}
-              </Link>
-            )
-          })}
-        </div> */}
         <MobileToggle />
 
         <div className="flex items-center justify-between   gap-x-4">
@@ -238,14 +195,14 @@ export const Navbar = (props: NavbarProps) => {
             <>
               <RegisterButton mode="modal">
                 <Button
-                  className="bg-transparent text-sm font-medium text-neutral-300"
+                  className="bg-transparent text-sm font-medium text-zinc-500 dark:text-neutral-300"
                   variant="ghost"
                 >
                   Sign up
                 </Button>
               </RegisterButton>
               <LoginButton mode="modal">
-                <Button className="bg-white px-5 py-2 text-sm">Log in</Button>
+                <Button className=" px-5 py-2 text-sm">Log in</Button>
               </LoginButton>
             </>
           )}

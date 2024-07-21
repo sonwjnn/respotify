@@ -35,11 +35,18 @@ export const getUserSongs = cache(async () => {
 })
 
 export const getSongsByTitle = cache(async (title: string) => {
-  const data = await db.query.songs.findMany({
-    where: ilike(songs.title, title),
-    orderBy: (songs, { desc }) => [desc(songs.createdAt)],
-  })
-  return data
+  if (title.trim() === '') {
+    const allSongs = await db.query.songs.findMany({
+      orderBy: (songs, { desc }) => [desc(songs.createdAt)],
+    })
+    return allSongs
+  } else {
+    const data = await db.query.songs.findMany({
+      where: ilike(songs.title, title),
+      orderBy: (songs, { desc }) => [desc(songs.createdAt)],
+    })
+    return data
+  }
 })
 
 export const getLikedSongs = cache(async () => {

@@ -120,6 +120,13 @@
       "when": 1721484071452,
       "tag": "0016_ambiguous_master_mold",
       "breakpoints": true
+    },
+    {
+      "idx": 17,
+      "version": "7",
+      "when": 1721550403872,
+      "tag": "0017_tired_scarlet_witch",
+      "breakpoints": true
     }
   ]
 }

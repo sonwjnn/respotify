@@ -20,7 +20,7 @@ export const revalidate = 0
 const SearchPage: NextPage<SearchPageProps> = async ({
   searchParams,
 }: SearchPageProps) => {
-  const songs = await getSongsByTitle(searchParams.title)
+  const songs = await getSongsByTitle(searchParams.title || '')
 
   return (
     <PageWrapper>

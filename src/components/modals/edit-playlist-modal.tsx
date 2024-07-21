@@ -40,7 +40,7 @@ export const EditPlaylistModal = () => {
   const authModal = useAuthModal()
 
   const initImageUrl = useLoadImage(
-    playlist?.imagePath || '',
+    playlist?.imagePath,
     buckets.playlist_images
   )
   // const { user } = useUser()

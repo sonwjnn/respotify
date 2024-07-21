@@ -30,7 +30,7 @@ export const PlaylistCard = ({
   const isPlayingCurrentTrack = currentTrack?.id === data.id && isPlaying
 
   const bucket = type === 'track' ? buckets.images : buckets.playlist_images
-  const imagePath = useLoadImage(data.imagePath || '', bucket)
+  const imagePath = useLoadImage(data.imagePath, bucket)
   return (
     <div
       onClick={() => router.push(`/playlist/${data.id}`)}

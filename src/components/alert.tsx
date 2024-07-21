@@ -8,7 +8,7 @@ import { Box } from '@/components/ui/box'
 import { Button } from '@/components/ui/button'
 
 type AlertProps = {
-  type?: 'notfound' | 'wrong' | 'noAuth'
+  type?: 'notfound' | 'wrong' | 'noAuth' | 'noData'
   text?: string
 }
 
@@ -32,6 +32,11 @@ export const Alert = (props: AlertProps) => {
           documentTitle: 'Unauthenticated!',
           message: 'Unauthenticated, please subcribe or login!',
         }
+      case 'noData':
+        return {
+          documentTitle: 'No data found',
+          message: text,
+        }
       default:
         return {
           documentTitle: '',
@@ -39,6 +44,13 @@ export const Alert = (props: AlertProps) => {
         }
     }
   }, [type])
+
+  const title = {
+    notfound: 'Page not found',
+    wrong: 'Oops! Something went wrong',
+    noData: 'Data not found',
+    noAuth: 'Unauthorized',
+  }
 
   return (
     <Box className="flex h-full w-full flex-col items-center justify-center">
@@ -52,19 +64,19 @@ export const Alert = (props: AlertProps) => {
         />
       </div>
       <div className="flex flex-col items-center p-10 ">
-        <h2 className=" mb-4 mt-1 text-center text-5xl font-bold text-white">
-          {type === 'notfound'
-            ? 'Page not found'
-            : 'Oops! Something went wrong'}
+        <h2 className=" mb-4 mt-1 text-center text-5xl font-bold text-zinc-600 dark:text-white">
+          {title[type]}
         </h2>
-        <p className="mb-10 text-base text-neutral-400">{message}</p>
+        <p className="mb-10 text-base text-zinc-500 dark:text-neutral-400">
+          {message}
+        </p>
         {type !== 'noAuth' && (
           <Link href={'/'}>
-            <Button className="mb-9 bg-white px-8 py-3 text-black">Home</Button>
+            <Button className="mb-9  px-8 py-3">Home</Button>
           </Link>
         )}
         <a
-          className="block text-base font-bold text-white no-underline hover:underline"
+          className="block text-base font-bold text-zinc-500 dark:text-white no-underline hover:underline"
           href="https://www.facebook.com/profile.php?id=100011436148089"
           target="_blank"
         >

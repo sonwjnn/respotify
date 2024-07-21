@@ -1,8 +1,11 @@
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
 
-export const useLoadImage = (imagePath: string, bucket: string) => {
+export const useLoadImage = (
+  imagePath: string | undefined | null,
+  bucket: string
+) => {
   // const supabaseClient = useSupabaseClient()
-  // if (!imagePath || !bucket) return null
+  if (!imagePath || !bucket) return null
   // if (imagePath.startsWith('https://')) {
   //   return imagePath
   // }

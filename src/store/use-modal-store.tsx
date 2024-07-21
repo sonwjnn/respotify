@@ -2,11 +2,11 @@ import { create } from 'zustand'
 
 export type ModalType = 'auth'
 
-interface ModalData {
+type ModalData = {
   authType?: 'login' | 'register'
 }
 
-interface ModalStore {
+type ModalStore = {
   type: ModalType | null
   data: ModalData
   isOpen: boolean

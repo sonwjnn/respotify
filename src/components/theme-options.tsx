@@ -9,7 +9,7 @@ import { cn } from '@/lib/utils'
 import { Tooltip } from '@/components/ui/tooltip'
 import { useMemo } from 'react'
 
-const ThemeSelect = () => {
+export const ThemeOptions = () => {
   const { theme, setTheme } = useTheme()
 
   const options = useMemo(
@@ -85,5 +85,3 @@ const Item = ({
     </Tooltip>
   )
 }
-
-export default ThemeSelect

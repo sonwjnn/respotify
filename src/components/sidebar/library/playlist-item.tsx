@@ -21,7 +21,7 @@ export const PlaylistItem = ({ data }: PlaylistItemProps) => {
   const router = useRouter()
 
   const { playlistPlayingId, isPlaying } = usePlayer()
-  const imageUrl = useLoadImage(data.imagePath || '', buckets.playlist_images)
+  const imageUrl = useLoadImage(data.imagePath, buckets.playlist_images)
   const { id } = useParams()
 
   const onClick = (): void => {

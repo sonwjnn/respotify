@@ -27,7 +27,7 @@ export const MediaItem = ({
   hasAddTrackBtn = false,
 }: MediaItemProps) => {
   const { width } = useMainLayout()
-  const imageUrl = useLoadImage(song.imagePath || '', buckets.images)
+  const imageUrl = useLoadImage(song.imagePath, buckets.images)
   const player = usePlayer()
 
   const [isHover, setHover] = useState<boolean>(false)

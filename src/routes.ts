@@ -34,6 +34,13 @@ export const apiAuthPrefix = '/api/auth'
 export const apiWebhooksPrefix = '/api/webhooks'
 
 /**
+ * The prefix for API upload image routes.
+ * Routes that start with this prefix are used for API uploadthing purposes.
+ * @type {string}
+ */
+export const apiUploadthingPrefix = '/api/uploadthing'
+
+/**
  * The default redirect path after logging in.
  * @type {string}
  */

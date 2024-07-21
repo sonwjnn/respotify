@@ -4,6 +4,7 @@ import { SongCard } from '@/components/song-card'
 import { useMainLayout } from '@/store/use-main-layout'
 import { useOnPlay } from '@/hooks/use-on-play'
 import { SongType } from '@/types/types'
+import { Alert } from '@/components/alert'
 
 type MainContentProps = {
   songs: SongType[]
@@ -16,7 +17,7 @@ export const MainContent = ({ songs }: MainContentProps) => {
   const columnWidth = (width - 2 * 24 - (quantityCol - 1) * 24) / quantityCol
 
   if (songs.length === 0) {
-    return <div className="mt-4 text-neutral-400">No songs avalable.</div>
+    return <Alert type="noData" text="No songs found." />
   }
 
   return (

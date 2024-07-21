@@ -27,7 +27,7 @@ export const PlaylistHeaderContent = () => {
 
   const subcribeModal = useSubscribeModal()
 
-  const imagePath = useLoadImage(data?.imagePath!, buckets.playlist_images)
+  const imagePath = useLoadImage(data?.imagePath, buckets.playlist_images)
 
   const onClick = (): void => {
     if (user?.id !== data?.userId) return
