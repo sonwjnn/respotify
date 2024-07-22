@@ -1,7 +1,7 @@
-<h1 align="center">FullStack Spotify Clone 🔥</h1>
+<h1 align="center">FullStack Respotify 🎼🎹</h1>
 <div align="center">
   <strong>:high_brightness: The website to play a music :musical_note:</strong><br>
-  Spotify Clone with Next.js 13.5 App Router: React, Tailwind, Supabase, PostgreSQL, Stripe.<br>
+  🌊 Respotify with Nextjs 14, Authjs, Server actions, Tailwindcss, NeonDB(PostgreSQL), Drizzle, Stripe.<br>
 </div>
 
 <br>
