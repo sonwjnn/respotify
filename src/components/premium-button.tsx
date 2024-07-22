@@ -9,7 +9,11 @@ import { postData } from '@/lib/helpers'
 import { Tooltip } from '@/components/ui/tooltip'
 import { Button } from '@/components/ui/button'
 
-export const PremiumButton = () => {
+export const PremiumButton = ({
+  hasActiveSubscription,
+}: {
+  hasActiveSubscription: boolean
+}) => {
   // const { isLoading, subscription } = useUser()
 
   const [loading, setLoading] = useState(false)
@@ -31,15 +35,16 @@ export const PremiumButton = () => {
     }
     setLoading(false)
   }
-  const subscription = false
 
   return (
     <Tooltip
       text={
-        subscription ? 'You are current premium' : 'Subcribe premium for better'
+        hasActiveSubscription
+          ? 'You are current premium'
+          : 'Subcribe premium for better'
       }
     >
-      {subscription ? (
+      {hasActiveSubscription ? (
         <Button
           variant="premium"
           disabled={loading}

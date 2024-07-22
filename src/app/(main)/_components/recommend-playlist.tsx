@@ -33,8 +33,6 @@ export const RecommendPlaylist = ({
   const user = useCurrentUser()
   const { bgBase, bgColor, setBgColor } = useHeader()
 
-  const imageUrl = useLoadImage(data.imagePath, buckets.playlist_images)
-
   const handleHover = (): void => {
     if (!isHover) setHover(true)
 
@@ -62,21 +60,14 @@ export const RecommendPlaylist = ({
       onClick={onClick}
     >
       <div className="relative min-h-[64px] min-w-[64px] shadow-base">
-        {imageUrl ? (
-          <Image
-            className="object-cover"
-            fill
-            src={imageUrl}
-            alt="Image"
-            sizes="100%"
-            blurDataURL={imageUrl}
-            placeholder="blur"
-          />
-        ) : (
-          <div className="absolute inset-0 flex items-center justify-center bg-zinc-300 text-white dark:bg-neutral-800">
-            <MusicNote size={25} />
-          </div>
-        )}
+        <Image
+          className="object-cover"
+          fill
+          src={data.imagePath || '/images/note.svg'}
+          alt="Image"
+          sizes="100%"
+        />
+        )
       </div>
       <p className="truncate py-5 pr-2 text-base font-bold text-zinc-600 dark:text-white">
         {data.title}

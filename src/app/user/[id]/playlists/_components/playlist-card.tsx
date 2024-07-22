@@ -30,29 +30,20 @@ export const PlaylistCard = ({
   const isPlayingCurrentTrack = currentTrack?.id === data.id && isPlaying
 
   const bucket = type === 'track' ? buckets.images : buckets.playlist_images
-  const imagePath = useLoadImage(data.imagePath, bucket)
   return (
     <div
       onClick={() => router.push(`/playlist/${data.id}`)}
       className="group relative mb-3 flex cursor-pointer flex-col items-center justify-center gap-x-4 overflow-hidden rounded-md bg-neutral-400/5 p-4 transition hover:bg-neutral-400/10"
     >
       <div className="relative aspect-square h-full w-full overflow-hidden rounded-md shadow-base">
-        {imagePath ? (
-          <Image
-            className="object-cover"
-            src={imagePath}
-            fill
-            alt="song img"
-            sizes="100%"
-            priority={true}
-            blurDataURL={imagePath}
-            placeholder="blur"
-          />
-        ) : (
-          <div className="flex h-full w-full items-center justify-center bg-zinc-300 text-white dark:bg-neutral-800">
-            <MusicNote size={50} />
-          </div>
-        )}
+        <Image
+          className="object-cover"
+          src={data.imagePath || '/images/note.svg'}
+          fill
+          alt="song img"
+          sizes="100%"
+          priority={true}
+        />
       </div>
 
       <div className="flex w-full flex-col items-start gap-y-1 pt-4">

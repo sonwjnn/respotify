@@ -127,6 +127,34 @@
       "when": 1721550403872,
       "tag": "0017_tired_scarlet_witch",
       "breakpoints": true
+    },
+    {
+      "idx": 18,
+      "version": "7",
+      "when": 1721658286986,
+      "tag": "0018_huge_mercury",
+      "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "7",
+      "when": 1721659279437,
+      "tag": "0019_fluffy_scorpion",
+      "breakpoints": true
+    },
+    {
+      "idx": 20,
+      "version": "7",
+      "when": 1721659332109,
+      "tag": "0020_cool_scarecrow",
+      "breakpoints": true
+    },
+    {
+      "idx": 21,
+      "version": "7",
+      "when": 1721659358216,
+      "tag": "0021_secret_nightmare",
+      "breakpoints": true
     }
   ]
 }

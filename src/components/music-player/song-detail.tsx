@@ -14,8 +14,6 @@ type SongDetailsProps = {
 }
 
 export const SongDetails = ({ data }: SongDetailsProps) => {
-  const imageUrl = useLoadImage(data.imagePath, buckets.images)
-
   return (
     <div className="flex w-full items-center gap-x-4   md:pr-6">
       <div
@@ -26,21 +24,14 @@ export const SongDetails = ({ data }: SongDetailsProps) => {
       "
         >
           <div className="relative min-h-[56px] min-w-[56px] overflow-hidden rounded-md">
-            {imageUrl ? (
-              <Image
-                fill
-                src={imageUrl}
-                sizes="100%"
-                alt="Media-Item"
-                className="object-cover"
-                blurDataURL={imageUrl}
-                placeholder="blur"
-              />
-            ) : (
-              <div className="flex aspect-square h-full w-full items-center justify-center bg-zinc-300 text-white dark:bg-neutral-800">
-                <MusicNote size={22} />
-              </div>
-            )}
+            <Image
+              fill
+              src={data.imagePath || '/images/note.svg'}
+              sizes="100%"
+              alt="Media-Item"
+              className="object-cover"
+            />
+            )
           </div>
           <div className="flex flex-col gap-y-1 overflow-hidden">
             <p className="truncate text-sm text-zinc-600 dark:text-white">

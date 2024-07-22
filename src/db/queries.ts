@@ -1,5 +1,4 @@
 import { db } from '@/db/drizzle'
-import { userSubscription } from '@/db/schema'
 
 import {
   likedPlaylists,
@@ -7,10 +6,12 @@ import {
   playlistSongs,
   playlists,
   songs,
+  subscriptions,
 } from '@/db/schema'
 import { eq, ilike } from 'drizzle-orm'
 import { cache } from 'react'
 import { getSelf } from '@/data/auth'
+import { checkIsActive } from '@/lib/utils'
 
 export const getSongs = cache(async () => {
   try {
@@ -143,24 +144,18 @@ export const getSongsByPlaylistId = cache(async (playlistId: string) => {
   }))
 })
 
-const DAY_IN_MS = 86_400_000
-
-export const getUserSubscription = cache(async () => {
+export const getSubscription = cache(async () => {
   const self = await getSelf()
 
   if (!self || !self.id) {
     return null
   }
 
-  const data = await db.query.userSubscription.findFirst({
-    where: eq(userSubscription.userId, self.id),
+  const data = await db.query.subscriptions.findFirst({
+    where: eq(subscriptions.userId, self.id),
   })
 
   if (!data) return null
 
-  const isActive =
-    data.stripePriceId &&
-    data.stripeCurrentPeriodEnd?.getTime()! + DAY_IN_MS > Date.now()
-
-  return { ...data, isActive: !!isActive }
+  return { ...data, isActive: checkIsActive(data) }
 })

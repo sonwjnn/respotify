@@ -43,7 +43,6 @@ export default async function RootLayout({
 }) {
   const session = await auth()
 
-  // const productsData = getActiveProductsWithPrices()
   const userSongsData = getUserSongs()
   const userPlaylistsData = getUserPlaylists()
   const likedSongsData = getLikedSongs()

@@ -44,6 +44,7 @@ type NavbarProps = {
   bgColor?: string
   hasPlayBtn?: boolean
   hasUsername?: boolean
+  hasActiveSubscription?: boolean
   title?: string
   showTitle?: boolean
 }
@@ -56,6 +57,7 @@ export const Navbar = (props: NavbarProps) => {
     data,
     darker = true,
     bgColor,
+    hasActiveSubscription = false,
     hasPlayBtn = false,
     hasUsername = false,
   } = props
@@ -140,13 +142,13 @@ export const Navbar = (props: NavbarProps) => {
       >
         <div className="hidden min-w-0 items-center gap-x-2  md:!flex ">
           <button
-            className="items-center justify-center rounded-full  bg-[#171717] dark:bg-black transition active:scale-95 disabled:cursor-not-allowed disabled:select-none"
+            className="items-center justify-center rounded-full  bg-[#171717] transition active:scale-95 disabled:cursor-not-allowed disabled:select-none dark:bg-black"
             onClick={() => router.back()}
           >
             <RxCaretLeft className="text-white" size={35} />
           </button>
           <button
-            className="items-center justify-center rounded-full bg-[#171717] dark:bg-black transition active:scale-95"
+            className="items-center justify-center rounded-full bg-[#171717] transition active:scale-95 dark:bg-black"
             onClick={() => router.forward()}
           >
             <RxCaretRight className="text-white" size={35} />
@@ -187,7 +189,9 @@ export const Navbar = (props: NavbarProps) => {
         <div className="flex items-center justify-between   gap-x-4">
           {user ? (
             <div className="flex items-center gap-x-4">
-              {width >= 459 && <PremiumButton />}
+              {width >= 459 && (
+                <PremiumButton hasActiveSubscription={hasActiveSubscription} />
+              )}
 
               <UserButton url={imageUrl || ''} />
             </div>

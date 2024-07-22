@@ -281,19 +281,15 @@ export const EditUserModal = () => {
                   </>
                 )}
               </div>
-              {file !== '' ? (
+              {file !== '' && (
                 <div className="relative h-full w-full overflow-hidden rounded-full">
                   <Image
                     className="object-cover"
-                    src={file}
+                    src={file || '/images/note.svg'}
                     fill
                     alt="playlist img"
                     sizes="100%"
                   />
-                </div>
-              ) : (
-                <div className="flex aspect-square h-full w-full items-center justify-center overflow-hidden">
-                  <MusicNote size={50} />
                 </div>
               )}
             </label>

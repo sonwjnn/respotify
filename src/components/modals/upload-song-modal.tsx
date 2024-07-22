@@ -2,14 +2,11 @@
 
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import { useRouter } from 'next/navigation'
-import { use, useEffect, useState, useTransition } from 'react'
-import type { FieldValues, SubmitHandler } from 'react-hook-form'
+import { useEffect, useState, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
-import uniqid from 'uniqid'
 
 import { useUploadModal } from '@/store/modals/use-upload-modal'
-// import { useUser } from '@/hooks/use-user'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -25,14 +22,12 @@ import {
 } from '../ui/form'
 import { set, z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import Image from 'next/image'
 import { SongSchema } from '@/schemas'
 import { createSong } from '@/actions/song'
-import { FileUpload } from '../file-upload'
+import { FileUpload } from '@/components/file-upload'
 
 export const UploadSongModal = () => {
   const uploadModal = useUploadModal()
-  // const { user } = useUser()
 
   const [isLoading, startTransition] = useTransition()
 

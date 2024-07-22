@@ -1,0 +1,1 @@
+ALTER TABLE "subscription" ALTER COLUMN "user_id" SET DATA TYPE uuid;

@@ -1,18 +1,20 @@
-import type { NextPage } from 'next'
-
 import { Footer } from '@/components/footer'
 import { Header } from '@/components/header'
 import { Navbar } from '@/components/navbar'
 import { PageWrapper } from '@/components/page-wrapper'
 
 import { QueueContent } from './_components/queue-content'
+import { getSubscription } from '@/db/queries'
 
 export const revalidate = 0
 
-const QueuePage: NextPage = async () => {
+const QueuePage = async () => {
+  const subscription = await getSubscription()
+
+  const active = subscription?.isActive
   return (
     <div className="relative h-full w-full">
-      <Navbar bgColor="#171717" darker={false} />
+      <Navbar bgColor="#171717" darker={false} hasActiveSubscription={active} />
       <PageWrapper>
         <Header bgColor="#171717" type="queue">
           <div className="mb-2 flex w-full flex-col  gap-y-6">

@@ -1,6 +1,6 @@
 'use client'
 
-import dayjs from 'dayjs'
+import { format } from 'date-fns'
 import Image from 'next/image'
 import { useState } from 'react'
 
@@ -139,7 +139,7 @@ export const MediaItem = ({
                 'select-none text-sm text-zinc-500 dark:text-neutral-400'
               }
             >
-              {dayjs(song.createdAt).format('DD-MM-YYYY')}
+              {format(song.createdAt, 'DD-MM-YYYY')}
             </div>
           )}
         </>

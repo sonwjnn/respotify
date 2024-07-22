@@ -39,19 +39,13 @@ export const LikedItem = ({ image, name, href, count }: LikedItemProps) => {
         >
           <div onClick={onClick} className="flex items-center gap-x-3">
             <div className="relative min-h-[48px] min-w-[48px] overflow-hidden rounded-md">
-              {image ? (
-                <Image
-                  fill
-                  src={image}
-                  sizes="100%"
-                  alt="Media-Item"
-                  className="object-cover"
-                />
-              ) : (
-                <div className="flex h-full w-full items-center justify-center bg-neutral-800">
-                  <MusicNote size={20} />
-                </div>
-              )}
+              <Image
+                fill
+                src={image}
+                sizes="100%"
+                alt="Media-Item"
+                className="object-cover"
+              />
             </div>
             <div className="flex flex-col gap-y-1 overflow-hidden">
               <p className="truncate text-zinc-600 dark:text-white">{name}</p>

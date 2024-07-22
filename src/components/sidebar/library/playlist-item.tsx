@@ -3,12 +3,10 @@
 import Image from 'next/image'
 import { useParams, useRouter } from 'next/navigation'
 
-import { useLoadImage } from '@/hooks/use-load-image'
 import { usePlayer } from '@/store/use-player'
-import { MusicNote, SoundIconSolid } from '@/public/icons'
-import { PlaylistType, PlaylistWithUser } from '@/types/types'
+import { SoundIconSolid } from '@/public/icons'
+import { PlaylistWithUser } from '@/types/types'
 import { cn } from '@/lib/utils'
-import { buckets } from '@/data/ui'
 import { useTheme } from 'next-themes'
 
 type PlaylistItemProps = {
@@ -21,7 +19,7 @@ export const PlaylistItem = ({ data }: PlaylistItemProps) => {
   const router = useRouter()
 
   const { playlistPlayingId, isPlaying } = usePlayer()
-  const imageUrl = useLoadImage(data.imagePath, buckets.playlist_images)
+
   const { id } = useParams()
 
   const onClick = (): void => {
@@ -44,21 +42,13 @@ export const PlaylistItem = ({ data }: PlaylistItemProps) => {
     >
       <div className="flex min-w-0 items-center gap-x-3">
         <div className="relative min-h-[48px] min-w-[48px] overflow-hidden rounded-md">
-          {imageUrl ? (
-            <Image
-              fill
-              src={imageUrl}
-              sizes="100%"
-              alt="Media-Item"
-              className="object-cover"
-              blurDataURL={imageUrl}
-              placeholder="blur"
-            />
-          ) : (
-            <div className="flex min-h-[48px] w-full items-center justify-center bg-zinc-300 text-white dark:bg-neutral-800">
-              <MusicNote size={20} />
-            </div>
-          )}
+          <Image
+            fill
+            src={data.imagePath || '/images/note.svg'}
+            sizes="100%"
+            alt="Media-Item"
+            className="object-cover"
+          />
         </div>
         <div className="flex flex-col gap-y-1 overflow-hidden ">
           <p

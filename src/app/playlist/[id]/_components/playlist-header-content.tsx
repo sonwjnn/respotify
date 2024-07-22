@@ -63,28 +63,22 @@ export const PlaylistHeaderContent = () => {
             <p className="text-base text-white">Choose photo</p>
           </div>
         ) : null}
-        {imagePath ? (
-          <div
-            className={cn(
-              'relative aspect-square h-full w-full overflow-hidden rounded-sm'
-            )}
-          >
-            <Image
-              className="
+        <div
+          className={cn(
+            'relative aspect-square h-full w-full overflow-hidden rounded-sm'
+          )}
+        >
+          <Image
+            className="
             object-cover
           "
-              src={imagePath}
-              fill
-              alt="playlist image"
-              sizes="100%"
-              priority={true}
-              blurDataURL={imagePath}
-              placeholder="blur"
-            />
-          </div>
-        ) : (
-          <MusicNote size={50} />
-        )}
+            src={data?.imagePath || '/images/note.svg'}
+            fill
+            alt="playlist image"
+            sizes="100%"
+            priority={true}
+          />
+        </div>
       </div>
       <div className="mt-4 flex  flex-col gap-y-3 md:mt-0 md:gap-y-6">
         <p className="hidden text-base text-white  md:block">Playlist</p>

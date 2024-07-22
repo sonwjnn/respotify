@@ -1,10 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
-import { useLoadImage } from '@/hooks/use-load-image'
-import { MusicNote } from '@/public/icons'
 import { PlaylistType } from '@/types/types'
-import { buckets } from '@/data/ui'
 
 type CollapseListProps = {
   playlists: PlaylistType[]
@@ -15,26 +12,17 @@ type CollapseListItemProps = {
 }
 
 const CollapseListItem = ({ playlist }: CollapseListItemProps) => {
-  const imageUrl = useLoadImage(playlist.imagePath, buckets.playlist_images)
   return (
     <div className="flex items-center justify-center  rounded-lg  py-2  transition hover:bg-neutral-800 ">
-      {imageUrl ? (
-        <div className="relative aspect-square h-12 w-12 overflow-hidden rounded-sm shadow-base">
-          <Image
-            fill
-            src={imageUrl}
-            sizes="100%"
-            alt="Media-Item"
-            className="object-cover"
-            blurDataURL={imageUrl}
-            placeholder="blur"
-          />
-        </div>
-      ) : (
-        <div className="flex h-14 w-14 items-center justify-center bg-zinc-300 text-white dark:bg-neutral-800">
-          <MusicNote size={20} />
-        </div>
-      )}
+      <div className="relative aspect-square h-12 w-12 overflow-hidden rounded-sm shadow-base">
+        <Image
+          fill
+          src={playlist.imagePath || '/images/note.svg'}
+          sizes="100%"
+          alt="Media-Item"
+          className="object-cover"
+        />
+      </div>
     </div>
   )
 }

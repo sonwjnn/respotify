@@ -1,7 +1,7 @@
 'use client'
 
 import { type ElementRef, memo, useEffect, useRef, useState } from 'react'
-import { useMediaQuery } from 'usehooks-ts'
+import { useMedia } from 'react-use'
 
 import { useSidebar } from '@/store/use-sidebar'
 import { cn } from '@/lib/utils'
@@ -22,9 +22,9 @@ export const SidebarResizer = memo(
     maxWidth = 500,
     className,
   }: SidebarResizerProps) => {
-    const isTablet = useMediaQuery('(max-width: 768px)')
-    const isMobile = useMediaQuery('(max-width: 585px)')
-    const isMediumScreen = useMediaQuery('(max-width: 987px)')
+    const isTablet = useMedia('(max-width: 768px)')
+    const isMobile = useMedia('(max-width: 585px)')
+    const isMediumScreen = useMedia('(max-width: 987px)')
 
     const isResizingRef = useRef(false)
     const sidebarRef = useRef<ElementRef<'aside'>>(null)

@@ -1,5 +1,3 @@
-import type { NextPage } from 'next'
-
 import { Footer } from '@/components/footer'
 import { Greeting } from './_components/greeting'
 import { Header } from '@/components/header'
@@ -7,18 +5,25 @@ import { Navbar } from '@/components/navbar'
 import { PageWrapper } from '@/components/page-wrapper'
 
 import { MainContent } from './_components/main-content'
-import { getPlaylists, getSongs } from '@/db/queries'
+import { getPlaylists, getSongs, getSubscription } from '@/db/queries'
 
-export const revalidate = 0
-
-const MainPage: NextPage = async () => {
+const MainPage = async () => {
   const songsData = getSongs()
   const playlistsData = getPlaylists()
+  const subscriptionsData = getSubscription()
 
-  const [songs, playlists] = await Promise.all([songsData, playlistsData])
+  const [songs, playlists, subscription] = await Promise.all([
+    songsData,
+    playlistsData,
+    subscriptionsData,
+  ])
+
+  console.log('subscription', subscription)
+
+  const isPro = !!subscription?.isActive
   return (
     <PageWrapper>
-      <Navbar type="home" />
+      <Navbar type="home" hasActiveSubscription={isPro} />
       <Header type="home">
         <div className="mb-2 w-full">
           <Greeting playlists={playlists} />

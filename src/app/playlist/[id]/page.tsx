@@ -7,7 +7,11 @@ import { Navbar } from '@/components/navbar'
 
 import { PlaylistContent } from './_components/playlist-content'
 import { PlaylistHeaderContent } from './_components/playlist-header-content'
-import { getPlaylistById, getSongsByPlaylistId } from '@/db/queries'
+import {
+  getPlaylistById,
+  getSongsByPlaylistId,
+  getSubscription,
+} from '@/db/queries'
 
 type PlaylistPageProps = {
   params: {
@@ -17,24 +21,31 @@ type PlaylistPageProps = {
 
 export const revalidate = 0
 
-const PlaylistPage: NextPage<PlaylistPageProps> = async ({
-  params,
-}: PlaylistPageProps) => {
+const PlaylistPage = async ({ params }: PlaylistPageProps) => {
   const playlistData = getPlaylistById(params.id)
   const playlistSongsData = getSongsByPlaylistId(params.id)
+  const subscriptionData = getSubscription()
 
-  const [playlist, playlistSongs] = await Promise.all([
+  const [playlist, playlistSongs, subscription] = await Promise.all([
     playlistData,
     playlistSongsData,
+    subscriptionData,
   ])
 
   if (!playlist) {
     return <Alert type="notfound" />
   }
 
+  const isPro = !!subscription?.isActive
+
   return (
     <div className="h-full w-full">
-      <Navbar type="playlist" data={playlist} hasPlayBtn />
+      <Navbar
+        type="playlist"
+        data={playlist}
+        hasPlayBtn
+        hasActiveSubscription={isPro}
+      />
       <Header data={playlist} type="playlist">
         <PlaylistHeaderContent />
       </Header>

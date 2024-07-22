@@ -17,7 +17,6 @@ import { useAuthModal } from '@/store/modals/use-auth-modal'
 import { useSubscribeModal } from '@/store/modals/use-subcribe-modal'
 import { useUploadModal } from '@/store/modals/use-upload-modal'
 import { usePlaylist } from '@/store/use-playlist'
-// import { useUser } from '@/hooks/use-user'
 import { DeleteIcon } from '@/public/icons'
 import { PlaylistType, SongType } from '@/types/types'
 import { useConfirm } from '@/hooks/use-confirm'
@@ -39,7 +38,6 @@ export const MediaDropdown = ({
     'You are about to delete this playlist'
   )
 
-  // const { user, subscription } = useUser()
   const user = useCurrentUser()
   const { removePlaylistSong, setDuration } = usePlaylist()
   const authModal = useAuthModal()
@@ -59,7 +57,7 @@ export const MediaDropdown = ({
       return
     }
 
-    // if (!subscription) {
+    // if (!subscription?.active) {
     //   subcribeModal.onOpen()
     //   return
     // }

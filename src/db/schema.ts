@@ -213,11 +213,18 @@ export const likedPlaylistsRelations = relations(likedPlaylists, ({ one }) => ({
   }),
 }))
 
-export const userSubscription = pgTable('user_subscription', {
+export const subscriptions = pgTable('subscription', {
   id: uuid('id').primaryKey().defaultRandom(),
-  userId: uuid('user_id').notNull().unique(),
-  stripeCustomerId: text('stripe_customer_id').notNull().unique(),
-  stripeSubscriptionId: text('stripe_subscription_id').notNull().unique(),
-  stripePriceId: text('stripe_price_id').notNull(),
-  stripeCurrentPeriodEnd: timestamp('stripe_current_period_end').notNull(),
+  userId: uuid('user_id')
+    .notNull()
+    .references(() => users.id, {
+      onDelete: 'cascade',
+    }),
+  subscriptionId: text('subscription_id').notNull(),
+  customerId: text('customer_id').notNull(),
+  priceId: text('price_id').notNull(),
+  status: text('status').notNull(),
+  currentPeriodEnd: timestamp('current_period_end', { mode: 'date' }),
+  createdAt: timestamp('created_at', { mode: 'date' }).notNull(),
+  updatedAt: timestamp('updated_at', { mode: 'date' }).notNull(),
 })

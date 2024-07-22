@@ -3,7 +3,6 @@
 import Image from 'next/image'
 import { useState } from 'react'
 
-import { useLoadImage } from '@/hooks/use-load-image'
 import { usePlayer } from '@/store/use-player'
 import { usePlayingView } from '@/store/use-playing-view'
 import { CloseIcon, MusicNote } from '@/public/icons'
@@ -17,7 +16,6 @@ import { PlayingViewResizer } from '@/components/playing-view/playing-view-resiz
 export const PlayingView = () => {
   const { collapsed } = usePlayingView()
   const { currentTrack, queue, nextTrackIndex } = usePlayer()
-  const imagePath = useLoadImage(currentTrack?.imagePath!, 'images')
 
   // find next song
   const nextSong = { ...queue[nextTrackIndex] } as SongType
@@ -67,27 +65,16 @@ export const PlayingView = () => {
             </div>
           </div>
           <div className="flex flex-col gap-4 p-4 pt-0">
-            {imagePath ? (
-              <div className="relative aspect-square h-full w-full overflow-hidden rounded-lg shadow-base">
-                <Image
-                  className="object-cover"
-                  src={imagePath}
-                  fill
-                  alt="Img"
-                  sizes="100%"
-                  blurDataURL={imagePath}
-                  placeholder="blur"
-                />
-              </div>
-            ) : (
-              <div
-                className={
-                  ' flex aspect-square h-full w-full items-center justify-center rounded-lg bg-[#282828] text-white shadow-base'
-                }
-              >
-                <MusicNote size={114} />
-              </div>
-            )}
+            <div className="relative aspect-square h-full w-full overflow-hidden rounded-lg shadow-base">
+              <Image
+                className="object-cover"
+                src={currentTrack?.imagePath || '/images/note.svg'}
+                fill
+                alt="Img"
+                sizes="100%"
+              />
+            </div>
+
             <div
               className={
                 'mt-2 flex h-[64px] w-full flex-row items-center justify-between gap-6'

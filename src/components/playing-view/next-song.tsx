@@ -5,9 +5,8 @@ import { usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
 import Skeleton from 'react-loading-skeleton'
 
-import { useLoadImage } from '@/hooks/use-load-image'
 import { usePlayer } from '@/store/use-player'
-import { MusicNote, PlayIcon, SingleMusicNote } from '@/public/icons'
+import { PlayIcon, SingleMusicNote } from '@/public/icons'
 import { SongType } from '@/types/types'
 
 type NextSongProps = {
@@ -15,7 +14,6 @@ type NextSongProps = {
 }
 export const NextSong = ({ song }: NextSongProps) => {
   const player = usePlayer()
-  const imagePath = useLoadImage(song?.imagePath!, 'images')
   const router = useRouter()
   const pathname = usePathname()
 
@@ -70,29 +68,17 @@ export const NextSong = ({ song }: NextSongProps) => {
             {isHover ? <PlayIcon size={14} /> : <SingleMusicNote size={16} />}
           </div>
           <div className={' h-12 w-12'}>
-            {imagePath ? (
-              <div className="relative aspect-square h-full w-full overflow-hidden rounded-md">
-                <Image
-                  className="
+            <div className="relative aspect-square h-full w-full overflow-hidden rounded-md">
+              <Image
+                className="
             object-cover
           "
-                  src={imagePath}
-                  fill
-                  alt="Img"
-                  sizes="100%"
-                  blurDataURL={imagePath}
-                  placeholder="blur"
-                />
-              </div>
-            ) : (
-              <div
-                className={
-                  'flex h-full w-full items-center justify-center rounded-lg bg-[#282828] text-white'
-                }
-              >
-                <MusicNote size={20} />
-              </div>
-            )}
+                src={song?.imagePath || '/images/note.svg'}
+                fill
+                alt="Img"
+                sizes="100%"
+              />
+            </div>
           </div>
           <div
             className={

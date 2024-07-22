@@ -1,5 +1,3 @@
-import type { NextPage } from 'next'
-
 import { Alert } from '@/components/alert'
 import { Footer } from '@/components/footer'
 import { Header } from '@/components/header'
@@ -9,6 +7,7 @@ import { PageWrapper } from '@/components/page-wrapper'
 import { UserContent } from './_components/user-content'
 import { UserHeaderContent } from './_components/user-header-content'
 import { PlaylistType } from '@/types/types'
+import { getSubscription } from '@/db/queries'
 
 type UserPageProps = {
   params: {
@@ -18,15 +17,19 @@ type UserPageProps = {
 
 export const revalidate = 0
 
-const UserPage: NextPage<UserPageProps> = async ({ params }: UserPageProps) => {
+const UserPage = async ({ params }: UserPageProps) => {
   // const playlists = await getOtherUserPlaylists(params.id)
+  const subscription = await getSubscription()
+
   const playlists = [] as PlaylistType[]
   if (!playlists) {
     return <Alert type="notfound" />
   }
+
+  const isPro = !!subscription?.isActive
   return (
     <PageWrapper>
-      <Navbar type="user" hasUsername />
+      <Navbar type="user" hasUsername hasActiveSubscription={isPro} />
       <Header type="user">
         <UserHeaderContent data={playlists} />
       </Header>

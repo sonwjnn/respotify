@@ -56,22 +56,19 @@ export const UserHeaderContent = ({ data }: UserHeaderContentProps) => {
           <FiEdit2 size={36} color="#ffffff" />
           <p className="text-base text-white">Choose photo</p>
         </div>
-        {imageUrl ? (
-          <div className="relative  aspect-square h-full w-full overflow-hidden rounded-full">
-            <Image
-              className="
+
+        <div className="relative  aspect-square h-full w-full overflow-hidden rounded-full">
+          <Image
+            className="
             object-cover
           "
-              src={imageUrl}
-              fill
-              alt="user image"
-              sizes="100%"
-              priority={true}
-            />
-          </div>
-        ) : (
-          <MusicNote size={50} />
-        )}
+            src={user?.image || '/images/note.svg'}
+            fill
+            alt="user image"
+            sizes="100%"
+            priority={true}
+          />
+        </div>
       </div>
       <div className="mt-4 flex  flex-col gap-y-3 md:mt-0 md:gap-y-6">
         <p className="hidden text-base text-white  md:block">Profile</p>

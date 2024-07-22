@@ -1,7 +1,7 @@
 'use client'
 
 import { type ElementRef, memo, useEffect, useRef, useState } from 'react'
-import { useMediaQuery } from 'usehooks-ts'
+import { useMedia } from 'react-use'
 
 import { usePlayingView } from '@/store/use-playing-view'
 import { cn } from '@/lib/utils'
@@ -21,7 +21,7 @@ export const PlayingViewResizer = memo(
     maxWidth = 500,
     className,
   }: PlayingViewResizerProps) => {
-    const isMobile = useMediaQuery('(max-width: 768px)')
+    const isMobile = useMedia('(max-width: 768px)')
 
     const isResizingRef = useRef(false)
     const playingViewRef = useRef<ElementRef<'aside'>>(null)
