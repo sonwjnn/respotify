@@ -26,11 +26,8 @@ import { Tooltip } from '@/components/ui/tooltip'
 import { ThemeOptions } from '@/components/theme-options'
 import { useCurrentUser } from '@/hooks/use-current-user'
 import { LogoutButton } from './logout-button'
-type UserButtonProps = {
-  url: string
-}
 
-export const UserButton = ({ url }: UserButtonProps) => {
+export const UserButton = () => {
   // const { user, subscription, userDetails } = useUser()
   const user = useCurrentUser()
 
@@ -65,19 +62,13 @@ export const UserButton = ({ url }: UserButtonProps) => {
             {/* eslint-disable-next-line tailwindcss/migration-from-tailwind-2 */}
             <div className="flex cursor-pointer items-center justify-center gap-x-2 rounded-full bg-white bg-opacity-30 p-1 transition hover:bg-opacity-20 hover:brightness-110 ">
               <div className="relative h-9 w-9 cursor-pointer overflow-hidden rounded-full bg-white">
-                {url ? (
-                  <Image
-                    className="object-cover"
-                    fill
-                    alt="avatar img"
-                    sizes="100%"
-                    src={url}
-                  />
-                ) : (
-                  <div className="flex h-full w-full items-center justify-center">
-                    <FaUserAlt />
-                  </div>
-                )}
+                <Image
+                  className="object-cover"
+                  fill
+                  alt="avatar img"
+                  sizes="100%"
+                  src={user?.image!}
+                />
               </div>
             </div>
           </div>

@@ -3,14 +3,12 @@
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 
-import { useLoadImage } from '@/hooks/use-load-image'
 import { usePlayer } from '@/store/use-player'
-// import { useUser } from '@/hooks/use-user'
 import { MusicNote } from '@/public/icons'
 import { PlaylistType } from '@/types/types'
-import { buckets } from '@/data/ui'
 
 import { PlayButton } from '@/components/play-button'
+import { useCurrentUser } from '@/hooks/use-current-user'
 
 type PlaylistCardProps = {
   data: PlaylistType
@@ -24,12 +22,11 @@ export const PlaylistCard = ({
   type = 'track',
 }: PlaylistCardProps) => {
   const { currentTrack, isPlaying, handlePlay } = usePlayer()
-  // const { userDetails } = useUser()
+  const user = useCurrentUser()
   const router = useRouter()
 
   const isPlayingCurrentTrack = currentTrack?.id === data.id && isPlaying
 
-  const bucket = type === 'track' ? buckets.images : buckets.playlist_images
   return (
     <div
       onClick={() => router.push(`/playlist/${data.id}`)}
@@ -51,8 +48,7 @@ export const PlaylistCard = ({
           {data.title}
         </p>
         <p className="w-full truncate pb-4 text-sm text-zinc-500 dark:text-neutral-400">
-          {/* By {userDetails?.full_name} */}
-          By {'userDetails?.full_name'}
+          By {user?.name}
         </p>
       </div>
       <div className="absolute bottom-[102px] right-6">

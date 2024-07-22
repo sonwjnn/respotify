@@ -12,7 +12,6 @@ import uniqid from 'uniqid'
 
 import { useAuthModal } from '@/store/modals/use-auth-modal'
 import { useUserModal } from '@/store/modals/use-user-modal'
-import { useLoadImage } from '@/hooks/use-load-image'
 // import { useUser } from '@/hooks/use-user'
 import { useUserStore } from '@/store/use-user-store'
 import { DeleteIcon, MusicNote } from '@/public/icons'
@@ -39,11 +38,6 @@ export const EditUserModal = () => {
   const user = useCurrentUser()
   const supabaseClient = useSupabaseClient()
 
-  const initImageUrl = useLoadImage(
-    'userDetails?.avatar_url' || '',
-    buckets.users
-  )
-
   const [file, setFile] = useState<string>('')
   const [bgColor, setBgColor] = useState<string>('')
   const [isRemove, setRemove] = useState<boolean>(false)
@@ -63,7 +57,7 @@ export const EditUserModal = () => {
   })
   useEffect(() => {
     if (userModal.isOpen) {
-      setFile(initImageUrl || '')
+      setFile(user?.image as string)
     } else {
       setRemove(false)
     }
@@ -75,19 +69,19 @@ export const EditUserModal = () => {
   //     full_name: "userDetails?.full_name" || '',
   //     user_img: null,
   //   })
-  //   if (initImageUrl) setFile(initImageUrl)
+  //   if (user?.image) setFile(user?.image)
   //   else setFile('')
   // }, [userDetails])
 
-  useEffect(() => {
-    // Update the default values when the playlist changes
-    reset({
-      full_name: 'userDetails?.full_name' || '',
-      user_img: null,
-    })
-    if (initImageUrl) setFile(initImageUrl)
-    else setFile('')
-  }, [])
+  // useEffect(() => {
+  //   // Update the default values when the playlist changes
+  //   reset({
+  //     full_name: 'userDetails?.full_name' || '',
+  //     user_img: null,
+  //   })
+  //   if (initImageUrl) setFile(initImageUrl)
+  //   else setFile('')
+  // }, [])
 
   useEffect(() => {
     if (dataColor) {
@@ -120,7 +114,7 @@ export const EditUserModal = () => {
       const imageFile = values.user_img?.[0]
 
       const isFormUnchanged =
-        values.full_name === 'userDetails?.full_name' && file === initImageUrl
+        values.full_name === user?.name && file === user?.image
 
       if (isFormUnchanged) {
         userModal.onClose()

@@ -7,13 +7,9 @@ import { FiEdit2 } from 'react-icons/fi'
 import { useAuthModal } from '@/store/modals/use-auth-modal'
 import { usePlaylistModal } from '@/store/modals/use-playlist-modal'
 import { useSubscribeModal } from '@/store/modals/use-subcribe-modal'
-import { useLoadImage } from '@/hooks/use-load-image'
 import { useMainLayout } from '@/store/use-main-layout'
 import { usePlaylist } from '@/store/use-playlist'
-// import { useUser } from '@/hooks/use-user'
-import { MusicNote } from '@/public/icons'
 import { cn } from '@/lib/utils'
-import { buckets } from '@/data/ui'
 import { getDurationSong } from '@/utils/duration-convertor'
 import { useCurrentUser } from '@/hooks/use-current-user'
 
@@ -26,8 +22,6 @@ export const PlaylistHeaderContent = () => {
   const uploadModal = usePlaylistModal()
 
   const subcribeModal = useSubscribeModal()
-
-  const imagePath = useLoadImage(data?.imagePath, buckets.playlist_images)
 
   const onClick = (): void => {
     if (user?.id !== data?.userId) return

@@ -8,7 +8,6 @@ import { twMerge } from 'tailwind-merge'
 
 import { useAuthModal } from '@/store/modals/use-auth-modal'
 import { useHeader } from '@/store/use-header'
-import { useLoadImage } from '@/hooks/use-load-image'
 import { useMainLayout } from '@/store/use-main-layout'
 import { useNavbar } from '@/store/use-navbar'
 import { useOnPlay } from '@/hooks/use-on-play'
@@ -78,10 +77,7 @@ export const Navbar = (props: NavbarProps) => {
   const [isPlaying, setPlaying] = useState(false)
   const [bgColorUser, setBgColorUser] = useState<string>('#171717')
 
-  const imageUrl = useLoadImage('', buckets.users)
-  // const imageUrl = useLoadImage(userDetails?.avatar_url || '', buckets.users)
-
-  const { data: dataColor } = usePalette(imageUrl as string, 10, 'hex', {
+  const { data: dataColor } = usePalette(user?.image as string, 10, 'hex', {
     crossOrigin: 'Anonymous',
     quality: 100,
   })
@@ -137,9 +133,7 @@ export const Navbar = (props: NavbarProps) => {
         }}
       ></div>
 
-      <div
-        className={` absolute inset-x-0 top-0 z-10 mb-4 flex  h-full w-full  items-center justify-between  px-6`}
-      >
+      <div className=" absolute inset-x-0 top-0 z-10 mb-4 flex  h-full w-full  items-center justify-between  px-6">
         <div className="hidden min-w-0 items-center gap-x-2  md:!flex ">
           <button
             className="items-center justify-center rounded-full  bg-[#171717] transition active:scale-95 disabled:cursor-not-allowed disabled:select-none dark:bg-black"
@@ -178,8 +172,7 @@ export const Navbar = (props: NavbarProps) => {
                 usernameVisible ? 'opacity-100' : 'opacity-0'
               }`}
             >
-              {/* {userDetails?.full_name} */}
-              {'userDetails?.full_name'}
+              {user?.name}
             </span>
           ) : null}
         </div>
@@ -193,7 +186,7 @@ export const Navbar = (props: NavbarProps) => {
                 <PremiumButton hasActiveSubscription={hasActiveSubscription} />
               )}
 
-              <UserButton url={imageUrl || ''} />
+              <UserButton />
             </div>
           ) : (
             <>

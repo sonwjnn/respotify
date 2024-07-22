@@ -5,12 +5,10 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 import { PlaylistCardList } from '@/app/user/[id]/playlists/_components/playlist-card-list'
-import { useLoadImage } from '@/hooks/use-load-image'
 import { useMainLayout } from '@/store/use-main-layout'
 // import { useUser } from '@/hooks/use-user'
 import { SingleMusicNote } from '@/public/icons'
 import { PlaylistType } from '@/types/types'
-import { buckets } from '@/data/ui'
 import { useCurrentUser } from '@/hooks/use-current-user'
 
 type UserContentProp = {
@@ -25,10 +23,7 @@ export const UserContent = ({ data, id }: UserContentProp) => {
   const [bgColorUser, setBgColorUser] = useState<string>('')
   const { quantityCol } = useMainLayout()
 
-  // const imageUrl = useLoadImage(userDetails?.avatar_url || '', buckets.users)
-  const imageUrl = useLoadImage('', buckets.users)
-
-  const { data: dataColor } = usePalette(imageUrl as string, 10, 'hex', {
+  const { data: dataColor } = usePalette(user?.image as string, 10, 'hex', {
     crossOrigin: 'Anonymous',
     quality: 100,
   })

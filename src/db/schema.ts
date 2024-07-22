@@ -15,7 +15,7 @@ export const users = pgTable('user', {
   name: text('name'),
   email: text('email').notNull(),
   emailVerified: timestamp('email_verified', { mode: 'date' }),
-  image: text('image'),
+  image: text('image').notNull().default('/images/robot.svg'),
   password: text('password'),
 })
 

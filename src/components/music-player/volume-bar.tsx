@@ -1,5 +1,3 @@
-'use client'
-
 import { usePathname, useRouter } from 'next/navigation'
 import { useCallback, useState } from 'react'
 

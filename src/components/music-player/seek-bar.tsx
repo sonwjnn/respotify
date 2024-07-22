@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { getDurationSong } from '@/utils/duration-convertor'
 
 import { Slider } from '@/components/ui/slider'

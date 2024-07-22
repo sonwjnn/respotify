@@ -44,7 +44,7 @@ export const UploadDropdown = () => {
     if (!user) {
       return authModal.onOpen()
     }
-    // if (!subscription?.active) {
+    // if (!subscription?.isActive) {
     //   return subcribeModal.onOpen()
     // }
 

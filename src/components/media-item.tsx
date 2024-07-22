@@ -4,7 +4,6 @@ import { format } from 'date-fns'
 import Image from 'next/image'
 import { useState } from 'react'
 
-import { useLoadImage } from '@/hooks/use-load-image'
 import { useMainLayout } from '@/store/use-main-layout'
 import { usePlayer } from '@/store/use-player'
 import { PlayIcon, SingleMusicNote } from '@/public/icons'
@@ -27,7 +26,6 @@ export const MediaItem = ({
   hasAddTrackBtn = false,
 }: MediaItemProps) => {
   const { width } = useMainLayout()
-  const imageUrl = useLoadImage(song.imagePath, buckets.images)
   const player = usePlayer()
 
   const [isHover, setHover] = useState<boolean>(false)
@@ -89,10 +87,10 @@ export const MediaItem = ({
           <div
             className={`relative aspect-square h-10 w-10 shrink-0 overflow-hidden`}
           >
-            {imageUrl ? (
+            {song.imagePath ? (
               <Image
                 fill
-                src={imageUrl}
+                src={song.imagePath}
                 sizes="100%"
                 alt="Media-Item"
                 className="object-cover"

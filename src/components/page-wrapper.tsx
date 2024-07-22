@@ -33,11 +33,15 @@ export const PageWrapper = ({ children }: PageWrapperProps) => {
 
     if (yAxis > height + 14) {
       setPlayBtnVisible(true)
-    } else setPlayBtnVisible(false)
+    } else {
+      setPlayBtnVisible(false)
+    }
 
     if (yAxis > height) {
       setUsernameVisible(true)
-    } else setUsernameVisible(false)
+    } else {
+      setUsernameVisible(false)
+    }
   }
 
   return (

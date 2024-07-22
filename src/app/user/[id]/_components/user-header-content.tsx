@@ -6,13 +6,10 @@ import { FiEdit2 } from 'react-icons/fi'
 import { useAuthModal } from '@/store/modals/use-auth-modal'
 import { useSubscribeModal } from '@/store/modals/use-subcribe-modal'
 import { useUserModal } from '@/store/modals/use-user-modal'
-import { useLoadImage } from '@/hooks/use-load-image'
 import { useMainLayout } from '@/store/use-main-layout'
 // import { useUser } from '@/hooks/use-user'
-import { MusicNote } from '@/public/icons'
 import { PlaylistType } from '@/types/types'
 import { cn } from '@/lib/utils'
-import { buckets } from '@/data/ui'
 import { useCurrentUser } from '@/hooks/use-current-user'
 
 type UserHeaderContentProps = {
@@ -24,13 +21,8 @@ export const UserHeaderContent = ({ data }: UserHeaderContentProps) => {
   const user = useCurrentUser()
   const authModal = useAuthModal()
   const userModal = useUserModal()
-  // const imageUrl = useLoadImage(userDetails?.avatar_url || '', buckets.users)
-  const imageUrl = useLoadImage('', buckets.users)
 
   const subcribeModal = useSubscribeModal()
-
-  // const fullName = userDetails?.full_name || 'User Name'
-  const fullName = 'User Name'
 
   const onClick = (): void => {
     if (!user) {
@@ -80,7 +72,7 @@ export const UserHeaderContent = ({ data }: UserHeaderContentProps) => {
             width <= 901 && '!text-3xl'
           )}
         >
-          {fullName}
+          {user?.name}
         </h1>
         <div className="flex flex-col items-center gap-y-2 md:items-start ">
           <p className="hidden text-sm text-desc md:block">

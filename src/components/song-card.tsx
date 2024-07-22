@@ -2,9 +2,7 @@
 
 import Image from 'next/image'
 
-import { useLoadImage } from '@/hooks/use-load-image'
 import { usePlayer } from '@/store/use-player'
-import { MusicNote } from '@/public/icons'
 import { SongType } from '@/types/types'
 
 import { PlayButton } from '@/components/play-button'

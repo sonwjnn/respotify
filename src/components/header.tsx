@@ -5,13 +5,13 @@ import { memo, useEffect, useRef, useState } from 'react'
 
 import { useComponentSize } from '@/store/use-component-size'
 import { useHeader } from '@/store/use-header'
-import { useLoadImage } from '@/hooks/use-load-image'
 import { useMainLayout } from '@/store/use-main-layout'
 // import { useUser } from '@/hooks/use-user'
 import { PlaylistType } from '@/types/types'
 import { cn } from '@/lib/utils'
 import { buckets } from '@/data/ui'
 import { useTheme } from 'next-themes'
+import { useCurrentUser } from '@/hooks/use-current-user'
 
 type HeaderProps = {
   children: React.ReactNode
@@ -24,6 +24,8 @@ type HeaderProps = {
 // eslint-disable-next-line react/display-name
 export const Header = memo(
   ({ children, className, data, bgColor, type }: HeaderProps) => {
+    const user = useCurrentUser()
+
     const { theme } = useTheme()
     const { bgColor: bgColorHeader } = useHeader()
     const { setHeight } = useHeader()
@@ -35,10 +37,7 @@ export const Header = memo(
 
     const [bgColorUser, setBgColorUser] = useState<string>('')
 
-    const imageUrl = useLoadImage('', buckets.users)
-    // const imageUrl = useLoadImage(userDetails?.avatar_url || '', buckets.users)
-
-    const { data: dataColor } = usePalette(imageUrl as string, 10, 'hex', {
+    const { data: dataColor } = usePalette(user?.image as string, 10, 'hex', {
       crossOrigin: 'Anonymous',
       quality: 100,
     })

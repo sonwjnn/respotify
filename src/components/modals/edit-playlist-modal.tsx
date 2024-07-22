@@ -12,7 +12,6 @@ import uniqid from 'uniqid'
 
 import { useAuthModal } from '@/store/modals/use-auth-modal'
 import { usePlaylistModal } from '@/store/modals/use-playlist-modal'
-import { useLoadImage } from '@/hooks/use-load-image'
 import { usePlaylist } from '@/store/use-playlist'
 // import { useUser } from '@/hooks/use-user'
 import { useUserStore } from '@/store/use-user-store'
@@ -39,16 +38,12 @@ export const EditPlaylistModal = () => {
   const uploadModal = usePlaylistModal()
   const authModal = useAuthModal()
 
-  const initImageUrl = useLoadImage(
-    playlist?.imagePath,
-    buckets.playlist_images
-  )
   // const { user } = useUser()
   const user = useCurrentUser()
   const { updatePlaylist } = useUserStore()
   const supabaseClient = useSupabaseClient()
 
-  const [file, setFile] = useState<string>(initImageUrl || '')
+  const [file, setFile] = useState<string>(playlist?.imagePath || '')
   const [bgColor, setBgColor] = useState<string>('')
   const [isRemove, setRemove] = useState<boolean>(false)
 
@@ -74,7 +69,7 @@ export const EditPlaylistModal = () => {
       title: playlist?.title || '',
       playlist_img: null,
     })
-    if (initImageUrl) setFile(initImageUrl)
+    if (playlist?.imagePath) setFile(playlist?.imagePath)
     else setFile('')
   }, [playlist])
 
@@ -111,7 +106,7 @@ export const EditPlaylistModal = () => {
       const isFormUnchanged =
         values.title === playlist?.title &&
         values.description === playlist?.description &&
-        file === initImageUrl
+        file === playlist?.imagePath
 
       if (isFormUnchanged) {
         uploadModal.onClose()

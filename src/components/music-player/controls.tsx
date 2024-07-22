@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { usePlayer } from '@/store/use-player'
 import {
   RepeatIcon,
