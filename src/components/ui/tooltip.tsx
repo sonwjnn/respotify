@@ -27,17 +27,18 @@ const TooltipContent = React.forwardRef<
 ))
 TooltipContent.displayName = TooltipPrimitive.Content.displayName
 
-interface TooltipProps {
+type TooltipProps = {
   children: React.ReactNode
   text: string
   side?: 'top' | 'right' | 'bottom' | 'left'
+  asChild?: boolean
 }
 
-const Tooltip: React.FC<TooltipProps> = ({ text, children, side }) => {
+const Tooltip = ({ text, children, side }: TooltipProps) => {
   return (
     <TooltipProvider delayDuration={300}>
       <TooltipRoot>
-        <TooltipTrigger>{children}</TooltipTrigger>
+        <TooltipTrigger asChild>{children}</TooltipTrigger>
         <TooltipContent side={side}>
           <p>{text}</p>
         </TooltipContent>

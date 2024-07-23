@@ -43,6 +43,7 @@ export const PremiumButton = ({
           ? 'You are current premium'
           : 'Subcribe premium for better'
       }
+      asChild
     >
       {hasActiveSubscription ? (
         <Button

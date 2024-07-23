@@ -27,7 +27,9 @@ export const HeaderContent = () => {
         </div>
       </div>
       <div className="mt-4 flex flex-col gap-y-2 md:mt-0">
-        <p className="hidden text-base text-white  md:block">Playlist</p>
+        <p className="hidden text-base text-white  md:visible md:block">
+          Playlist
+        </p>
         <h1
           className={`${
             width <= 1012 && '!text-5xl'
@@ -35,7 +37,7 @@ export const HeaderContent = () => {
         >
           Liked Songs
         </h1>
-        <p className="hidden text-sm text-white md:block">
+        <p className="hidden text-sm text-white md:visible md:block">
           Your favorite songs
         </p>
       </div>

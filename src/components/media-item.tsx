@@ -137,7 +137,7 @@ export const MediaItem = ({
                 'select-none text-sm text-zinc-500 dark:text-neutral-400'
               }
             >
-              {format(song.createdAt, 'DD-MM-YYYY')}
+              {format(song.createdAt, 'dd-MM-yyyy')}
             </div>
           )}
         </>

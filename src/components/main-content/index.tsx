@@ -29,7 +29,6 @@ export const MainContent = ({
   likedPlaylists,
 }: MainContentProps) => {
   const player = usePlayer()
-  // const { user } = useUser()
   const user = useCurrentUser()
   const { setPlaylists, setLikedSongs, setLikedPlaylists } = useUserStore()
 

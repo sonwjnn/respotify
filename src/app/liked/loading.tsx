@@ -27,7 +27,7 @@ const Loading = () => {
             <Skeleton height={'100%'} />
           </div>
           <div className="mt-4 flex grow flex-col  gap-y-2 self-end md:mt-0">
-            <p className="hidden w-[100px]  text-base md:block">
+            <p className="hidden w-[100px]  text-base md:visible md:block">
               <Skeleton height={'20px'} borderRadius={50} />
             </p>
             <h1
@@ -36,10 +36,10 @@ const Loading = () => {
               <Skeleton height={'48px'} borderRadius={50} />
             </h1>
 
-            <p className="hidden w-[100px] text-sm md:block">
+            <p className="hidden w-[100px] text-sm md:visible md:block">
               <Skeleton height={'20px'} borderRadius={50} />
             </p>
-            <p className="hidden w-[200px] text-sm md:block">
+            <p className="hidden w-[200px] text-sm md:visible md:block">
               <Skeleton height={'20px'} borderRadius={50} />
             </p>
           </div>

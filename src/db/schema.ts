@@ -114,7 +114,6 @@ export const playlists = pgTable('playlists', {
     .references(() => users.id),
   imagePath: text('image_path'),
   description: text('description'),
-  duration: integer('duration'),
   bgColor: text('bg_color').notNull().default('#171717'),
   createdAt: timestamp('created_at', { mode: 'date' }).notNull(),
 })

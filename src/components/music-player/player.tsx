@@ -194,7 +194,7 @@ export const Player = ({ song, songUrl }: PlayerProps) => {
       {/* Left */}
 
       {/* Center */}
-      <div className="hidden h-full w-[40%] max-w-[722px]   gap-y-1  md:flex md:flex-col">
+      <div className="hidden h-full w-[40%] max-w-[722px]   gap-y-1  md:visible md:flex md:flex-col">
         <Controls onPlayNext={onPlayNext} onPlayPrevious={onPlayPrevious} />
 
         <SeekBar
@@ -218,7 +218,7 @@ export const Player = ({ song, songUrl }: PlayerProps) => {
         />
       </div>
 
-      <div className="hidden w-[30%] justify-end pr-2  md:flex ">
+      <div className="hidden w-[30%] justify-end pr-2  md:visible md:flex">
         <VolumeBar />
       </div>
       {/* Right */}

@@ -155,6 +155,13 @@
       "when": 1721659358216,
       "tag": "0021_secret_nightmare",
       "breakpoints": true
+    },
+    {
+      "idx": 22,
+      "version": "7",
+      "when": 1721754774087,
+      "tag": "0022_absurd_silhouette",
+      "breakpoints": true
     }
   ]
 }
