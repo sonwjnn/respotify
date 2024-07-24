@@ -24,15 +24,12 @@ import { useCurrentUser } from '@/hooks/use-current-user'
 import { cn } from '@/lib/utils'
 import { deleteLikedPlaylist, deletePlaylist } from '@/actions/playlist'
 
-type PlaylistDropdownProps = {
+type DotsProps = {
   data: PlaylistType
   className?: string
 }
 
-export const PlaylistDropdown = ({
-  data,
-  className,
-}: PlaylistDropdownProps) => {
+export const Dots = ({ data, className }: DotsProps) => {
   const [ConfirmDialog, confirm] = useConfirm(
     'Are you sure?',
     'You are about to delete this playlist'

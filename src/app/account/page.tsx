@@ -5,7 +5,7 @@ import { Header } from '@/components/header'
 import { Navbar } from '@/components/navbar'
 import { PageWrapper } from '@/components/page-wrapper'
 
-import { AccountContent } from './_components/account-content'
+import { AccountContent } from './account-content'
 import { getSubscription } from '@/db/queries'
 
 const AccountPage = async () => {

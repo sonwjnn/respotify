@@ -70,7 +70,7 @@ export const List = () => {
             <LikeButton size={36} />
           </div>
         ) : null}
-        <Dots data={playlist} />
+        <Dots data={playlist as PlaylistType} />
       </div>
 
       <MediaList songs={songs} type="playlist" />

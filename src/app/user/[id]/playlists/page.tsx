@@ -6,8 +6,8 @@ import { Header } from '@/components/header'
 import { Navbar } from '@/components/navbar'
 import { PageWrapper } from '@/components/page-wrapper'
 
-import { UserPlaylistContent } from './user-playlist-content'
 import { PlaylistType } from '@/types/types'
+import { List } from './list'
 
 type UserPlaylistPageProps = {
   params: {
@@ -22,7 +22,7 @@ const UserPlaylistPage: NextPage<UserPlaylistPageProps> = async ({
 }: UserPlaylistPageProps) => {
   // const playlists = await getOtherUserPlaylists(params.id)
   const playlists = [] as PlaylistType[]
-  if (!playlists) {
+  if (!playlists.length) {
     return <Alert type="notfound" />
   }
   return (
@@ -35,7 +35,9 @@ const UserPlaylistPage: NextPage<UserPlaylistPageProps> = async ({
           </h1>
         </div>
       </Header>
-      <UserPlaylistContent data={playlists} />
+      <div className="w-full px-6">
+        <List data={playlists} />
+      </div>
       <Footer />
     </PageWrapper>
   )

@@ -11,17 +11,13 @@ import { PlaylistType } from '@/types/types'
 import { PlayButton } from '@/components/play-button'
 import { useCurrentUser } from '@/hooks/use-current-user'
 
-type RecommendPlaylistProps = {
+type RecommendProps = {
   data: PlaylistType
   index: number
   isHover: boolean
   setHover: React.Dispatch<React.SetStateAction<boolean>>
 }
-export const RecommendPlaylist = ({
-  data,
-  isHover,
-  setHover,
-}: RecommendPlaylistProps) => {
+export const Recommend = ({ data, isHover, setHover }: RecommendProps) => {
   const router = useRouter()
   const authModal = useAuthModal()
   const subscribeModal = useSubscribeModal()

@@ -7,7 +7,7 @@ import { useMainLayout } from '@/store/use-main-layout'
 import { PlaylistType } from '@/types/types'
 import { cn } from '@/lib/utils'
 
-import { RecommendPlaylist } from './recommend-playlist'
+import { Recommend } from './recommend'
 
 type GreetingProps = {
   playlists: PlaylistType[]
@@ -58,7 +58,7 @@ export const Greeting = memo(({ playlists }: GreetingProps) => {
         {playlists
           ?.slice(0, 6)
           .map((item, index) => (
-            <RecommendPlaylist
+            <Recommend
               key={index}
               data={item}
               index={index}

@@ -3,7 +3,7 @@ import { Header } from '@/components/header'
 import { Navbar } from '@/components/navbar'
 import { PageWrapper } from '@/components/page-wrapper'
 
-import { QueueContent } from './_components/queue-content'
+import { QueueContent } from './queue-content'
 import { getSubscription } from '@/db/queries'
 
 export const revalidate = 0
