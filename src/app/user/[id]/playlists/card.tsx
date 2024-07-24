@@ -10,17 +10,17 @@ import { PlaylistType } from '@/types/types'
 import { PlayButton } from '@/components/play-button'
 import { useCurrentUser } from '@/hooks/use-current-user'
 
-type PlaylistCardProps = {
+type CardProps = {
   data: PlaylistType
   onClick?: (id: string) => void
   type: 'track' | 'playlist'
 }
 
-export const PlaylistCard = ({
+export const Card = ({
   data,
   // onClick,
   type = 'track',
-}: PlaylistCardProps) => {
+}: CardProps) => {
   const { currentTrack, isPlaying, handlePlay } = usePlayer()
   const user = useCurrentUser()
   const router = useRouter()

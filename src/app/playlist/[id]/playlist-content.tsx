@@ -6,8 +6,8 @@ import { usePlaylist } from '@/store/use-playlist'
 // import { useUser } from '@/hooks/use-user'
 import type { PlaylistType, PlaylistWithUser, SongType } from '@/types/types'
 
-import { SearchPlaylist } from './search-playlist'
-import { SongPlaylist } from './song-playlist'
+import { SearchPlaylist } from './search'
+import { List } from './list'
 import { useCurrentUser } from '@/hooks/use-current-user'
 
 type PlaylistContentProps = {
@@ -34,7 +34,7 @@ export const PlaylistContent = ({
 
   return (
     <>
-      <SongPlaylist />
+      <List />
       {user?.id === playlist.userId ? <SearchPlaylist /> : null}
     </>
   )

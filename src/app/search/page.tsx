@@ -4,8 +4,9 @@ import { Navbar } from '@/components/navbar'
 import { PageWrapper } from '@/components/page-wrapper'
 import { SearchInput } from '@/components/search-input'
 
-import { SearchContent } from './_components/search-content'
 import { getSongsByTitle, getSubscription } from '@/db/queries'
+import { MediaList } from '@/components/media-list'
+import { Alert } from '@/components/alert'
 
 type SearchPageProps = {
   searchParams: {
@@ -22,6 +23,11 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
   const [songs, subscription] = await Promise.all([songsData, subscriptionData])
 
   const isPro = !!subscription?.isActive
+
+  if (!songs?.length) {
+    return <Alert type="noData" text="No songs found" />
+  }
+
   return (
     <PageWrapper>
       <Navbar
@@ -37,7 +43,7 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
           <SearchInput url="/search" />
         </div>
       </Header>
-      <SearchContent songs={songs} />
+      <MediaList type="search" songs={songs} />
       <Footer />
     </PageWrapper>
   )

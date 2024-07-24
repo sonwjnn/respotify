@@ -4,8 +4,8 @@ import { Header } from '@/components/header'
 import { Navbar } from '@/components/navbar'
 import { PageWrapper } from '@/components/page-wrapper'
 
-import { UserContent } from './_components/user-content'
-import { UserHeaderContent } from './_components/user-header-content'
+import { UserContent } from './user-content'
+import { HeaderContent } from './header-content'
 import { PlaylistType } from '@/types/types'
 import { getSubscription } from '@/db/queries'
 
@@ -31,7 +31,7 @@ const UserPage = async ({ params }: UserPageProps) => {
     <PageWrapper>
       <Navbar type="user" hasUsername hasActiveSubscription={isPro} />
       <Header type="user">
-        <UserHeaderContent data={playlists} />
+        <HeaderContent data={playlists} />
       </Header>
       <UserContent data={playlists} id={params.id} />
       <Footer />

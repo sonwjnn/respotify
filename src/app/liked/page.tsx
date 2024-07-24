@@ -3,8 +3,8 @@ import { Header } from '@/components/header'
 import { Navbar } from '@/components/navbar'
 import { PageWrapper } from '@/components/page-wrapper'
 
-import { HeaderContent } from './_components/header-content'
-import { LikedContent } from './_components/liked-content'
+import { HeaderContent } from './header-content'
+import { LikedContent } from './liked-content'
 import { getSubscription } from '@/db/queries'
 
 const LikedPage = async () => {

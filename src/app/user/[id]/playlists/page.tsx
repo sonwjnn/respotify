@@ -6,7 +6,7 @@ import { Header } from '@/components/header'
 import { Navbar } from '@/components/navbar'
 import { PageWrapper } from '@/components/page-wrapper'
 
-import { UserPlaylistContent } from './_components/user-playlist-content'
+import { UserPlaylistContent } from './user-playlist-content'
 import { PlaylistType } from '@/types/types'
 
 type UserPlaylistPageProps = {

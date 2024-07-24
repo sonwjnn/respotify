@@ -1,4 +1,4 @@
-import { PlaylistCard } from './playlist-card'
+import { Card } from './card'
 import { useMainLayout } from '@/store/use-main-layout'
 import { PlaylistType } from '@/types/types'
 
@@ -6,7 +6,7 @@ type CartListProps = {
   data: PlaylistType[]
 }
 
-export const PlaylistCardList = ({ data }: CartListProps): JSX.Element => {
+export const List = ({ data }: CartListProps): JSX.Element => {
   const { width, quantityCol } = useMainLayout()
 
   const columnWidth = (width - 2 * 24 - (quantityCol - 1) * 24) / quantityCol
@@ -19,7 +19,7 @@ export const PlaylistCardList = ({ data }: CartListProps): JSX.Element => {
       }}
     >
       {data.map(item => (
-        <PlaylistCard key={item.id} data={item} type="playlist" />
+        <Card key={item.id} data={item} type="playlist" />
       ))}
     </div>
   )

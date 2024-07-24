@@ -1,30 +1,27 @@
 'use client'
 
-import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import { usePalette } from 'color-thief-react'
 import Image from 'next/image'
-import { useEffect, useRef, useState } from 'react'
-import type { FieldValues, SubmitHandler } from 'react-hook-form'
+import { useEffect, useRef, useState, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 import { LuImage } from 'react-icons/lu'
-import uniqid from 'uniqid'
 
-import { useAuthModal } from '@/store/modals/use-auth-modal'
 import { usePlaylistModal } from '@/store/modals/use-playlist-modal'
 import { usePlaylist } from '@/store/use-playlist'
-// import { useUser } from '@/hooks/use-user'
 import { useUserStore } from '@/store/use-user-store'
 import { DeleteIcon, MusicNote } from '@/public/icons'
-import { PlaylistWithUser } from '@/types/types'
 import { cn } from '@/lib/utils'
-import { buckets } from '@/data/ui'
 
 import { Spinner } from '@/components/spinner'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Modal } from '@/components/ui/modal'
-import { useCurrentUser } from '@/hooks/use-current-user'
+import { updatePlaylist as updatePlaylistAction } from '@/actions/playlist'
+import { PlaylistSchema } from '@/schemas'
+import { z } from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Form, FormControl, FormField, FormItem, FormMessage } from '../ui/form'
 
 export const EditPlaylistModal = () => {
   const {
@@ -34,18 +31,13 @@ export const EditPlaylistModal = () => {
     setTitle,
     setBgColor: setBgColorStore,
   } = usePlaylist()
-  const [isLoading, setIsLoading] = useState(false)
   const uploadModal = usePlaylistModal()
-  const authModal = useAuthModal()
-
-  // const { user } = useUser()
-  const user = useCurrentUser()
   const { updatePlaylist } = useUserStore()
-  const supabaseClient = useSupabaseClient()
 
   const [file, setFile] = useState<string>(playlist?.imagePath || '')
   const [bgColor, setBgColor] = useState<string>('')
   const [isRemove, setRemove] = useState<boolean>(false)
+  const [isPending, startTransition] = useTransition()
 
   const labelRef = useRef<HTMLLabelElement>(null)
 
@@ -54,20 +46,21 @@ export const EditPlaylistModal = () => {
     quality: 100,
   })
 
-  const { reset, handleSubmit, register, setValue } = useForm<FieldValues>({
+  const form = useForm<z.infer<typeof PlaylistSchema>>({
+    resolver: zodResolver(PlaylistSchema),
     defaultValues: {
-      description: playlist?.description,
       title: playlist?.title,
-      playlist_img: null,
+      description: playlist?.description || '',
+      image: '',
     },
   })
 
   useEffect(() => {
     // Update the default values when the playlist changes
-    reset({
-      description: playlist?.description || '',
+    form.reset({
       title: playlist?.title || '',
-      playlist_img: null,
+      description: playlist?.description || '',
+      image: '',
     })
     if (playlist?.imagePath) setFile(playlist?.imagePath)
     else setFile('')
@@ -81,7 +74,7 @@ export const EditPlaylistModal = () => {
 
   const onChange = (open: boolean): void => {
     if (!open) {
-      reset()
+      form.reset()
       uploadModal.onClose()
     }
   }
@@ -93,147 +86,35 @@ export const EditPlaylistModal = () => {
     }
   }
 
-  const onSubmit: SubmitHandler<FieldValues> = async values => {
-    try {
-      if (!user) {
-        authModal.onOpen()
-        return
-      }
-      setIsLoading(true)
-
-      const imageFile = values.playlist_img?.[0]
-
-      const isFormUnchanged =
-        values.title === playlist?.title &&
-        values.description === playlist?.description &&
-        file === playlist?.imagePath
-
-      if (isFormUnchanged) {
-        uploadModal.onClose()
-        return
-      }
-
-      if (imageFile) {
-        const uniqID = uniqid()
-
-        // Upload images
-        const { data: imageData, error: imageError } =
-          await supabaseClient.storage
-            .from(buckets.playlist_images)
-            .upload(`playlist-image-${uniqID}`, imageFile, {
-              cacheControl: '3600',
-              upsert: false,
-            })
-        if (imageError) {
-          setIsLoading(false)
-          toast.error(imageError.message)
-          return
-        }
-
-        // Remove old images
-        if (playlist?.imagePath) {
-          const { error: oldImageError } = await supabaseClient.storage
-            .from(buckets.playlist_images)
-            .remove([playlist?.imagePath])
-
-          if (oldImageError) {
-            setIsLoading(false)
-            toast.error(oldImageError.message)
-            return
+  const onSubmit = (values: z.infer<typeof PlaylistSchema>) => {
+    if (!playlist || !playlist.id) return
+    // const imageFile = values.playlist_img?.[0]
+    startTransition(() => {
+      updatePlaylistAction(values, playlist.id)
+        .then(data => {
+          if (data) {
+            setTitle(data.title)
+            setDescription(data.description || '')
+            setImagePath(data.imagePath || '/images/note.svg')
+            setBgColorStore(bgColor)
+            toast.success('Playlist edited!')
+            form.reset()
+            uploadModal.onClose()
           }
-        }
-
-        const { error: supabaseError } = await supabaseClient
-          .from('playlists')
-          .update({
-            title: values.title,
-            description: values.description,
-            image_path: imageData.path,
-            bg_color: bgColor,
-          })
-          .eq('id', playlist?.id)
-
-        if (supabaseError) {
-          setIsLoading(false)
-          toast.error(supabaseError.message)
-          return
-        }
-
-        setTitle(values.title)
-        setDescription(values.description)
-        setImagePath(imageData.path)
-        setBgColorStore(bgColor)
-        // router.refresh()
-      } else if (isRemove) {
-        if (playlist?.imagePath) {
-          const { error: oldImageError } = await supabaseClient.storage
-            .from(buckets.playlist_images)
-            .remove([playlist?.imagePath])
-
-          if (oldImageError) {
-            setIsLoading(false)
-            toast.error(oldImageError.message)
-            return
-          }
-        }
-
-        const { error: supabaseError } = await supabaseClient
-          .from('playlists')
-          .update({
-            title: values.title,
-            description: values.description,
-            image_path: null,
-          })
-          .eq('id', playlist?.id)
-
-        if (supabaseError) {
-          setIsLoading(false)
-          toast.error(supabaseError.message)
-          return
-        }
-
-        setTitle(values.title)
-        setDescription(values.description)
-        setImagePath('')
-      } else {
-        const { error: supabaseError } = await supabaseClient
-          .from('playlists')
-          .update({
-            title: values.title,
-            description: values.description,
-          })
-          .eq('id', playlist?.id)
-
-        if (supabaseError) {
-          setIsLoading(false)
-          toast.error(supabaseError.message)
-          return
-        }
-
-        setTitle(values.title)
-        setDescription(values.description)
-      }
-
-      setIsLoading(false)
-      toast.success('Playlist edited!')
-      reset()
-      uploadModal.onClose()
-    } catch (error) {
-      toast.error('Something went wrong')
-    } finally {
-      setIsLoading(false)
-    }
+        })
+        .catch(() => toast.error('Something went wrong!'))
+    })
   }
   useEffect(() => {
     if (playlist) {
-      updatePlaylist(playlist as PlaylistWithUser)
+      updatePlaylist(playlist)
     }
   }, [playlist])
 
   const onRemove = (e: any): void => {
     e.preventDefault()
     setRemove(true)
-    setValue('playlist_img', null)
+    form.setValue('image', '')
     setFile('')
   }
 
@@ -245,91 +126,119 @@ export const EditPlaylistModal = () => {
       isOpen={uploadModal.isOpen}
       onChange={onChange}
     >
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-y-4">
-        <div className="flex flex-col items-center gap-4 md:flex-row md:items-start ">
-          <div className="group  h-[180px] w-[180px] rounded-sm  shadow-xl">
-            <label
-              htmlFor="playlist_img"
-              className="relative flex  h-full w-full cursor-pointer items-center justify-center  text-white"
-            >
-              <div
-                className={cn(
-                  `absolute inset-0 z-10 flex flex-col items-center justify-center gap-y-2 rounded-sm bg-[rgba(0,0,0,.7)] opacity-0 transition group-hover:opacity-100`,
-                  isLoading && 'cursor-not-allowed opacity-100'
-                )}
-              >
-                {isLoading ? (
-                  <Spinner size="lg" />
-                ) : (
-                  <>
-                    {file && (
-                      <div className="absolute bottom-5 right-5 flex flex-col items-center justify-center gap-x-2 opacity-0 group-hover:opacity-100">
-                        <Button
-                          onClick={() => labelRef?.current?.click()}
-                          className="flex gap-x-2 bg-transparent text-sm text-white"
-                        >
-                          <LuImage />
-                          Change cover
-                        </Button>
-                        <Button
-                          onClick={onRemove}
-                          className="flex gap-x-2 bg-transparent text-sm text-white"
-                        >
-                          <DeleteIcon color="#991b1b" />
-                          Remove
-                        </Button>
-                      </div>
-                    )}
-                  </>
-                )}
-              </div>
-              {file !== '' && (
-                <div className="relative aspect-square h-full w-full overflow-hidden rounded-sm">
-                  <Image
-                    className="object-cover"
-                    src={file || '/images/note.svg'}
-                    fill
-                    alt="playlist img"
-                    sizes="100%"
-                  />
-                </div>
-              )}
-            </label>
-            <Input
-              className="h-0 bg-neutral-800 p-0 opacity-0"
-              id="playlist_img"
-              disabled={isLoading}
-              type="file"
-              accept="image/*"
-              {...register('playlist_img', { required: false })}
-              onChange={handleChange}
-            />
-          </div>
-
-          <div className="flex h-[180px] w-full flex-col gap-y-4 text-white ">
-            <Input
-              className="bg-neutral-800"
-              id="title"
-              disabled={isLoading}
-              {...register('title', { required: false })}
-              placeholder="Playlist title"
-            />
-            <textarea
-              id="description"
-              className="h-full w-full resize-none rounded-md border  border-transparent bg-neutral-800 p-3 text-sm text-white outline-none placeholder:text-neutral-400 focus:outline-none disabled:cursor-not-allowed"
-              {...register('description', { required: false })}
-              placeholder="Write your description"
-            />
-          </div>
-        </div>
-        <Button
-          type="submit"
-          className="ml-auto  mt-2 w-full md:w-[30%]"
-          disabled={isLoading}
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="flex flex-col gap-y-4"
         >
-          Save
-        </Button>
-      </form>
+          <div className="flex flex-col items-center gap-4 md:flex-row md:items-start ">
+            <div className="group  h-[180px] w-[180px] rounded-sm  shadow-xl">
+              <label
+                htmlFor="playlist_img"
+                className="relative flex  h-full w-full cursor-pointer items-center justify-center  text-white"
+              >
+                <div
+                  className={cn(
+                    'absolute inset-0 z-10 flex flex-col items-center justify-center gap-y-2 rounded-sm bg-[rgba(0,0,0,.7)] opacity-0 transition group-hover:opacity-100',
+                    isPending && 'cursor-not-allowed opacity-100'
+                  )}
+                >
+                  {isPending ? (
+                    <Spinner size="lg" />
+                  ) : (
+                    <>
+                      {file && (
+                        <div className="absolute bottom-5 right-5 flex flex-col items-center justify-center gap-x-2 opacity-0 group-hover:opacity-100">
+                          <Button
+                            onClick={() => labelRef?.current?.click()}
+                            className="flex gap-x-2 bg-transparent text-sm text-white"
+                          >
+                            <LuImage />
+                            Change cover
+                          </Button>
+                          <Button
+                            onClick={onRemove}
+                            className="flex gap-x-2 bg-transparent text-sm text-white"
+                          >
+                            <DeleteIcon color="#991b1b" />
+                            Remove
+                          </Button>
+                        </div>
+                      )}
+                    </>
+                  )}
+                </div>
+                {file !== '' && (
+                  <div className="relative aspect-square h-full w-full overflow-hidden rounded-sm">
+                    <Image
+                      className="object-cover"
+                      src={file || '/images/note.svg'}
+                      fill
+                      alt="playlist img"
+                      sizes="100%"
+                    />
+                  </div>
+                )}
+              </label>
+              <Input
+                className="h-0 bg-neutral-800 p-0 opacity-0"
+                id="image"
+                disabled={isPending}
+                type="file"
+                accept="image/*"
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="flex h-[180px] w-full flex-col gap-y-4 text-white ">
+              <FormField
+                control={form.control}
+                name="title"
+                render={({ field }) => (
+                  <FormItem>
+                    {/* <FormLabel>Title</FormLabel> */}
+                    <FormControl>
+                      <Input
+                        className="bg-neutral-800"
+                        disabled={isPending}
+                        placeholder="Playlist title"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="description"
+                render={({ field }) => (
+                  <FormItem>
+                    {/* <FormLabel>Title</FormLabel> */}
+                    <FormControl>
+                      <textarea
+                        className="h-full w-full resize-none rounded-md border  border-transparent bg-neutral-800 p-3 text-sm text-white outline-none placeholder:text-neutral-400 focus:outline-none disabled:cursor-not-allowed"
+                        placeholder="Write your description"
+                        disabled={isPending}
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+          </div>
+          <Button
+            type="submit"
+            className="ml-auto  mt-2 w-full md:w-[30%]"
+            disabled={isPending}
+          >
+            Save
+          </Button>
+        </form>
+      </Form>
     </Modal>
   )
 }

@@ -11,15 +11,12 @@ import { Tooltip } from '@/components/ui/tooltip'
 import { createLikedPlaylist, deleteLikedPlaylist } from '@/actions/playlist'
 import { cn } from '@/lib/utils'
 
-type LikePlaylistButtonProps = {
+type LikeButtonProps = {
   size?: number
   className?: string
 }
 
-export const LikePlaylistButton = ({
-  size = 25,
-  className,
-}: LikePlaylistButtonProps) => {
+export const LikeButton = ({ size = 25, className }: LikeButtonProps) => {
   const { likedPlaylists, removeLikedPlaylist, addLikedPlaylist } =
     useUserStore()
 

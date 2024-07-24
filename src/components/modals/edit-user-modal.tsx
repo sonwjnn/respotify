@@ -1,6 +1,5 @@
 'use client'
 
-import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import { usePalette } from 'color-thief-react'
 import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
@@ -36,7 +35,6 @@ export const EditUserModal = () => {
 
   // const { user, userDetails } = useUser()
   const user = useCurrentUser()
-  const supabaseClient = useSupabaseClient()
 
   const [file, setFile] = useState<string>('')
   const [bgColor, setBgColor] = useState<string>('')
@@ -125,18 +123,18 @@ export const EditUserModal = () => {
         const uniqID = uniqid()
 
         // Upload images
-        const { data: imageData, error: imageError } =
-          await supabaseClient.storage
-            .from(buckets.users)
-            .upload(`user-image-${uniqID}`, imageFile, {
-              cacheControl: '3600',
-              upsert: false,
-            })
-        if (imageError) {
-          setIsLoading(false)
-          toast.error(imageError.message)
-          return
-        }
+        // const { data: imageData, error: imageError } =
+        //   await supabaseClient.storage
+        //     .from(buckets.users)
+        //     .upload(`user-image-${uniqID}`, imageFile, {
+        //       cacheControl: '3600',
+        //       upsert: false,
+        //     })
+        // if (imageError) {
+        //   setIsLoading(false)
+        //   toast.error(imageError.message)
+        //   return
+        // }
 
         // Remove old images
         // if (userDetails?.avatar_url) {
@@ -167,7 +165,7 @@ export const EditUserModal = () => {
         // }
 
         setFullName(values.full_name)
-        setAvatarUrl(imageData.path)
+        // setAvatarUrl(imageData.path)
         setBgColorStore(bgColor)
         // router.refresh()
       } else if (isRemove) {

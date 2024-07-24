@@ -3,7 +3,7 @@
 import { useParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
-import { LikePlaylistButton } from './like-playlist-button'
+import { LikeButton } from './like-button'
 import { MediaList } from '@/components/media-list'
 import { PlayButton } from '@/components/play-button'
 import { useOnPlay } from '@/hooks/use-on-play'
@@ -14,10 +14,10 @@ import { useSelectedPlayer } from '@/store/use-selected-player'
 // import { useUser } from '@/hooks/use-user'
 import { PlaylistType } from '@/types/types'
 
-import { PlaylistDropdown } from './playlist-dropdown'
+import { Dots } from './dots'
 import { useCurrentUser } from '@/hooks/use-current-user'
 
-export const SongPlaylist = () => {
+export const List = () => {
   const { playlistSongs: songs } = usePlaylist()
   // const { user } = useUser()
   const user = useCurrentUser()
@@ -67,10 +67,10 @@ export const SongPlaylist = () => {
         {/* <MediaDropdown /> */}
         {user?.id !== playlist?.userId ? (
           <div className="z-10 flex h-14 w-14 items-center justify-center">
-            <LikePlaylistButton size={36} />
+            <LikeButton size={36} />
           </div>
         ) : null}
-        <PlaylistDropdown data={playlist as PlaylistType} />
+        <Dots data={playlist} />
       </div>
 
       <MediaList songs={songs} type="playlist" />

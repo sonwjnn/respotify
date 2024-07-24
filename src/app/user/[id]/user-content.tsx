@@ -4,7 +4,7 @@ import { usePalette } from 'color-thief-react'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
-import { PlaylistCardList } from '@/app/user/[id]/playlists/_components/playlist-card-list'
+import { List } from '@/app/user/[id]/playlists/list'
 import { useMainLayout } from '@/store/use-main-layout'
 // import { useUser } from '@/hooks/use-user'
 import { SingleMusicNote } from '@/public/icons'
@@ -81,7 +81,7 @@ export const UserContent = ({ data, id }: UserContentProp) => {
           Show all
         </div>
       </div>
-      <PlaylistCardList data={filteredPlaylists} />
+      <List data={filteredPlaylists} />
     </div>
   )
 }

@@ -13,7 +13,7 @@ import { cn } from '@/lib/utils'
 import { getDurationSong } from '@/utils/duration-convertor'
 import { useCurrentUser } from '@/hooks/use-current-user'
 
-export const PlaylistHeaderContent = () => {
+export const HeaderContent = () => {
   const { playlist: data, playlistSongs } = usePlaylist()
   const { width } = useMainLayout()
   // const { user, subscription } = useUser()

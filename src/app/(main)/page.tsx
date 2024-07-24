@@ -1,10 +1,10 @@
 import { Footer } from '@/components/footer'
-import { Greeting } from './_components/greeting'
+import { Greeting } from './greeting'
 import { Header } from '@/components/header'
 import { Navbar } from '@/components/navbar'
 import { PageWrapper } from '@/components/page-wrapper'
 
-import { MainContent } from './_components/main-content'
+import { MainContent } from './main-content'
 import { getPlaylists, getSongs, getSubscription } from '@/db/queries'
 
 const MainPage = async () => {

@@ -12,10 +12,10 @@ import { PlaylistType } from '@/types/types'
 import { cn } from '@/lib/utils'
 import { useCurrentUser } from '@/hooks/use-current-user'
 
-type UserHeaderContentProps = {
+type HeaderContentProps = {
   data?: PlaylistType[]
 }
-export const UserHeaderContent = ({ data }: UserHeaderContentProps) => {
+export const HeaderContent = ({ data }: HeaderContentProps) => {
   const { width } = useMainLayout()
   // const { user, subscription, userDetails } = useUser()
   const user = useCurrentUser()

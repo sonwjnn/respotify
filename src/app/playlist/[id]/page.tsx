@@ -5,8 +5,8 @@ import { Footer } from '@/components/footer'
 import { Header } from '@/components/header'
 import { Navbar } from '@/components/navbar'
 
-import { PlaylistContent } from './_components/playlist-content'
-import { PlaylistHeaderContent } from './_components/playlist-header-content'
+import { PlaylistContent } from './playlist-content'
+import { HeaderContent } from './header-content'
 import {
   getPlaylistById,
   getSongsByPlaylistId,
@@ -47,7 +47,7 @@ const PlaylistPage = async ({ params }: PlaylistPageProps) => {
         hasActiveSubscription={isPro}
       />
       <Header data={playlist} type="playlist">
-        <PlaylistHeaderContent />
+        <HeaderContent />
       </Header>
       <PlaylistContent playlist={playlist} playlistSongs={playlistSongs} />
       <Footer />

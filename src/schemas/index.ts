@@ -39,3 +39,9 @@ export const SongSchema = z.object({
   // ),
   image: z.string().optional(),
 })
+
+export const PlaylistSchema = z.object({
+  title: z.string().min(5).max(100),
+  description: z.string().min(5).max(500),
+  image: z.string().optional(),
+})
