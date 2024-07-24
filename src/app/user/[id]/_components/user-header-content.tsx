@@ -63,9 +63,7 @@ export const UserHeaderContent = ({ data }: UserHeaderContentProps) => {
         </div>
       </div>
       <div className="mt-4 flex  flex-col gap-y-3 md:mt-0 md:gap-y-6">
-        <p className="hidden text-base text-white  md:visible md:block">
-          Profile
-        </p>
+        <p className="hidden text-base text-white   md:block">Profile</p>
         <h1
           onClick={onClick}
           className={cn(
@@ -77,7 +75,7 @@ export const UserHeaderContent = ({ data }: UserHeaderContentProps) => {
           {user?.name}
         </h1>
         <div className="flex flex-col items-center gap-y-2 md:items-start ">
-          <p className="hidden text-sm text-desc md:visible md:block">
+          <p className="hidden text-sm text-desc  md:block">
             {`${data?.length} Public Playlists`}
           </p>
         </div>

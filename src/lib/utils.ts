@@ -1,7 +1,6 @@
+import { subscriptions } from '@/db/schema'
 import { type ClassValue, clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
-
-import { subscriptions } from '@/db/schema'
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))

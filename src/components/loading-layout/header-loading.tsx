@@ -27,7 +27,7 @@ export const HeaderLoading = ({ children, className }: HeaderProps) => {
       )}
     >
       <div className="mb-4 flex w-full items-center justify-between">
-        <div className="hidden items-center gap-x-2 md:visible md:flex">
+        <div className="hidden items-center gap-x-2  md:flex">
           <button className="items-center justify-center rounded-full bg-neutral-800 transition hover:opacity-75">
             <RxCaretLeft className="text-white" size={35} />
           </button>

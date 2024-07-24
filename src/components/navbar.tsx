@@ -134,7 +134,7 @@ export const Navbar = (props: NavbarProps) => {
       ></div>
 
       <div className=" absolute inset-x-0 top-0 z-10 mb-4 flex  h-full w-full  items-center justify-between  px-6">
-        <div className="hidden min-w-0 items-center gap-x-2  md:visible md:flex">
+        <div className="hidden  min-w-0 items-center gap-x-2   md:flex">
           <button
             className="items-center justify-center rounded-full  bg-[#171717] transition active:scale-95 disabled:cursor-not-allowed disabled:select-none dark:bg-black"
             onClick={() => router.back()}

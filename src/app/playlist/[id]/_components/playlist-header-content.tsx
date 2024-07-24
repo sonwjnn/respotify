@@ -75,9 +75,7 @@ export const PlaylistHeaderContent = () => {
         </div>
       </div>
       <div className="mt-4 flex  flex-col gap-y-3 md:mt-0 md:gap-y-6">
-        <p className="hidden text-base text-white  md:visible md:block">
-          Playlist
-        </p>
+        <p className="hidden text-base text-white   md:block">Playlist</p>
         <div
           onClick={onClick}
           className={cn(
@@ -91,7 +89,7 @@ export const PlaylistHeaderContent = () => {
         </div>
         <div className="flex flex-col items-center gap-y-2 md:items-start ">
           {data?.description && (
-            <p className="hidden text-sm text-desc md:visible md:block">
+            <p className="hidden text-sm text-desc  md:block">
               {data.description}
             </p>
           )}

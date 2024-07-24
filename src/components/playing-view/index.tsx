@@ -37,7 +37,7 @@ export const PlayingView = () => {
 
   return (
     <PlayingViewResizer
-      className={'hidden md:visible md:block'}
+      className={'hidden  md:block'}
       minWidth={300}
       maxWidth={400}
     >
