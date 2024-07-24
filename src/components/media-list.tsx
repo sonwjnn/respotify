@@ -10,8 +10,8 @@ import { usePlayer } from '@/store/use-player'
 import { usePlaylist } from '@/store/use-playlist'
 import { ClockIcon } from '@/public/icons'
 import type { MediaListProps } from '@/types/track'
-import type { Playlist } from '@/types/types'
 import { cn } from '@/lib/utils'
+import { useClickAway } from 'react-use'
 
 type ListBarProps = {
   className?: string
@@ -86,9 +86,11 @@ export const MediaList = ({
   const [selectedId, setSelectedId] = useState<string>('')
 
   const wrapperRef = useRef(null)
-  useOnClickOutside(wrapperRef, () => {
-    setSelectedId('')
-  })
+
+  // TODO: Fix on click outside
+  // useClickAway(wrapperRef, () => {
+  //   setSelectedId('')
+  // })
 
   const handleOnPlay = (songId: string): void => {
     onPlay(songId)
@@ -118,7 +120,7 @@ export const MediaList = ({
             <MediaItem
               type={type}
               song={song}
-              playlist={playlist as Playlist}
+              playlist={playlist}
               index={type !== 'queue' ? index + 1 : index + 2}
               isSelected={selectedId === song.id}
               isActived={player.activeId === song.id}

@@ -9,7 +9,6 @@ import { useUploadModal } from '@/store/modals/use-upload-modal'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Modal } from '@/components/ui/modal'
-import { useCurrentUser } from '@/hooks/use-current-user'
 import {
   Form,
   FormControl,
@@ -69,12 +68,7 @@ export const UploadSongModal = () => {
   const onSubmit = (values: z.infer<typeof SongSchema>) => {
     startTransition(() => {
       createSong(values, duration)
-        .then(response => {
-          if (response?.error) {
-            toast.error(response.error)
-            return
-          }
-
+        .then(() => {
           toast.success('Song created!')
           form.reset()
         })

@@ -66,8 +66,8 @@ export default async function RootLayout({
             <Sheets />
             <MainContent
               songs={userSongs}
-              playlists={userPlaylists}
               likedSongs={likedSongs}
+              playlists={userPlaylists}
               likedPlaylists={likedPlaylists}
             >
               {children}

@@ -38,8 +38,13 @@ export const PlaylistHeaderContent = () => {
     uploadModal.onOpen()
   }
 
-  const duration = useCallback(() => {
-    return getDurationSong({ milliseconds: data?.duration || 0, type: 'long' })
+  const totalDuration = useCallback(() => {
+    const duration = playlistSongs.reduce((acc, song) => {
+      const duration = song?.duration || 0
+      return acc + duration
+    }, 0)
+
+    return getDurationSong({ milliseconds: duration, type: 'long' })
   }, [playlistSongs])
 
   return (
@@ -98,7 +103,7 @@ export const PlaylistHeaderContent = () => {
               'data?.likes' || 0
             } likes - ${playlistSongs?.length} songs
             `}</p>
-            <p className="text-desc">{`${duration()}`}</p>
+            <p className="text-desc">{`${totalDuration()}`}</p>
           </div>
         </div>
       </div>

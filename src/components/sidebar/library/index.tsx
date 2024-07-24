@@ -67,7 +67,7 @@ export const Library = ({ isScroll = false }: LibraryProps) => {
           }
         )}
       >
-        <div className={`flex h-8 w-full items-center justify-between `}>
+        <div className="flex h-8 w-full items-center justify-between">
           <Tooltip
             text={`${
               isCollapsed ? 'Expend your library' : 'Collapse your library'
@@ -78,7 +78,7 @@ export const Library = ({ isScroll = false }: LibraryProps) => {
               className="group flex cursor-pointer gap-x-2 "
               onClick={handleScale}
             >
-              <div className="  pl-1 text-zinc-700 transition group-hover:text-zinc-600 dark:text-neutral-400 dark:group-hover:text-white">
+              <div className="pl-1 text-zinc-700 transition group-hover:text-zinc-600 dark:text-neutral-400 dark:group-hover:text-white">
                 {isCollapsed ? <LibraryActiveIcon /> : <LibraryIcon />}
               </div>
               {!isCollapsed && (
@@ -90,10 +90,10 @@ export const Library = ({ isScroll = false }: LibraryProps) => {
           </Tooltip>
 
           {!isCollapsed ? (
-            <div className={'flex flex-row justify-end gap-x-2'}>
-              {/* <Tooltip text="Create song or playlist"> */}
-              <UploadDropdown />
-              {/* </Tooltip> */}
+            <div className="flex flex-row justify-end gap-x-2">
+              <Tooltip text="Create song or playlist">
+                <UploadDropdown />
+              </Tooltip>
               <Tooltip text={`${isMaxWidth ? 'Show less' : 'Show more'}`}>
                 <div
                   onClick={handleShowMore}
@@ -131,21 +131,23 @@ export const Library = ({ isScroll = false }: LibraryProps) => {
 
       {/* eslint-disable-next-line no-nested-ternary */}
       {/* {!user || !subscription ? ( */}
-      {!user || !false ? (
+      {!user ? (
         <div
           onClick={handleClick}
-          className={`${
+          className={cn(
+            'my-8 line-clamp-2 flex w-full cursor-pointer items-center justify-center px-4 text-center text-neutral-400 transition hover:text-white',
             isCollapsed && 'hidden'
-          } my-8 line-clamp-2 flex w-full cursor-pointer items-center justify-center px-4 text-center text-neutral-400 transition hover:text-white`}
+          )}
         >
           Log in and subscribe to view your playlists.
         </div>
       ) : !playlists.length && !likedPlaylists.length ? (
         <div
           onClick={handleClick}
-          className={`${
+          className={cn(
+            'my-8 line-clamp-2 flex w-full cursor-pointer items-center justify-center px-4 text-center text-neutral-400 transition hover:text-white',
             isCollapsed && 'hidden'
-          } my-8 line-clamp-2 flex w-full cursor-pointer items-center justify-center px-4 text-center text-neutral-400 transition hover:text-white`}
+          )}
         >
           You have no any playlists, create your playlists.
         </div>

@@ -1,9 +1,7 @@
 'use client'
 
-// import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
-import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useState, useTransition } from 'react'
 import { toast } from 'react-hot-toast'
 import { AiOutlinePlus } from 'react-icons/ai'
 import { LuListMusic } from 'react-icons/lu'
@@ -15,75 +13,34 @@ import {
   DropdownMenuPortal,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { useAuthModal } from '@/store/modals/use-auth-modal'
-import { useSubscribeModal } from '@/store/modals/use-subcribe-modal'
 import { useUploadModal } from '@/store/modals/use-upload-modal'
-// import { useUser } from '@/hooks/use-user'
 import { AddPlaylistIcon } from '@/public/icons'
 
 import { Tooltip } from '@/components/ui/tooltip'
-import { useCurrentUser } from '@/hooks/use-current-user'
+import { createPlaylist } from '@/actions/playlist'
 
 export const UploadDropdown = () => {
-  // const { user, subscription } = useUser()
-  const user = useCurrentUser()
-  const authModal = useAuthModal()
   const uploadModal = useUploadModal()
   const [isDropdown, setDropdown] = useState(false)
-  const [isRequired, setRequired] = useState(false)
-
-  const subcribeModal = useSubscribeModal()
-
-  const supabaseClient = useSupabaseClient()
+  const [isPending, startTransition] = useTransition()
 
   const router = useRouter()
 
   const onUploadSong = (): void => {
     setDropdown(false)
 
-    if (!user) {
-      return authModal.onOpen()
-    }
-    // if (!subscription?.isActive) {
-    //   return subcribeModal.onOpen()
-    // }
-
     return uploadModal.onOpen()
   }
 
-  const onUploadPlaylist = async (): Promise<void> => {
-    setDropdown(false)
-
-    if (!user) {
-      authModal.onOpen()
-      return
-    }
-    // if (!subscription) {
-    //   subcribeModal.onOpen()
-    //   return
-    // }
-
-    setRequired(true)
-
-    const { data, error: supabaseError } = await supabaseClient
-      .from('playlists')
-      .insert({
-        user_id: user.id,
-        title: `My new playlist`,
-        description: '',
-        bg_color: '#525252',
-      })
-      .select()
-      .single()
-    if (supabaseError) {
-      toast.error(supabaseError.message)
-      return
-    }
-    if (data) {
-      setRequired(false)
-      router.refresh()
-      router.push(`/playlist/${data.id}`)
-    }
+  const onUploadPlaylist = () => {
+    startTransition(() => {
+      setDropdown(false)
+      createPlaylist()
+        .then(data => {
+          router.push(`/playlist/${data.id}`)
+        })
+        .catch(() => toast.error('Something went wrong!'))
+    })
   }
 
   const onChange = (open: boolean): void => {
@@ -130,10 +87,7 @@ export const UploadDropdown = () => {
             </div>
             Create a new song
           </DropdownMenuItem>
-          <DropdownMenuItem
-            onSelect={onUploadPlaylist}
-            className={` ${isRequired && 'select-none'} `}
-          >
+          <DropdownMenuItem onSelect={onUploadPlaylist} disabled={isPending}>
             <div className="mr-2   ">
               <AddPlaylistIcon color="#3b82f6" />
             </div>

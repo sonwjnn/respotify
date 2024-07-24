@@ -1,4 +1,4 @@
-import { PlaylistType, SongType } from './types'
+import { PlaylistType, PlaylistWithUser, SongType } from './types'
 
 export type SongCardTagProps = {
   thumbnailUrl?: string
@@ -15,7 +15,7 @@ export type MediaItemProps = {
   type?: 'default' | 'playlist' | 'album' | 'search' | 'artist' | 'queue'
   id?: string
   song: SongType
-  playlist?: PlaylistType
+  playlist?: PlaylistWithUser | null
   isPlaying?: boolean
   index?: number
   isSelected?: boolean

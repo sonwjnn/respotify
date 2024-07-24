@@ -1,6 +1,5 @@
 'use client'
 
-import { useSessionContext } from '@supabase/auth-helpers-react'
 import { useEffect, useState } from 'react'
 
 import { MediaList } from '@/components/media-list'
@@ -10,44 +9,37 @@ import { useMainLayout } from '@/store/use-main-layout'
 import { usePlaylist } from '@/store/use-playlist'
 import { SearchIcon } from '@/public/icons'
 import { SongType } from '@/types/types'
+import { getSongsByTitle } from '@/actions/song'
 
 export const SearchPlaylist = () => {
   const { width } = useMainLayout()
 
   const { playlistSongs } = usePlaylist()
 
-  const { supabaseClient } = useSessionContext()
-
   const [value, setValue] = useState<string>('')
   const [songs, setSongs] = useState<SongType[]>([])
   const debouncedValue = useDebounce<string>(value, 500)
 
   useEffect(() => {
-    const fetchDataByTitle: () => Promise<void> = async () => {
-      if (!debouncedValue) {
-        setSongs([])
-        return
-      }
-      const { data, error } = await supabaseClient
-        .from('songs')
-        .select('*')
-        .ilike('title', `%${debouncedValue}%`)
-        .order('created_at', { ascending: false })
-      if (error) {
-        console.log(error)
-      }
+    const fetchDataByTitle = async () => {
+      // if (!debouncedValue) {
+      //   setSongs([])
+      //   return
+      // }
+      const data = await getSongsByTitle(debouncedValue)
+
       if (data) {
         const playlistSongIds = playlistSongs.map(item => item.id)
         const unplaylistSongs = data.filter(
-          (song: SongType) => !playlistSongIds.includes(song.id)
+          song => !playlistSongIds.includes(song.id)
         )
 
-        setSongs(unplaylistSongs as SongType[])
+        setSongs(unplaylistSongs)
       }
     }
 
     fetchDataByTitle()
-  }, [debouncedValue, supabaseClient, playlistSongs])
+  }, [debouncedValue, playlistSongs])
 
   return (
     <>

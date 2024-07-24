@@ -1,18 +1,15 @@
 'use client'
 
-import { useSessionContext } from '@supabase/auth-helpers-react'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useTransition } from 'react'
 import { toast } from 'react-hot-toast'
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai'
-import { twMerge } from 'tailwind-merge'
 
-import { useAuthModal } from '@/store/modals/use-auth-modal'
 import { usePlaylist } from '@/store/use-playlist'
-// import { useUser } from '@/hooks/use-user'
 import { useUserStore } from '@/store/use-user-store'
 
 import { Tooltip } from '@/components/ui/tooltip'
-import { useCurrentUser } from '@/hooks/use-current-user'
+import { createLikedPlaylist, deleteLikedPlaylist } from '@/actions/playlist'
+import { cn } from '@/lib/utils'
 
 type LikePlaylistButtonProps = {
   size?: number
@@ -23,21 +20,13 @@ export const LikePlaylistButton = ({
   size = 25,
   className,
 }: LikePlaylistButtonProps) => {
-  const { supabaseClient } = useSessionContext()
-
   const { likedPlaylists, removeLikedPlaylist, addLikedPlaylist } =
     useUserStore()
 
   const { playlist, setLikes } = usePlaylist()
 
-  // const { user } = useUser()
-  const user = useCurrentUser()
-
-  const authModal = useAuthModal()
-
   const [isLiked, setIsLiked] = useState<boolean>(false)
-
-  const [isRequired, setRequired] = useState<boolean>(false)
+  const [isPending, startTransition] = useTransition()
 
   useEffect(() => {
     const isPlaylistLiked = likedPlaylists.some(
@@ -46,85 +35,45 @@ export const LikePlaylistButton = ({
     setIsLiked(isPlaylistLiked)
   }, [likedPlaylists])
 
-  const handleLike = async (): Promise<void> => {
-    if (!user) {
-      authModal.onOpen()
-      return
-    }
-    if (isRequired) return
+  const handleLike = () => {
+    startTransition(() => {
+      if (!playlist || !playlist?.id) return
 
-    setRequired(true)
-
-    if (isLiked) {
-      const { error } = await supabaseClient
-        .from('liked_playlists')
-        .delete()
-        .eq('user_id', user.id)
-        .eq('playlist_id', playlist?.id)
-
-      if (error) {
-        toast.error(error.message)
-        return
+      if (isLiked) {
+        deleteLikedPlaylist(playlist.id)
+          .then(() => {
+            setIsLiked(false)
+            removeLikedPlaylist(playlist?.id)
+            toast.success('Playlist liked!')
+          })
+          .catch(() => toast.error('Something went wrong!'))
+      } else {
+        createLikedPlaylist(playlist.id)
+          .then(data => {
+            if (data) {
+              setIsLiked(true)
+              addLikedPlaylist(data)
+              toast.success('Playlist liked!')
+            }
+          })
+          .catch(() => toast.error('Something went wrong!'))
       }
-      const updatedLikes = (playlist?.likes || 0) - 1
-      const { error: updateError } = await supabaseClient
-        .from('playlists')
-        .update({
-          likes: updatedLikes >= 0 ? updatedLikes : 0,
-        })
-        .eq('id', playlist?.id)
-
-      if (updateError) {
-        toast.error(updateError.message)
-        return
-      }
-
-      setLikes(updatedLikes >= 0 ? updatedLikes : 0)
-      setIsLiked(false)
-      if (playlist?.id) removeLikedPlaylist(playlist?.id)
-    } else {
-      const { error } = await supabaseClient.from('liked_playlists').insert({
-        playlist_id: playlist?.id,
-        user_id: user.id,
-      })
-
-      if (error) {
-        toast.error(error.message)
-        return
-      }
-
-      const updatedLikes = (playlist?.likes || 0) + 1
-      const { error: updateError } = await supabaseClient
-        .from('playlists')
-        .update({
-          likes: updatedLikes >= 0 ? updatedLikes : 1,
-        })
-        .eq('id', playlist?.id)
-
-      if (updateError) {
-        toast.error(updateError.message)
-        return
-      }
-
-      setLikes(updatedLikes >= 0 ? updatedLikes : 1)
-      setIsLiked(true)
-      if (playlist) addLikedPlaylist(playlist)
-      toast.success('Playlist liked!')
-    }
-    setRequired(false)
+    })
   }
   const Icon = isLiked ? AiFillHeart : AiOutlineHeart
 
   return (
     <Tooltip
       text={`${isLiked ? 'Remove from Your Library' : 'Save to Your Library'}`}
+      asChild
     >
-      <div
+      <button
         onClick={handleLike}
-        className={twMerge(
+        className={cn(
           `items-center justify-center transition active:scale-110`,
           className
         )}
+        disabled={isPending}
       >
         <Icon
           className={` transition ${
@@ -134,7 +83,7 @@ export const LikePlaylistButton = ({
           }`}
           size={size}
         />
-      </div>
+      </button>
     </Tooltip>
   )
 }

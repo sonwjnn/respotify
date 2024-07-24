@@ -1,10 +1,8 @@
 'use client'
 
-import { useSupabaseClient } from '@supabase/auth-helpers-react'
-import { useState } from 'react'
+import { useState, useTransition } from 'react'
 import { toast } from 'react-hot-toast'
 import { BsThreeDots } from 'react-icons/bs'
-import { twMerge } from 'tailwind-merge'
 
 import {
   DropdownMenu,
@@ -14,13 +12,14 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { useAuthModal } from '@/store/modals/use-auth-modal'
-import { useSubscribeModal } from '@/store/modals/use-subcribe-modal'
 import { useUploadModal } from '@/store/modals/use-upload-modal'
 import { usePlaylist } from '@/store/use-playlist'
 import { DeleteIcon } from '@/public/icons'
 import { PlaylistType, SongType } from '@/types/types'
 import { useConfirm } from '@/hooks/use-confirm'
 import { useCurrentUser } from '@/hooks/use-current-user'
+import { deleteSongOfPlaylist } from '@/actions/song'
+import { cn } from '@/lib/utils'
 
 type MediaDropdownProps = {
   song: SongType
@@ -35,7 +34,7 @@ export const MediaDropdown = ({
 }: MediaDropdownProps) => {
   const [ConfirmDialog, confirm] = useConfirm(
     'Are you sure?',
-    'You are about to delete this playlist'
+    'You are about to delete this song from playlist'
   )
 
   const user = useCurrentUser()
@@ -43,55 +42,22 @@ export const MediaDropdown = ({
   const authModal = useAuthModal()
   const uploadModal = useUploadModal()
   const [isDropdown, setDropdown] = useState(false)
-  const [isRequired, setRequired] = useState(false)
+  const [isPending, startTransition] = useTransition()
 
-  const subcribeModal = useSubscribeModal()
+  const onRemove = () => {
+    startTransition(() => {
+      deleteSongOfPlaylist(song.id, playlist.id)
+        .then(response => {
+          if (!response) {
+            toast.error('Failed to delete song of playlist')
+            return
+          }
 
-  const supabaseClient = useSupabaseClient()
-
-  const onRemove: () => Promise<void> = async () => {
-    if (isRequired) return
-
-    if (!user) {
-      authModal.onOpen()
-      return
-    }
-
-    // if (!subscription?.active) {
-    //   subcribeModal.onOpen()
-    //   return
-    // }
-
-    setRequired(true)
-
-    const { error } = await supabaseClient
-      .from('playlist_songs')
-      .delete()
-      .eq('playlist_id', playlist.id)
-      .eq('song_id', song.id)
-
-    if (error) {
-      toast.error(error.message)
-      return
-    }
-    const songDuration = song.duration || 0
-
-    const updatedDuration = (playlist?.duration || 0) - songDuration
-
-    const { error: playlistError } = await supabaseClient
-      .from('playlists')
-      .update({ duration: updatedDuration })
-      .eq('id', playlist.id)
-
-    if (playlistError) {
-      toast.error(playlistError.message)
-      return
-    }
-
-    setDuration(updatedDuration >= 0 ? updatedDuration : 0)
-
-    removePlaylistSong(song.id)
-    toast.success('Removed!')
+          removePlaylistSong(song.id)
+          toast.success('Removed!')
+        })
+        .catch(() => toast.error('Something went wrong!'))
+    })
   }
 
   const onChange = (open: boolean): void => {
@@ -107,6 +73,7 @@ export const MediaDropdown = ({
       onRemove()
     }
   }
+
   return (
     <>
       <ConfirmDialog />
@@ -118,7 +85,7 @@ export const MediaDropdown = ({
       >
         <DropdownMenuTrigger asChild>
           <div
-            className={twMerge(
+            className={cn(
               `relative h-8 w-8 rounded-full transition hover:bg-neutral-800`,
               className
             )}
@@ -144,6 +111,7 @@ export const MediaDropdown = ({
               <DropdownMenuItem
                 onSelect={handleRemove}
                 className="dropdown-menu-item text-white"
+                disabled={isPending}
               >
                 <DeleteIcon color="#991b1b" />
                 Remove from this playlist

@@ -3,12 +3,12 @@
 import { useRouter } from 'next/navigation'
 import qs from 'query-string'
 import { useEffect, useState } from 'react'
-import { twMerge } from 'tailwind-merge'
 
 import { useDebounce } from '@/hooks/use-debounce'
 import { SearchIcon } from '@/public/icons'
 
 import { Input } from '@/components/ui/input'
+import { cn } from '@/lib/utils'
 
 type SearchInputProps = {
   url: string
@@ -44,7 +44,7 @@ export const SearchInput = ({
       placeholder={placeholder || 'Search for your song to want to listen to !'}
       value={value}
       onChange={e => setValue(e.target.value)}
-      className={twMerge(` rounded-full px-4 pl-10`, className)}
+      className={cn(` rounded-full px-4 pl-10`, className)}
       startIcon={
         <SearchIcon size={18} className="text-zinc-600 dark:text-white" />
       }

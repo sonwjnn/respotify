@@ -19,7 +19,7 @@ export const HeaderContent = () => {
             className="
             object-cover
           "
-            src={'/images/liked.png'}
+            src="/images/liked.png"
             fill
             alt="liked img"
             sizes="100%"
@@ -27,7 +27,7 @@ export const HeaderContent = () => {
         </div>
       </div>
       <div className="mt-4 flex flex-col gap-y-2 md:mt-0">
-        <p className="hidden text-base text-white   md:block">Playlist</p>
+        <p className="hidden text-base text-white md:block">Playlist</p>
         <h1
           className={`${
             width <= 1012 && '!text-5xl'

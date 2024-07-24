@@ -1,12 +1,10 @@
 'use client'
 
-import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import { usePathname, useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useState, useTransition } from 'react'
 import { toast } from 'react-hot-toast'
 import { BsThreeDots } from 'react-icons/bs'
 import { FiEdit } from 'react-icons/fi'
-import { twMerge } from 'tailwind-merge'
 
 import {
   DropdownMenu,
@@ -18,14 +16,13 @@ import {
 import { Tooltip } from '@/components/ui/tooltip'
 import { useAuthModal } from '@/store/modals/use-auth-modal'
 import { usePlaylistModal } from '@/store/modals/use-playlist-modal'
-import { useSubscribeModal } from '@/store/modals/use-subcribe-modal'
-// import { useUser } from '@/hooks/use-user'
 import { useUserStore } from '@/store/use-user-store'
 import { DeleteIcon } from '@/public/icons'
 import { PlaylistType } from '@/types/types'
-import { buckets } from '@/data/ui'
 import { useConfirm } from '@/hooks/use-confirm'
 import { useCurrentUser } from '@/hooks/use-current-user'
+import { cn } from '@/lib/utils'
+import { deleteLikedPlaylist, deletePlaylist } from '@/actions/playlist'
 
 type PlaylistDropdownProps = {
   data: PlaylistType
@@ -40,94 +37,44 @@ export const PlaylistDropdown = ({
     'Are you sure?',
     'You are about to delete this playlist'
   )
-  // const { user, subscription } = useUser()
   const user = useCurrentUser()
   const authModal = useAuthModal()
   const uploadModal = usePlaylistModal()
 
-  const subcribeModal = useSubscribeModal()
-
-  const supabaseClient = useSupabaseClient()
   const { removeLikedPlaylist, removePlaylist } = useUserStore()
 
   const [isDropdown, setDropdown] = useState(false)
-  const [isRequired, setRequired] = useState(false)
+  const [isPending, startTransition] = useTransition()
   const router = useRouter()
-  const currentPath = usePathname()
+  const pathname = usePathname()
 
-  const onDeletePlaylist = async (): Promise<void> => {
-    if (isRequired) return
+  const onDeletePlaylist = () => {
+    startTransition(() => {
+      deletePlaylist(data)
+        .then(() => {
+          removePlaylist(data.id)
 
-    if (!user) {
-      authModal.onOpen()
-      return
-    }
-    // if (!subscription) {
-    //   subcribeModal.onOpen()
-    //   return
-    // }
-
-    setDropdown(false)
-
-    setRequired(true)
-
-    if (data.imagePath) {
-      const { error: oldImageError } = await supabaseClient.storage
-        .from(buckets.playlist_images)
-        .remove([data.imagePath])
-
-      if (oldImageError) {
-        setRequired(false)
-        toast.error(oldImageError.message)
-        return
-      }
-    }
-
-    const { error: supabaseError } = await supabaseClient
-      .from('playlists')
-      .delete()
-      .eq('id', data.id)
-
-    if (supabaseError) {
-      setRequired(false)
-      toast.error(supabaseError.message)
-      return
-    }
-    removePlaylist(data.id)
-
-    setRequired(false)
-    if (currentPath.includes(`playlist/${data.id}`)) {
-      router.replace('/')
-    }
+          if (pathname.includes(`playlist/${data.id}`)) {
+            router.replace('/')
+          }
+        })
+        .catch(() => toast.error('Something went wrong!'))
+    })
   }
 
-  const onEditPlaylist = async (): Promise<void> => {
-    if (!user) {
-      authModal.onOpen()
-      return
-    }
-    // if (!subscription) {
-    //   subcribeModal.onOpen()
-    //   return
-    // }
-
+  const onEditPlaylist = () => {
     setDropdown(false)
     uploadModal.onOpen()
   }
 
-  const onRemoveFromLibrary = async (): Promise<void> => {
-    const { error } = await supabaseClient
-      .from('liked_playlists')
-      .delete()
-      .eq('user_id', user?.id)
-      .eq('playlist_id', data.id)
-
-    if (error) {
-      toast.error(error.message)
-      return
-    }
-
-    removeLikedPlaylist(data.id)
+  const onRemoveFromLibrary = () => {
+    startTransition(() => {
+      deleteLikedPlaylist(data.id)
+        .then(() => {
+          removeLikedPlaylist(data.id)
+        })
+        .catch(() => toast.error('Something went wrong!'))
+    })
   }
   const onChange = (open: boolean): void => {
     if (!open) {
@@ -155,11 +102,11 @@ export const PlaylistDropdown = ({
     <>
       <ConfirmDialog />
       <DropdownMenu modal={isDropdown} onOpenChange={onChange}>
-        <DropdownMenuTrigger asChild>
+        <DropdownMenuTrigger disabled={isPending} asChild>
           <div className="flex items-center justify-center">
             <Tooltip text={`More options for this playlist`}>
               <div
-                className={twMerge(
+                className={cn(
                   `relative h-8 w-8 rounded-full transition hover:text-white`,
                   className
                 )}

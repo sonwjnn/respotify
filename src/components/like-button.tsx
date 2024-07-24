@@ -1,10 +1,8 @@
 'use client'
 
-import { useSessionContext } from '@supabase/auth-helpers-react'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useTransition } from 'react'
 import { toast } from 'react-hot-toast'
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai'
-import { twMerge } from 'tailwind-merge'
 
 import { useAuthModal } from '@/store/modals/use-auth-modal'
 // import { useUser } from '@/hooks/use-user'
@@ -13,6 +11,8 @@ import { SongType } from '@/types/types'
 
 import { Tooltip } from '@/components/ui/tooltip'
 import { useCurrentUser } from '@/hooks/use-current-user'
+import { createLikedSong, deleteLikedSong } from '@/actions/song'
+import { cn } from '@/lib/utils'
 
 type LikeButtonProps = {
   song: SongType
@@ -29,86 +29,75 @@ export const LikeButton = ({
 }: LikeButtonProps) => {
   const { likedSongs, addLikedSong, removeLikedSong } = useUserStore()
 
-  const { supabaseClient } = useSessionContext()
-
   // const { user } = useUser()
   const user = useCurrentUser()
 
-  const authModal = useAuthModal()
+  const [isPending, startTransition] = useTransition()
 
   const [isLiked, setIsLiked] = useState<boolean>(false)
-
-  const [isRequired, setRequired] = useState<boolean>(false)
 
   useEffect(() => {
     const isSongLiked = likedSongs.some(item => item.id === song.id)
     setIsLiked(isSongLiked)
   }, [likedSongs])
 
-  const handleLike: () => Promise<void> = async () => {
-    if (!user) {
-      authModal.onOpen()
-      return
-    }
-    if (isRequired) return
+  const handleLike = () => {
+    startTransition(() => {
+      if (isLiked) {
+        deleteLikedSong(song.id)
+          .then(response => {
+            if (!response) {
+              toast.error('Failed to delete liked song')
+              return
+            }
 
-    setRequired(true)
+            setIsLiked(false)
+            removeLikedSong(song.id)
+          })
+          .catch(() => toast.error('Something went wrong!'))
+      } else {
+        createLikedSong(song.id)
+          .then(response => {
+            if (!response) {
+              toast.error('Failed to like song')
+              return
+            }
 
-    if (isLiked) {
-      const { error } = await supabaseClient
-        .from('liked_songs')
-        .delete()
-        .eq('user_id', user.id)
-        .eq('song_id', song.id)
-
-      if (error) {
-        toast.error(error.message)
-        return
+            setIsLiked(true)
+            addLikedSong(song)
+          })
+          .catch(() => toast.error('Something went wrong!'))
       }
-      setIsLiked(false)
-      removeLikedSong(song.id)
-    } else {
-      const { error } = await supabaseClient.from('liked_songs').insert({
-        song_id: song.id,
-        user_id: user.id,
-      })
-
-      if (error) {
-        toast.error(error.message)
-        return
-      }
-
-      setIsLiked(true)
-      addLikedSong(song)
-
-      toast.success('Song liked!')
-    }
-    setRequired(false)
+    })
   }
   const Icon = isLiked ? AiFillHeart : AiOutlineHeart
+
+  if (!user) return null
 
   return (
     <Tooltip
       text={`${isLiked ? 'Remove from Your Library' : 'Save to Your Library'}`}
+      asChild
     >
-      <div
+      <button
         onClick={handleLike}
-        className={twMerge(
-          `items-center justify-center ${
-            isLiked || isSelected ? 'flex' : 'hidden'
-          }  transition active:scale-110 group-hover/:flex`,
+        className={cn(
+          `items-center justify-center transition active:scale-110 group-hover:flex`,
+          isLiked || isSelected ? 'flex' : 'hidden',
           className
         )}
+        disabled={isPending}
       >
         <Icon
-          className={` transition ${
-            isLiked
-              ? 'text-[#22c55e] hover:brightness-125'
-              : 'text-zinc-500 hover:text-zinc-600 dark:text-neutral-400 dark:hover:text-white'
-          }`}
+          className={cn(
+            'transition',
+            isLiked && 'text-[#22c55e] hover:brightness-125',
+            !isLiked &&
+              'text-zinc-500 hover:text-zinc-600 dark:text-neutral-400 dark:hover:text-white'
+          )}
           size={size}
         />
-      </div>
+      </button>
     </Tooltip>
   )
 }

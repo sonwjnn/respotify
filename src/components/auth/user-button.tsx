@@ -1,12 +1,9 @@
 'use client'
 
-import { useSupabaseClient } from '@supabase/auth-helpers-react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-import { toast } from 'react-hot-toast'
 import { CgProfile } from 'react-icons/cg'
-import { FaUserAlt } from 'react-icons/fa'
 import { LuLogOut } from 'react-icons/lu'
 import { RiVipCrownLine } from 'react-icons/ri'
 
@@ -19,9 +16,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { useUploadModal } from '@/store/modals/use-upload-modal'
-import { usePlayer } from '@/store/use-player'
 // import { useUser } from '@/hooks/use-user'
-import { useUserStore } from '@/store/use-user-store'
 import { Tooltip } from '@/components/ui/tooltip'
 import { ThemeOptions } from '@/components/theme-options'
 import { useCurrentUser } from '@/hooks/use-current-user'
@@ -31,13 +26,10 @@ export const UserButton = () => {
   // const { user, subscription, userDetails } = useUser()
   const user = useCurrentUser()
 
-  const userStore = useUserStore()
   const uploadModal = useUploadModal()
   const [isDropdown, setDropdown] = useState(false)
-  const player = usePlayer()
 
   const router = useRouter()
-  const supabaseClient = useSupabaseClient()
 
   const onChange = (open: boolean): void => {
     if (!open) {
@@ -53,7 +45,7 @@ export const UserButton = () => {
       defaultOpen={isDropdown}
       onOpenChange={onChange}
     >
-      <Tooltip text={'userDetails?.full_name' || 'No name'}>
+      <Tooltip text={user?.name || 'No name'}>
         <DropdownMenuTrigger asChild>
           <div
             className="flex items-center justify-center"

@@ -9,7 +9,6 @@ import { usePlayer } from '@/store/use-player'
 import { PlayIcon, SingleMusicNote } from '@/public/icons'
 import type { MediaItemProps } from '@/types/track'
 import { cn } from '@/lib/utils'
-import { buckets } from '@/data/ui'
 import { getDurationSong } from '@/utils/duration-convertor'
 
 import { LikeButton } from '@/components/like-button'
@@ -42,12 +41,9 @@ export const MediaItem = ({
   return (
     <div
       className={cn(
-        `
-      group grid grid-cols-list-5 gap-4
-      ${isSelected && 'bg-neutral-800/50'}
-      h-[56px] w-full cursor-pointer items-center rounded-md px-4 transition hover:bg-white  dark:hover:bg-zinc-700/10
-    `,
+        'group grid h-[56px] w-full cursor-pointer grid-cols-list-5 items-center gap-4 rounded-md px-4 transition hover:bg-white  dark:hover:bg-zinc-700/10',
         {
+          'bg-neutral-800/50': isSelected,
           'grid-cols-list-4': width <= 780 && type !== 'album',
           '!grid-cols-list-3': width <= 640 && type !== 'album',
           '!grid-cols-list-2 ': width <= 480 && type !== 'album',
@@ -63,7 +59,7 @@ export const MediaItem = ({
           {index && player.isPlaying && handleActive() ? (
             <div className="relative ml-2 flex  h-full w-3 items-center overflow-hidden ">
               <Image
-                src={'/images/animation/equaliser-animated-green.f5eb96f2.gif'}
+                src="/images/animation/equaliser-animated-green.f5eb96f2.gif"
                 sizes={'100%'}
                 height={20}
                 width={20}
@@ -72,21 +68,21 @@ export const MediaItem = ({
             </div>
           ) : (
             <div
-              className={`
-                flex w-4 items-center  justify-end text-sm 
-                ${handleActive() ? 'text-[#2ed760]' : 'text-zinc-500 dark:text-neutral-400'}
-              `}
+              className={cn(
+                'flex w-4 items-center justify-end text-sm',
+                handleActive()
+                  ? 'text-[#2ed760]'
+                  : 'text-zinc-500 dark:text-neutral-400'
+              )}
             >
               {isHover ? <PlayIcon size={12} color={`#a3a3a3`} /> : index}
             </div>
           )}
         </div>
       )}
-      <div className={`flex min-w-0 select-none items-center gap-4 pr-2`}>
+      <div className="flex min-w-0 select-none items-center gap-4 pr-2">
         {type !== 'album' && (
-          <div
-            className={`relative aspect-square h-10 w-10 shrink-0 overflow-hidden`}
-          >
+          <div className="relative aspect-square h-10 w-10 shrink-0 overflow-hidden">
             {song.imagePath ? (
               <Image
                 fill
@@ -96,26 +92,25 @@ export const MediaItem = ({
                 className="object-cover"
               />
             ) : (
-              <div
-                className={`flex h-full w-full items-center justify-center bg-zinc-300 text-white dark:bg-neutral-800`}
-              >
+              <div className="flex h-full w-full items-center justify-center bg-zinc-300 text-white dark:bg-neutral-800">
                 <SingleMusicNote />
               </div>
             )}
           </div>
         )}
-        <div
-          className={`flex h-full flex-col justify-between gap-[5px] overflow-hidden`}
-        >
+        <div className="flex h-full flex-col justify-between gap-[5px] overflow-hidden">
           <p
-            className={`
-              ${handleActive() ? 'text-[#2ed760]' : 'text-zinc-600 dark:text-white'}
-              m-0 select-none truncate p-0 text-base`}
+            className={cn(
+              'm-0 select-none truncate p-0 text-base',
+              handleActive()
+                ? 'text-[#2ed760]'
+                : 'text-zinc-600 dark:text-white'
+            )}
           >
             {song.title}
           </p>
           {type !== 'artist' && (
-            <div className={`flex w-full items-center gap-[3px] truncate`}>
+            <div className="flex w-full items-center gap-[3px] truncate">
               {/* <SubTitle data={artists} /> */}
               <p className="select-none truncate text-sm  dark:text-neutral-400">
                 {song.author}
@@ -132,26 +127,18 @@ export const MediaItem = ({
             </p>
           )}
           {width > 780 && (
-            <div
-              className={
-                'select-none text-sm text-zinc-500 dark:text-neutral-400'
-              }
-            >
+            <div className="select-none text-sm text-zinc-500 dark:text-neutral-400">
               {format(song.createdAt, 'dd-MM-yyyy')}
             </div>
           )}
         </>
       )}
-      <div className={`group flex items-center justify-end gap-x-3`}>
+      <div className="group flex items-center justify-end gap-x-3">
         {!hasAddTrackBtn ? (
           <>
             <LikeButton isSelected={isSelected} song={song} size={20} />
 
-            <div
-              className={
-                'select-none text-sm text-zinc-500 dark:text-neutral-400'
-              }
-            >
+            <div className="select-none text-sm text-zinc-500 dark:text-neutral-400">
               {getDurationSong({
                 milliseconds: song?.duration ? song?.duration : 0,
               })}
