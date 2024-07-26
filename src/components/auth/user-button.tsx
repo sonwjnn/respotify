@@ -15,18 +15,18 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { useUploadModal } from '@/store/modals/use-upload-modal'
 // import { useUser } from '@/hooks/use-user'
 import { Tooltip } from '@/components/ui/tooltip'
 import { ThemeOptions } from '@/components/theme-options'
 import { useCurrentUser } from '@/hooks/use-current-user'
 import { LogoutButton } from './logout-button'
+import { useModal } from '@/store/use-modal-store'
 
 export const UserButton = () => {
+  const { isOpen } = useModal()
   // const { user, subscription, userDetails } = useUser()
   const user = useCurrentUser()
 
-  const uploadModal = useUploadModal()
   const [isDropdown, setDropdown] = useState(false)
 
   const router = useRouter()
@@ -71,7 +71,7 @@ export const UserButton = () => {
         <DropdownMenuContent
           className="mr-7 min-w-[220px]  rounded-md border-none p-[5px]"
           sideOffset={5}
-          hidden={uploadModal.isOpen}
+          hidden={isOpen}
         >
           <DropdownMenuItem onSelect={() => router.push('/account')}>
             <RiVipCrownLine

@@ -6,7 +6,6 @@ import { useEffect, useState } from 'react'
 import { RxCaretLeft, RxCaretRight } from 'react-icons/rx'
 import { twMerge } from 'tailwind-merge'
 
-import { useAuthModal } from '@/store/modals/use-auth-modal'
 import { useHeader } from '@/store/use-header'
 import { useMainLayout } from '@/store/use-main-layout'
 import { useNavbar } from '@/store/use-navbar'
@@ -62,7 +61,6 @@ export const Navbar = (props: NavbarProps) => {
   } = props
 
   const router = useRouter()
-  const authModal = useAuthModal()
   // const { user, userDetails } = useUser()
   const user = useCurrentUser()
   const player = usePlayer()

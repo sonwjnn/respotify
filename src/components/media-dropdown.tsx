@@ -11,8 +11,6 @@ import {
   DropdownMenuPortal,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { useAuthModal } from '@/store/modals/use-auth-modal'
-import { useUploadModal } from '@/store/modals/use-upload-modal'
 import { usePlaylist } from '@/store/use-playlist'
 import { DeleteIcon } from '@/public/icons'
 import { PlaylistType, SongType } from '@/types/types'
@@ -39,8 +37,6 @@ export const MediaDropdown = ({
 
   const user = useCurrentUser()
   const { removePlaylistSong, setDuration } = usePlaylist()
-  const authModal = useAuthModal()
-  const uploadModal = useUploadModal()
   const [isDropdown, setDropdown] = useState(false)
   const [isPending, startTransition] = useTransition()
 
@@ -104,7 +100,7 @@ export const MediaDropdown = ({
           <DropdownMenuContent
             className=" mr-12 min-w-[220px] rounded-md bg-neutral-800 py-1 shadow-[0px_10px_38px_-10px_rgba(22,_23,_24,_0.35),_0px_10px_20px_-15px_rgba(22,_23,_24,_0.2)] will-change-[opacity,transform]"
             sideOffset={5}
-            hidden={uploadModal.isOpen}
+            // hidden={uploadModal.isOpen}
             side="top"
           >
             {user?.id === playlist.userId ? (

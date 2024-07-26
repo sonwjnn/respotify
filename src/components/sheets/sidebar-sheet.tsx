@@ -10,12 +10,11 @@ import { PlaylistList } from '@/components/sidebar/library/playlist-list'
 import { LikedItem } from '@/components/sidebar/library/liked-item'
 // import { useUser } from '@/hooks/use-user'
 import { useUserStore } from '@/store/use-user-store'
-import { useAuthModal } from '@/store/modals/use-auth-modal'
-import { useSubscribeModal } from '@/store/modals/use-subcribe-modal'
 import Link from 'next/link'
 import { Sheet, SheetContent } from '../ui/sheet'
 import { useSidebarSheet } from '@/store/use-sidebar-sheet'
 import { useCurrentUser } from '@/hooks/use-current-user'
+import { useModal } from '@/store/use-modal-store'
 
 type NavItemProps = {
   icon: IconType
@@ -25,13 +24,12 @@ type NavItemProps = {
 }
 
 export const SidebarSheet = () => {
+  const { open: openModal } = useModal()
   // const { user, subscription } = useUser()
   const user = useCurrentUser()
   const { playlists, likedSongs, likedPlaylists } = useUserStore()
 
   const { isOpen, onClose } = useSidebarSheet()
-  const authModal = useAuthModal()
-  const subcribeModal = useSubscribeModal()
   const pathname = usePathname()
 
   const [isScroll, setScroll] = useState<boolean>(false)
@@ -55,10 +53,7 @@ export const SidebarSheet = () => {
   )
 
   const handleClick = (): void => {
-    if (!user) {
-      authModal.onOpen()
-      return
-    }
+    openModal('auth')
     // if (!subscription) {
     //   subcribeModal.onOpen()
     // }

@@ -4,38 +4,29 @@ import Image from 'next/image'
 import { useCallback } from 'react'
 import { FiEdit2 } from 'react-icons/fi'
 
-import { useAuthModal } from '@/store/modals/use-auth-modal'
-import { usePlaylistModal } from '@/store/modals/use-playlist-modal'
-import { useSubscribeModal } from '@/store/modals/use-subcribe-modal'
 import { useMainLayout } from '@/store/use-main-layout'
 import { usePlaylist } from '@/store/use-playlist'
 import { cn } from '@/lib/utils'
 import { getDurationSong } from '@/utils/duration-convertor'
 import { useCurrentUser } from '@/hooks/use-current-user'
+import { useModal } from '@/store/use-modal-store'
 
 export const HeaderContent = () => {
+  const { open } = useModal()
+
   const { playlist: data, playlistSongs } = usePlaylist()
   const { width } = useMainLayout()
   // const { user, subscription } = useUser()
   const user = useCurrentUser()
-  const authModal = useAuthModal()
-  const uploadModal = usePlaylistModal()
-
-  const subcribeModal = useSubscribeModal()
 
   const onClick = (): void => {
     if (user?.id !== data?.userId) return
 
     if (!user) {
-      authModal.onOpen()
       return
     }
-    // if (!subscription) {
-    //   subcribeModal.onOpen()
-    //   return
-    // }
 
-    uploadModal.onOpen()
+    open('editPlaylist')
   }
 
   const totalDuration = useCallback(() => {

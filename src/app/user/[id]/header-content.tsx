@@ -3,36 +3,24 @@
 import Image from 'next/image'
 import { FiEdit2 } from 'react-icons/fi'
 
-import { useAuthModal } from '@/store/modals/use-auth-modal'
-import { useSubscribeModal } from '@/store/modals/use-subcribe-modal'
-import { useUserModal } from '@/store/modals/use-user-modal'
 import { useMainLayout } from '@/store/use-main-layout'
-// import { useUser } from '@/hooks/use-user'
 import { PlaylistType } from '@/types/types'
 import { cn } from '@/lib/utils'
 import { useCurrentUser } from '@/hooks/use-current-user'
+import { useModal } from '@/store/use-modal-store'
 
 type HeaderContentProps = {
   data?: PlaylistType[]
 }
 export const HeaderContent = ({ data }: HeaderContentProps) => {
+  const { open } = useModal()
   const { width } = useMainLayout()
-  // const { user, subscription, userDetails } = useUser()
   const user = useCurrentUser()
-  const authModal = useAuthModal()
-  const userModal = useUserModal()
-
-  const subcribeModal = useSubscribeModal()
 
   const onClick = (): void => {
-    if (!user) {
-      return authModal.onOpen()
-    }
-    // if (!subscription) {
-    //   return subcribeModal.onOpen()
-    // }
+    if (!user) return
 
-    return userModal.onOpen()
+    return open('editUser')
   }
 
   return (
@@ -42,7 +30,7 @@ export const HeaderContent = ({ data }: HeaderContentProps) => {
           `group relative flex h-[232px] w-[232px] cursor-pointer items-center justify-center rounded-full bg-[#282828] text-white shadow-base`,
           width <= 875 && '!h-[192px] !w-[192px]'
         )}
-        onClick={userModal.onOpen}
+        onClick={onClick}
       >
         <div className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-y-2 rounded-full bg-[rgba(0,0,0,.7)] opacity-0 transition group-hover:opacity-100">
           <FiEdit2 size={36} color="#ffffff" />
@@ -54,7 +42,7 @@ export const HeaderContent = ({ data }: HeaderContentProps) => {
             className="
             object-cover
           "
-            src={user?.image || '/images/note.svg'}
+            src={user?.image || '/images/robot.svg'}
             fill
             alt="user image"
             sizes="100%"

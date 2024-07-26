@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import { toast } from 'react-hot-toast'
 
-import { useSubscribeModal } from '@/store/modals/use-subcribe-modal'
 // import { useUser } from '@/hooks/use-user'
 import { postData } from '@/lib/helpers'
 import { getStripe } from '@/lib/stripe-client'
@@ -12,6 +11,7 @@ import type { Price, ProductWithPrice } from '@/types/types'
 import { Button } from '@/components/ui/button'
 import { Modal } from '@/components/ui/modal'
 import { useCurrentUser } from '@/hooks/use-current-user'
+import { useModal } from '@/store/use-modal-store'
 
 type SubscribeModalProps = {
   products: ProductWithPrice[]
@@ -28,15 +28,18 @@ const formatPrice = (price: Price): string => {
 }
 
 export const SubscribeModal = ({ products }: SubscribeModalProps) => {
+  const { isOpen, type } = useModal()
+
+  const isModalOpen = isOpen && type === 'subscribe'
+
   let content = <div className="text-center">No products available</div>
 
   // const { user, isLoading, subscription } = useUser()
   const user = useCurrentUser()
   const [priceIdLoading, setPriceIdLoading] = useState<string>()
-  const subscribeModal = useSubscribeModal()
 
   const onChange = (open: boolean): void => {
-    if (!open) subscribeModal.onClose()
+    if (!open) close()
   }
 
   const handleCheckout: (price: Price) => Promise<void> = async (
@@ -99,7 +102,7 @@ export const SubscribeModal = ({ products }: SubscribeModalProps) => {
     <Modal
       title="Only for premium users"
       description="Listen to music with Spotify Premium"
-      isOpen={subscribeModal.isOpen}
+      isOpen={isModalOpen}
       onChange={onChange}
     >
       {content}

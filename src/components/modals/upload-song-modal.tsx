@@ -4,8 +4,6 @@ import { useEffect, useState, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 
-import { useUploadModal } from '@/store/modals/use-upload-modal'
-
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Modal } from '@/components/ui/modal'
@@ -22,9 +20,12 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { SongSchema } from '@/schemas'
 import { createSong } from '@/actions/song'
 import { FileUpload } from '@/components/file-upload'
+import { useModal } from '@/store/use-modal-store'
 
 export const UploadSongModal = () => {
-  const uploadModal = useUploadModal()
+  const { isOpen, type, close } = useModal()
+
+  const isModalOpen = isOpen && type === 'uploadSong'
 
   const [isLoading, startTransition] = useTransition()
 
@@ -44,7 +45,7 @@ export const UploadSongModal = () => {
   const onChange = (open: boolean): void => {
     if (!open) {
       form.reset()
-      uploadModal.onClose()
+      close()
     }
   }
 
@@ -80,7 +81,7 @@ export const UploadSongModal = () => {
     <Modal
       title="Upload your songs"
       description="upload modal description"
-      isOpen={uploadModal.isOpen}
+      isOpen={isModalOpen}
       onChange={onChange}
     >
       <Form {...form}>

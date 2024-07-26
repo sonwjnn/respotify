@@ -45,3 +45,13 @@ export const PlaylistSchema = z.object({
   description: z.string().min(5).max(500),
   image: z.string().optional(),
 })
+
+export const UserSchema = z.object({
+  name: z
+    .string()
+    .min(1, { message: 'User name is required' })
+    .refine(name => !name.includes(' '), {
+      message: 'User name cannot contain spaces',
+    }),
+  image: z.string().optional(),
+})

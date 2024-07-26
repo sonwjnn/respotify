@@ -3,13 +3,12 @@
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 
-import { useAuthModal } from '@/store/modals/use-auth-modal'
-import { useSubscribeModal } from '@/store/modals/use-subcribe-modal'
 import { useHeader } from '@/store/use-header'
 import { PlaylistType } from '@/types/types'
 
 import { PlayButton } from '@/components/play-button'
 import { useCurrentUser } from '@/hooks/use-current-user'
+import { useModal } from '@/store/use-modal-store'
 
 type RecommendProps = {
   data: PlaylistType
@@ -18,9 +17,8 @@ type RecommendProps = {
   setHover: React.Dispatch<React.SetStateAction<boolean>>
 }
 export const Recommend = ({ data, isHover, setHover }: RecommendProps) => {
+  const { open } = useModal()
   const router = useRouter()
-  const authModal = useAuthModal()
-  const subscribeModal = useSubscribeModal()
   // const { user, subscription } = useUser()
   const user = useCurrentUser()
   const { bgBase, bgColor, setBgColor } = useHeader()
@@ -32,14 +30,10 @@ export const Recommend = ({ data, isHover, setHover }: RecommendProps) => {
   }
   const onClick = (): void => {
     if (!user) {
-      authModal.onOpen()
+      open('auth')
       return
     }
 
-    // if (!subscription) {
-    //   subscribeModal.onOpen()
-    //   return
-    // }
     // Add authentication befire push
     router.push(`playlist/${data.id}`)
   }

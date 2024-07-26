@@ -2,8 +2,6 @@
 
 import { HiArrowLeft, HiArrowRight } from 'react-icons/hi'
 
-import { useAuthModal } from '@/store/modals/use-auth-modal'
-import { useSubscribeModal } from '@/store/modals/use-subcribe-modal'
 import { useSidebar } from '@/store/use-sidebar'
 // import { useUser } from '@/hooks/use-user'
 import { useUserStore } from '@/store/use-user-store'
@@ -16,23 +14,22 @@ import { UploadDropdown } from '@/components/upload-dropdown'
 import { LikedItem } from '@/components/sidebar/library/liked-item'
 import { PlaylistList } from '@/components/sidebar/library/playlist-list'
 import { useCurrentUser } from '@/hooks/use-current-user'
+import { useModal } from '@/store/use-modal-store'
 
 type LibraryProps = {
   isScroll?: boolean
 }
 
 export const Library = ({ isScroll = false }: LibraryProps) => {
-  // const { user, subscription } = useUser()
+  const { open } = useModal()
   const user = useCurrentUser()
   const { playlists, likedSongs, likedPlaylists } = useUserStore()
   const { isCollapsed, isMaxWidth, collapsed, resetMinWidth, resetMaxWidth } =
     useSidebar()
-  const authModal = useAuthModal()
-  const subcribeModal = useSubscribeModal()
 
   const handleClick = (): void => {
     if (!user) {
-      authModal.onOpen()
+      open('auth')
       return
     }
     // if (!subscription) {

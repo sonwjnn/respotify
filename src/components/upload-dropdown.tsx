@@ -13,14 +13,14 @@ import {
   DropdownMenuPortal,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { useUploadModal } from '@/store/modals/use-upload-modal'
 import { AddPlaylistIcon } from '@/public/icons'
 
 import { Tooltip } from '@/components/ui/tooltip'
 import { createPlaylist } from '@/actions/playlist'
+import { useModal } from '@/store/use-modal-store'
 
 export const UploadDropdown = () => {
-  const uploadModal = useUploadModal()
+  const { open, isOpen } = useModal()
   const [isDropdown, setDropdown] = useState(false)
   const [isPending, startTransition] = useTransition()
 
@@ -29,7 +29,7 @@ export const UploadDropdown = () => {
   const onUploadSong = (): void => {
     setDropdown(false)
 
-    return uploadModal.onOpen()
+    return open('uploadSong')
   }
 
   const onUploadPlaylist = () => {
@@ -79,7 +79,7 @@ export const UploadDropdown = () => {
         <DropdownMenuContent
           className="min-w-[220px] rounded-md border-none  p-[5px]"
           sideOffset={5}
-          hidden={uploadModal.isOpen}
+          hidden={isOpen}
         >
           <DropdownMenuItem onSelect={onUploadSong}>
             <div className="mr-2   ">

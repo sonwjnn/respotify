@@ -7,10 +7,9 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 import { LuImage } from 'react-icons/lu'
 
-import { usePlaylistModal } from '@/store/modals/use-playlist-modal'
 import { usePlaylist } from '@/store/use-playlist'
 import { useUserStore } from '@/store/use-user-store'
-import { DeleteIcon, MusicNote } from '@/public/icons'
+import { DeleteIcon } from '@/public/icons'
 import { cn } from '@/lib/utils'
 
 import { Spinner } from '@/components/spinner'
@@ -22,6 +21,7 @@ import { PlaylistSchema } from '@/schemas'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Form, FormControl, FormField, FormItem, FormMessage } from '../ui/form'
+import { useModal } from '@/store/use-modal-store'
 
 export const EditPlaylistModal = () => {
   const {
@@ -31,7 +31,10 @@ export const EditPlaylistModal = () => {
     setTitle,
     setBgColor: setBgColorStore,
   } = usePlaylist()
-  const uploadModal = usePlaylistModal()
+  const { isOpen, close, type } = useModal()
+
+  const isModalOpen = isOpen && type === 'editPlaylist'
+
   const { updatePlaylist } = useUserStore()
 
   const [file, setFile] = useState<string>(playlist?.imagePath || '')
@@ -56,28 +59,19 @@ export const EditPlaylistModal = () => {
   })
 
   useEffect(() => {
-    // Update the default values when the playlist changes
-    form.reset({
-      title: playlist?.title || '',
-      description: playlist?.description || '',
-      image: '',
-    })
-    if (playlist?.imagePath) setFile(playlist?.imagePath)
-    else setFile('')
-  }, [playlist])
+    if (playlist && isModalOpen) {
+      form.setValue('title', playlist?.title || '')
+      form.setValue('description', playlist?.description || '')
+      form.setValue('image', playlist?.imagePath || '')
+      setFile(playlist?.imagePath || '')
+    }
+  }, [playlist, form, isModalOpen])
 
   useEffect(() => {
     if (dataColor) {
       setBgColor(dataColor?.[2] ?? '#e0e0e0')
     }
   }, [dataColor])
-
-  const onChange = (open: boolean): void => {
-    if (!open) {
-      form.reset()
-      uploadModal.onClose()
-    }
-  }
 
   const handleChange = (event: any): void => {
     if (event.target.files[0]) {
@@ -98,13 +92,13 @@ export const EditPlaylistModal = () => {
             setImagePath(data.imagePath || '/images/note.svg')
             setBgColorStore(bgColor)
             toast.success('Playlist edited!')
-            form.reset()
-            uploadModal.onClose()
+            close()
           }
         })
         .catch(() => toast.error('Something went wrong!'))
     })
   }
+
   useEffect(() => {
     if (playlist) {
       updatePlaylist(playlist)
@@ -123,8 +117,8 @@ export const EditPlaylistModal = () => {
       className="md:max-w-[550px]"
       title="Edit details playlist"
       description="upload playlist description"
-      isOpen={uploadModal.isOpen}
-      onChange={onChange}
+      isOpen={isModalOpen}
+      onChange={close}
     >
       <Form {...form}>
         <form

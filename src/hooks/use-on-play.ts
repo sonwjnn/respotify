@@ -4,7 +4,6 @@ import { usePlayer } from '@/store/use-player'
 import { useSelectedPlayer } from '@/store/use-selected-player'
 import { SongType } from '@/types/types'
 
-import { useAuthModal } from '@/store/modals/use-auth-modal'
 // import { useUser } from '@/hooks/use-user'
 import { useCurrentUser } from './use-current-user'
 
@@ -23,8 +22,6 @@ export const useOnPlay = (songs: SongType[]): ((id: string) => void) => {
 
   const { setSelected } = useSelectedPlayer()
 
-  const authModal = useAuthModal()
-
   // const subcribeModal = useSubscribeModal()
 
   // const { user } = useUser()
@@ -32,7 +29,6 @@ export const useOnPlay = (songs: SongType[]): ((id: string) => void) => {
 
   const onPlay = (id: string): void => {
     if (!user) {
-      authModal.onOpen()
       return
     }
 

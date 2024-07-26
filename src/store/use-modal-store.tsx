@@ -1,6 +1,11 @@
 import { create } from 'zustand'
 
-export type ModalType = 'auth'
+export type ModalType =
+  | 'auth'
+  | 'editPlaylist'
+  | 'editUser'
+  | 'uploadSong'
+  | 'subscribe'
 
 type ModalData = {
   authType?: 'login' | 'register'

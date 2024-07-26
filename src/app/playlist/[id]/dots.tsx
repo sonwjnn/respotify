@@ -14,8 +14,6 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Tooltip } from '@/components/ui/tooltip'
-import { useAuthModal } from '@/store/modals/use-auth-modal'
-import { usePlaylistModal } from '@/store/modals/use-playlist-modal'
 import { useUserStore } from '@/store/use-user-store'
 import { DeleteIcon } from '@/public/icons'
 import { PlaylistType } from '@/types/types'
@@ -23,6 +21,7 @@ import { useConfirm } from '@/hooks/use-confirm'
 import { useCurrentUser } from '@/hooks/use-current-user'
 import { cn } from '@/lib/utils'
 import { deleteLikedPlaylist, deletePlaylist } from '@/actions/playlist'
+import { useModal } from '@/store/use-modal-store'
 
 type DotsProps = {
   data: PlaylistType
@@ -30,13 +29,13 @@ type DotsProps = {
 }
 
 export const Dots = ({ data, className }: DotsProps) => {
+  const { open } = useModal()
+
   const [ConfirmDialog, confirm] = useConfirm(
     'Are you sure?',
     'You are about to delete this playlist'
   )
   const user = useCurrentUser()
-  const authModal = useAuthModal()
-  const uploadModal = usePlaylistModal()
 
   const { removeLikedPlaylist, removePlaylist } = useUserStore()
 
@@ -60,8 +59,10 @@ export const Dots = ({ data, className }: DotsProps) => {
   }
 
   const onEditPlaylist = () => {
+    if (!user) return
+
     setDropdown(false)
-    uploadModal.onOpen()
+    open('editPlaylist')
   }
 
   const onRemoveFromLibrary = () => {

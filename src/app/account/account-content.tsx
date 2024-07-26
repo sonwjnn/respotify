@@ -5,14 +5,15 @@ import { useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
 
 import { Button } from '@/components/ui/button'
-import { useSubscribeModal } from '@/store/modals/use-subcribe-modal'
 import { postData } from '@/lib/helpers'
 import { useCurrentUser } from '@/hooks/use-current-user'
+import { useModal } from '@/store/use-modal-store'
 
 export const AccountContent = () => {
+  const { open } = useModal()
+
   const router = useRouter()
 
-  const subscribeModal = useSubscribeModal()
   // const { isLoading, subscription, user } = useUser()
   const user = useCurrentUser()
   const [loading, setLoading] = useState(false)
@@ -47,7 +48,7 @@ export const AccountContent = () => {
       {!subscription ? (
         <div className="flex flex-col gap-y-4 ">
           <p className="text-white ">No active plan.</p>
-          <Button onClick={subscribeModal.onOpen} className="w-[300px]">
+          <Button onClick={() => open('subscribe')} className="w-[300px]">
             Subscribe
           </Button>
         </div>
