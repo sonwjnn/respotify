@@ -23,7 +23,7 @@ export const SongCard = ({ data, onClick }: SongCardProps) => {
     >
       <div className="relative aspect-square h-full w-full overflow-hidden rounded-md shadow-base">
         <Image
-          className="object-cover transition group-hover:scale-110"
+          className="object-cover transition"
           src={data.imagePath}
           fill
           alt="song img"

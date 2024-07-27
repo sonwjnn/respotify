@@ -49,11 +49,10 @@ export const Recommend = ({ data, isHover, setHover }: RecommendProps) => {
         <Image
           className="object-cover"
           fill
-          src={data.imagePath || '/images/note.svg'}
+          src={data.imagePath || '/images/playlist.svg'}
           alt="Image"
           sizes="100%"
         />
-        )
       </div>
       <p className="truncate py-5 pr-2 text-base font-bold text-zinc-600 dark:text-white">
         {data.title}

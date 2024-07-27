@@ -45,9 +45,8 @@ export const LikeButton = ({
       if (isLiked) {
         deleteLikedSong(song.id)
           .then(response => {
-            if (!response) {
-              toast.error('Failed to delete liked song')
-              return
+            if (response?.error) {
+              return toast.error(response.error)
             }
 
             setIsLiked(false)
@@ -57,9 +56,8 @@ export const LikeButton = ({
       } else {
         createLikedSong(song.id)
           .then(response => {
-            if (!response) {
-              toast.error('Failed to like song')
-              return
+            if (response?.error) {
+              return toast.error(response.error)
             }
 
             setIsLiked(true)

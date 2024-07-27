@@ -68,7 +68,7 @@ export const PlayingView = () => {
             <div className="relative aspect-square h-full w-full overflow-hidden rounded-lg shadow-base">
               <Image
                 className="object-cover"
-                src={currentTrack?.imagePath || '/images/note.svg'}
+                src={currentTrack?.imagePath || '/images/song.svg'}
                 fill
                 alt="Img"
                 sizes="100%"

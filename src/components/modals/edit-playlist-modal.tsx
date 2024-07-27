@@ -86,10 +86,12 @@ export const EditPlaylistModal = () => {
     startTransition(() => {
       updatePlaylistAction(values, playlist.id)
         .then(data => {
-          if (data) {
+          if ('error' in data) {
+            toast.error(data.error as string)
+          } else {
             setTitle(data.title)
             setDescription(data.description || '')
-            setImagePath(data.imagePath || '/images/note.svg')
+            setImagePath(data.imagePath || '/images/playlist.svg')
             setBgColorStore(bgColor)
             toast.success('Playlist edited!')
             close()
@@ -166,7 +168,7 @@ export const EditPlaylistModal = () => {
                   <div className="relative aspect-square h-full w-full overflow-hidden rounded-sm">
                     <Image
                       className="object-cover"
-                      src={file || '/images/note.svg'}
+                      src={file || '/images/playlist.svg'}
                       fill
                       alt="playlist img"
                       sizes="100%"

@@ -10,6 +10,7 @@ import { useMainLayout } from '@/store/use-main-layout'
 import { SingleMusicNote } from '@/public/icons'
 import { PlaylistType } from '@/types/types'
 import { useCurrentUser } from '@/hooks/use-current-user'
+import { useTheme } from 'next-themes'
 
 type UserContentProp = {
   data: PlaylistType[]
@@ -20,6 +21,7 @@ export const UserContent = ({ data, id }: UserContentProp) => {
   const router = useRouter()
   // const { isLoading, user, userDetails } = useUser()
   const user = useCurrentUser()
+  const { theme } = useTheme()
   const [bgColorUser, setBgColorUser] = useState<string>('')
   const { quantityCol } = useMainLayout()
 
@@ -43,18 +45,22 @@ export const UserContent = ({ data, id }: UserContentProp) => {
   if (!data?.length) {
     return (
       <div
-        className=" header-bg-img-md-light dark:header-bg-img-md flex h-[40vh] w-full flex-col items-center justify-center gap-y-4 px-5 pt-8 text-white"
+        className=" header-bg-img-md-light dark:header-bg-img-md flex h-[40vh] w-full flex-col items-center justify-center gap-y-4 px-5 pt-8 "
         style={{
           background: bgColorUser,
         }}
       >
         <div>
-          <SingleMusicNote size={70} />
+          <SingleMusicNote
+            className="text-zinc-600 dark:text-white"
+            size={70}
+            color={theme === 'dark' ? '#ffffff' : '#52525B'}
+          />
         </div>
-        <h1 className="text-[32px] font-bold">
+        <h1 className="text-[32px] font-bold text-zinc-600 dark:text-white">
           Playlists you create will appear here
         </h1>
-        <p className="text-base font-semibold">
+        <p className="text-base font-semibold text-zinc-600 dark:text-white">
           Create playlists by tapping the plus icon.
         </p>
       </div>

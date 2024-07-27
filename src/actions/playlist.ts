@@ -1,6 +1,7 @@
 'use server'
 
 import { db } from '@/db/drizzle'
+import { getSubscription } from '@/db/queries'
 import { likedPlaylists, playlists } from '@/db/schema'
 import { currentUser } from '@/lib/auth'
 import { PlaylistSchema } from '@/schemas'
@@ -13,7 +14,13 @@ export const createPlaylist = cache(async () => {
   const user = await currentUser()
 
   if (!user || !user.id) {
-    throw new Error('Unauthorized')
+    return { error: 'Unauthorized' }
+  }
+
+  const subscription = await getSubscription()
+
+  if (!subscription?.isActive) {
+    return { error: 'Subscription' }
   }
 
   const [data] = await db
@@ -37,12 +44,18 @@ export const deletePlaylist = cache(
     const user = await currentUser()
 
     if (!user || !user.id) {
-      throw new Error('Unauthorized')
+      return { error: 'Unauthorized' }
+    }
+
+    const subscription = await getSubscription()
+
+    if (!subscription?.isActive) {
+      return { error: 'Subscription' }
     }
 
     const oldPlaylistImage = playlist.imagePath
 
-    if (oldPlaylistImage && oldPlaylistImage !== '/images/note.svg') {
+    if (oldPlaylistImage && oldPlaylistImage !== '/images/playlist.svg') {
       await fetch('api/uploadthing', {
         method: 'DELETE',
         headers: {
@@ -66,7 +79,7 @@ export const deleteLikedPlaylist = cache(async (playlistId: string) => {
   const user = await currentUser()
 
   if (!user || !user.id) {
-    throw new Error('Unauthorized')
+    return { error: 'Unauthorized' }
   }
 
   await db
@@ -85,7 +98,7 @@ export const createLikedPlaylist = cache(async (playlistId: string) => {
   const user = await currentUser()
 
   if (!user || !user.id) {
-    throw new Error('Unauthorized')
+    return { error: 'Unauthorized' }
   }
 
   const existingPlaylist = await db.query.playlists.findFirst({
@@ -99,13 +112,11 @@ export const createLikedPlaylist = cache(async (playlistId: string) => {
     throw new Error('Playlist not found')
   }
 
-  const data = await db.insert(likedPlaylists).values({
+  await db.insert(likedPlaylists).values({
     userId: user.id,
     playlistId,
     createdAt: new Date(),
   })
-
-  return existingPlaylist
 })
 
 export const updatePlaylist = cache(
@@ -113,18 +124,24 @@ export const updatePlaylist = cache(
     const validatedFields = PlaylistSchema.safeParse(values)
 
     if (!validatedFields.success) {
-      throw new Error('Invalid fields!')
+      return { error: 'Invalid fields!' }
     }
 
     const { title, description, image } = validatedFields.data
 
     if (!title || !description || !playlistId) {
-      throw new Error('Missing fields!')
+      return { error: 'Missing fields!' }
     }
     const user = await currentUser()
 
     if (!user || !user.id) {
-      throw new Error('Unauthorized')
+      return { error: 'Unauthorized' }
+    }
+
+    const subscription = await getSubscription()
+
+    if (!subscription?.isActive) {
+      return { error: 'Subscription' }
     }
 
     const existingPlaylist = await db.query.playlists.findFirst({
@@ -138,7 +155,7 @@ export const updatePlaylist = cache(
     const oldImagePath = existingPlaylist.imagePath
 
     // Delete old image
-    if (oldImagePath && oldImagePath !== '/images/note.svg') {
+    if (oldImagePath && oldImagePath !== '/images/playlist.svg') {
       await fetch('api/uploadthing', {
         method: 'DELETE',
         headers: {
@@ -155,7 +172,7 @@ export const updatePlaylist = cache(
       .set({
         title,
         description,
-        imagePath: image || '/images/note.svg',
+        imagePath: image || '/images/playlist.svg',
       })
       .where(
         and(

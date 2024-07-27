@@ -44,9 +44,8 @@ export const MediaDropdown = ({
     startTransition(() => {
       deleteSongOfPlaylist(song.id, playlist.id)
         .then(response => {
-          if (!response) {
-            toast.error('Failed to delete song of playlist')
-            return
+          if (response?.error) {
+            return toast.error(response.error as string)
           }
 
           removePlaylistSong(song.id)

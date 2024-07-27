@@ -8,6 +8,7 @@ import { currentUser } from '@/lib/auth'
 import { cache } from 'react'
 import { revalidatePath } from 'next/cache'
 import { and, eq, ilike } from 'drizzle-orm'
+import { getSubscription } from '@/db/queries'
 
 export const createSong = cache(
   async (values: z.infer<typeof SongSchema>, duration: number | undefined) => {
@@ -30,14 +31,20 @@ export const createSong = cache(
     const user = await currentUser()
 
     if (!user || !user.id) {
-      throw new Error('Unauthorized')
+      return { error: 'Unauthorized' }
+    }
+
+    const subscription = await getSubscription()
+
+    if (!subscription?.isActive) {
+      return { error: 'Subscription' }
     }
 
     const data = await db.insert(songs).values({
       title,
       author,
       userId: user.id,
-      imagePath: image || '/images/note.svg',
+      imagePath: image || '/images/song.svg',
       songPath: song,
       duration,
       createdAt: new Date(),
@@ -56,30 +63,26 @@ export const createLikedSong = cache(async (songId: string) => {
   const user = await currentUser()
 
   if (!user || !user.id) {
-    throw new Error('Unauthorized')
+    return { error: 'Unauthorized' }
   }
 
-  const data = await db.insert(likedSongs).values({
+  await db.insert(likedSongs).values({
     userId: user.id,
     songId,
     createdAt: new Date(),
   })
-
-  return data
 })
 
 export const deleteLikedSong = cache(async (songId: string) => {
   const user = await currentUser()
 
   if (!user || !user.id) {
-    throw new Error('Unauthorized')
+    return { error: 'Unauthorized' }
   }
 
-  const data = await db
+  await db
     .delete(likedSongs)
     .where(and(eq(likedSongs.songId, songId), eq(likedSongs.userId, user.id)))
-
-  return data
 })
 
 export const createSongOfPlaylist = cache(
@@ -87,16 +90,20 @@ export const createSongOfPlaylist = cache(
     const user = await currentUser()
 
     if (!user || !user.id) {
-      throw new Error('Unauthorized')
+      return { error: 'Unauthorized' }
     }
 
-    const data = await db.insert(playlistSongs).values({
+    const subscription = await getSubscription()
+
+    if (!subscription?.isActive) {
+      return { error: 'Subscription' }
+    }
+
+    await db.insert(playlistSongs).values({
       playlistId,
       songId,
       createdAt: new Date(),
     })
-
-    return data
   }
 )
 
@@ -105,10 +112,16 @@ export const deleteSongOfPlaylist = cache(
     const user = await currentUser()
 
     if (!user || !user.id) {
-      throw new Error('Unauthorized')
+      return { error: 'Unauthorized' }
     }
 
-    const data = await db
+    const subscription = await getSubscription()
+
+    if (!subscription?.isActive) {
+      return { error: 'Subscription' }
+    }
+
+    await db
       .delete(playlistSongs)
       .where(
         and(
@@ -116,8 +129,6 @@ export const deleteSongOfPlaylist = cache(
           eq(playlistSongs.playlistId, playlistId)
         )
       )
-
-    return data
   }
 )
 

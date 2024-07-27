@@ -47,11 +47,12 @@ export const LikeButton = ({ size = 25, className }: LikeButtonProps) => {
       } else {
         createLikedPlaylist(playlist.id)
           .then(data => {
-            if (data) {
-              setIsLiked(true)
-              addLikedPlaylist(data)
-              toast.success('Playlist liked!')
+            if (data?.error) {
+              return toast.error(data.error)
             }
+            setIsLiked(true)
+            addLikedPlaylist(playlist)
+            toast.success('Playlist liked!')
           })
           .catch(() => toast.error('Something went wrong!'))
       }

@@ -500,13 +500,13 @@ export function MusicNote(props: Partial<IconProps>): JSX.Element {
 }
 
 export function SingleMusicNote(props: Partial<IconProps>): JSX.Element {
-  const { size = 16 } = props
+  const { size = 16, color = 'currentColor' } = props
   return (
     <svg
       role="img"
       height={size}
       width={size}
-      fill="currentColor"
+      fill={color}
       aria-hidden="true"
       viewBox="0 0 16 16"
       data-encore-id="icon"

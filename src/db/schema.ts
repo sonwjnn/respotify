@@ -15,7 +15,7 @@ export const users = pgTable('user', {
   name: text('name'),
   email: text('email').notNull(),
   emailVerified: timestamp('email_verified', { mode: 'date' }),
-  image: text('image').notNull().default('/images/robot.svg'),
+  image: text('image').notNull().default('/images/user.svg'),
   password: text('password'),
 })
 
@@ -92,7 +92,7 @@ export const songs = pgTable('songs', {
   author: text('author').notNull(),
   duration: integer('duration'),
   songPath: text('song_path').notNull(),
-  imagePath: text('image_path').notNull().default('/images/note.svg'),
+  imagePath: text('image_path').notNull().default('/images/song.svg'),
   userId: uuid('user_id')
     .notNull()
     .references(() => users.id),
@@ -112,7 +112,7 @@ export const playlists = pgTable('playlists', {
   userId: uuid('user_id')
     .notNull()
     .references(() => users.id),
-  imagePath: text('image_path'),
+  imagePath: text('image_path').notNull().default('/images/playlist.svg'),
   description: text('description'),
   bgColor: text('bg_color').notNull().default('#171717'),
   createdAt: timestamp('created_at', { mode: 'date' }).notNull(),

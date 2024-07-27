@@ -62,7 +62,7 @@ export const HeaderContent = () => {
             className="
             object-cover
           "
-            src={data?.imagePath || '/images/note.svg'}
+            src={data?.imagePath || '/images/playlist.svg'}
             fill
             alt="playlist image"
             sizes="100%"

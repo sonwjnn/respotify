@@ -37,7 +37,11 @@ export const UploadDropdown = () => {
       setDropdown(false)
       createPlaylist()
         .then(data => {
-          router.push(`/playlist/${data.id}`)
+          if ('error' in data) {
+            toast.error(data.error as string)
+          } else {
+            router.push(`/playlist/${data.id}`)
+          }
         })
         .catch(() => toast.error('Something went wrong!'))
     })

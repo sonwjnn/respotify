@@ -25,9 +25,8 @@ export const AddSongPlaylist = ({ song, playlist }: AddSongPlaylistProps) => {
     startTransition(() => {
       createSongOfPlaylist(song.id, playlist.id)
         .then(response => {
-          if (!response) {
-            toast.error('Failed to add song of playlist')
-            return
+          if (response?.error) {
+            return toast.error(response.error)
           }
 
           addPlaylistSong(song)

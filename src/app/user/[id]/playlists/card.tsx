@@ -35,7 +35,7 @@ export const Card = ({
       <div className="relative aspect-square h-full w-full overflow-hidden rounded-md shadow-base">
         <Image
           className="object-cover"
-          src={data.imagePath || '/images/note.svg'}
+          src={data.imagePath || '/images/playlist.svg'}
           fill
           alt="song img"
           sizes="100%"

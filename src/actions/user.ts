@@ -30,7 +30,7 @@ export const updateUser = async (values: z.infer<typeof UserSchema>) => {
     .update(users)
     .set({
       name,
-      image: image || '/images/robot.svg',
+      image: image || '/images/user.svg',
     })
     .where(eq(users.id, user.id))
     .returning()

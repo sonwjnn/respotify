@@ -44,7 +44,7 @@ export const PlaylistItem = ({ data }: PlaylistItemProps) => {
         <div className="relative min-h-[48px] min-w-[48px] overflow-hidden rounded-md">
           <Image
             fill
-            src={data.imagePath || '/images/note.svg'}
+            src={data.imagePath || '/images/playlist.svg'}
             sizes="100%"
             alt="Media-Item"
             className="object-cover"

@@ -159,7 +159,7 @@ export const EditUserModal = () => {
                   <div className="relative h-full w-full overflow-hidden rounded-full">
                     <Image
                       className="object-cover"
-                      src={file || '/images/note.svg'}
+                      src={file || '/images/song.svg'}
                       fill
                       alt="playlist img"
                       sizes="100%"

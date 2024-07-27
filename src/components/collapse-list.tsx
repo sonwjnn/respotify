@@ -17,7 +17,7 @@ const CollapseListItem = ({ playlist }: CollapseListItemProps) => {
       <div className="relative aspect-square h-12 w-12 overflow-hidden rounded-sm shadow-base">
         <Image
           fill
-          src={playlist.imagePath || '/images/note.svg'}
+          src={playlist.imagePath || '/images/playlist.svg'}
           sizes="100%"
           alt="Media-Item"
           className="object-cover"

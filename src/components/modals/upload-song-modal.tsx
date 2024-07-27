@@ -69,11 +69,14 @@ export const UploadSongModal = () => {
   const onSubmit = (values: z.infer<typeof SongSchema>) => {
     startTransition(() => {
       createSong(values, duration)
-        .then(() => {
+        .then(data => {
+          if (data && 'error' in data) {
+            return toast.error(data.error as string)
+          }
           toast.success('Song created!')
           form.reset()
         })
-        .catch(e => console.log(e))
+        .catch(() => toast.error('Something went wrong!'))
     })
   }
 

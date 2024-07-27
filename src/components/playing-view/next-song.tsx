@@ -73,7 +73,7 @@ export const NextSong = ({ song }: NextSongProps) => {
                 className="
             object-cover
           "
-                src={song?.imagePath || '/images/note.svg'}
+                src={song?.imagePath || '/images/song.svg'}
                 fill
                 alt="Img"
                 sizes="100%"

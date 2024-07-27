@@ -59,7 +59,7 @@ export const UserButton = () => {
                   fill
                   alt="avatar img"
                   sizes="100%"
-                  src={user?.image!}
+                  src={user?.image || '/images/user.svg'}
                 />
               </div>
             </div>

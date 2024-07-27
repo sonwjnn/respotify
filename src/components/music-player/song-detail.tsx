@@ -21,7 +21,7 @@ export const SongDetails = ({ data }: SongDetailsProps) => {
           <div className="relative min-h-[56px] min-w-[56px] overflow-hidden rounded-md">
             <Image
               fill
-              src={data.imagePath || '/images/note.svg'}
+              src={data.imagePath || '/images/song.svg'}
               sizes="100%"
               alt="Media-Item"
               className="object-cover"

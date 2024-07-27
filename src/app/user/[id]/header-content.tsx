@@ -27,7 +27,7 @@ export const HeaderContent = ({ data }: HeaderContentProps) => {
     <div className="flex flex-col  items-center gap-x-5  md:flex-row md:items-end">
       <div
         className={cn(
-          `group relative flex h-[232px] w-[232px] cursor-pointer items-center justify-center rounded-full bg-[#282828] text-white shadow-base`,
+          `group relative flex h-[232px] w-[232px] cursor-pointer items-center justify-center rounded-full bg-white text-white shadow-base dark:bg-[#282828]`,
           width <= 875 && '!h-[192px] !w-[192px]'
         )}
         onClick={onClick}
@@ -42,7 +42,7 @@ export const HeaderContent = ({ data }: HeaderContentProps) => {
             className="
             object-cover
           "
-            src={user?.image || '/images/robot.svg'}
+            src={user?.image || '/images/user.svg'}
             fill
             alt="user image"
             sizes="100%"

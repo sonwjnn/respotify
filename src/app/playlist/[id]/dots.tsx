@@ -47,7 +47,11 @@ export const Dots = ({ data, className }: DotsProps) => {
   const onDeletePlaylist = () => {
     startTransition(() => {
       deletePlaylist(data)
-        .then(() => {
+        .then(response => {
+          if (response?.error) {
+            return toast.error(response.error)
+          }
+
           removePlaylist(data.id)
 
           if (pathname.includes(`playlist/${data.id}`)) {
@@ -68,7 +72,11 @@ export const Dots = ({ data, className }: DotsProps) => {
   const onRemoveFromLibrary = () => {
     startTransition(() => {
       deleteLikedPlaylist(data.id)
-        .then(() => {
+        .then(response => {
+          if (response?.error) {
+            return toast.error(response.error)
+          }
+
           removeLikedPlaylist(data.id)
         })
         .catch(() => toast.error('Something went wrong!'))
