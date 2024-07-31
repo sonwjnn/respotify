@@ -15,8 +15,6 @@ type UserPlaylistPageProps = {
   }
 }
 
-export const revalidate = 0
-
 const UserPlaylistPage: NextPage<UserPlaylistPageProps> = async ({
   params,
 }: UserPlaylistPageProps) => {

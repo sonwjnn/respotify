@@ -108,6 +108,14 @@ const config = withUt({
             transform: 'rotate(30deg)',
           },
         },
+        'brighten-up': {
+          '0%': {
+            filter: 'brightness(0.3)',
+          },
+          '100%': {
+            filter: 'brightness(1)',
+          },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
@@ -116,6 +124,7 @@ const config = withUt({
         'gradient-y': 'gradient-y 15s ease infinite',
         'gradient-xy': 'gradient-xy 15s ease infinite',
         'spin-once': 'spin-once 1s ease-in-out',
+        'brighten-up': 'brighten-up 0.2s',
       },
       fontFamily: {
         sans: ['var(--font-circularSp)'],

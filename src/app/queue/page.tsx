@@ -6,8 +6,6 @@ import { PageWrapper } from '@/components/page-wrapper'
 import { QueueContent } from './queue-content'
 import { getSubscription } from '@/db/queries'
 
-export const revalidate = 0
-
 const QueuePage = async () => {
   const subscription = await getSubscription()
 

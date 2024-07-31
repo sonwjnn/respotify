@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { SongType } from '@/types/types'
 
 import { LikeButton } from '@/components/like-button'
+import { ImageLazy } from '../ui/image'
 
 type SongDetailsProps = {
   data: SongType
@@ -18,13 +19,10 @@ export const SongDetails = ({ data }: SongDetailsProps) => {
           className="flex items-center gap-x-3
       "
         >
-          <div className="relative min-h-[56px] min-w-[56px] overflow-hidden rounded-md">
-            <Image
-              fill
+          <div className="relative size-[56px] overflow-hidden rounded-md">
+            <ImageLazy
               src={data.imagePath || '/images/song.svg'}
-              sizes="100%"
               alt="Media-Item"
-              className="object-cover"
             />
             )
           </div>

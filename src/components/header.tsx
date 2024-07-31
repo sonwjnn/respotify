@@ -9,9 +9,9 @@ import { useMainLayout } from '@/store/use-main-layout'
 // import { useUser } from '@/hooks/use-user'
 import { PlaylistType } from '@/types/types'
 import { cn } from '@/lib/utils'
-import { buckets } from '@/data/ui'
 import { useTheme } from 'next-themes'
 import { useCurrentUser } from '@/hooks/use-current-user'
+import { useInView } from 'react-intersection-observer'
 
 type HeaderProps = {
   children: React.ReactNode
@@ -30,6 +30,7 @@ export const Header = memo(
     const { bgColor: bgColorHeader } = useHeader()
     const { setHeight } = useHeader()
     const { width } = useMainLayout()
+
     // const { userDetails } = useUser()
     const headerRef = useRef<HTMLDivElement>(null)
 

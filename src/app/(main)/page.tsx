@@ -18,8 +18,6 @@ const MainPage = async () => {
     subscriptionsData,
   ])
 
-  console.log('subscription', subscription)
-
   const isPro = !!subscription?.isActive
   return (
     <PageWrapper>

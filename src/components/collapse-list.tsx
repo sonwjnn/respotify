@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 import { PlaylistType } from '@/types/types'
+import { ImageLazy } from './ui/image'
 
 type CollapseListProps = {
   playlists: PlaylistType[]
@@ -15,12 +16,9 @@ const CollapseListItem = ({ playlist }: CollapseListItemProps) => {
   return (
     <div className="flex items-center justify-center  rounded-lg  py-2  transition hover:bg-neutral-800 ">
       <div className="relative aspect-square h-12 w-12 overflow-hidden rounded-sm shadow-base">
-        <Image
-          fill
+        <ImageLazy
           src={playlist.imagePath || '/images/playlist.svg'}
-          sizes="100%"
           alt="Media-Item"
-          className="object-cover"
         />
       </div>
     </div>
@@ -43,13 +41,7 @@ export const CollapseList = ({ playlists }: CollapseListProps) => {
       <Link href={`/liked`} className="  px-1 ">
         <div className="flex items-center justify-center rounded-lg py-2 shadow-base transition hover:bg-neutral-800 ">
           <div className="relative aspect-square h-12 w-12 overflow-hidden rounded-sm shadow-base">
-            <Image
-              fill
-              src={'/images/liked.png'}
-              sizes="100%"
-              alt="like img"
-              className="object-cover"
-            />
+            <ImageLazy src={'/images/liked.png'} alt="like img" />
           </div>
         </div>
       </Link>

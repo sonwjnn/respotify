@@ -18,8 +18,10 @@ import { AddPlaylistIcon } from '@/public/icons'
 import { Tooltip } from '@/components/ui/tooltip'
 import { createPlaylist } from '@/actions/playlist'
 import { useModal } from '@/store/use-modal-store'
+import { useCurrentUser } from '@/hooks/use-current-user'
 
 export const UploadDropdown = () => {
+  const user = useCurrentUser()
   const { open, isOpen } = useModal()
   const [isDropdown, setDropdown] = useState(false)
   const [isPending, startTransition] = useTransition()
@@ -53,6 +55,15 @@ export const UploadDropdown = () => {
     }
   }
 
+  const onClick = () => {
+    if (!user) {
+      open('auth', { authType: 'login' })
+    }
+
+    // TODO: Subscription
+
+    setDropdown(!isDropdown)
+  }
   return (
     <DropdownMenu
       open={isDropdown}
@@ -70,7 +81,7 @@ export const UploadDropdown = () => {
               <div
                 className="absolute right-[1px] flex h-full  w-full cursor-pointer items-center justify-center border-none bg-transparent text-zinc-500 outline-none transition hover:text-white focus:outline-none dark:text-neutral-400"
                 aria-label="Customise options"
-                onClick={() => setDropdown(!isDropdown)}
+                onClick={onClick}
               >
                 <AiOutlinePlus size={20} />
               </div>

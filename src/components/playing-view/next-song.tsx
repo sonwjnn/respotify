@@ -1,6 +1,5 @@
 'use client'
 
-import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
 import Skeleton from 'react-loading-skeleton'
@@ -8,6 +7,7 @@ import Skeleton from 'react-loading-skeleton'
 import { usePlayer } from '@/store/use-player'
 import { PlayIcon, SingleMusicNote } from '@/public/icons'
 import { SongType } from '@/types/types'
+import { ImageLazy } from '../ui/image'
 
 type NextSongProps = {
   song: SongType | undefined
@@ -69,14 +69,9 @@ export const NextSong = ({ song }: NextSongProps) => {
           </div>
           <div className={' h-12 w-12'}>
             <div className="relative aspect-square h-full w-full overflow-hidden rounded-md">
-              <Image
-                className="
-            object-cover
-          "
+              <ImageLazy
                 src={song?.imagePath || '/images/song.svg'}
-                fill
                 alt="Img"
-                sizes="100%"
               />
             </div>
           </div>

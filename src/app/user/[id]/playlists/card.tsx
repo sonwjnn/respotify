@@ -9,6 +9,7 @@ import { PlaylistType } from '@/types/types'
 
 import { PlayButton } from '@/components/play-button'
 import { useCurrentUser } from '@/hooks/use-current-user'
+import { ImageLazy } from '@/components/ui/image'
 
 type CardProps = {
   data: PlaylistType
@@ -33,13 +34,9 @@ export const Card = ({
       className="group relative mb-3 flex cursor-pointer flex-col items-center justify-center gap-x-4 overflow-hidden rounded-md bg-neutral-400/5 p-4 transition hover:bg-neutral-400/10"
     >
       <div className="relative aspect-square h-full w-full overflow-hidden rounded-md shadow-base">
-        <Image
-          className="object-cover"
+        <ImageLazy
           src={data.imagePath || '/images/playlist.svg'}
-          fill
           alt="song img"
-          sizes="100%"
-          priority={true}
         />
       </div>
 

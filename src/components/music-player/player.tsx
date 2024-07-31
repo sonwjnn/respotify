@@ -141,7 +141,7 @@ export const Player = ({ song, songUrl }: PlayerProps) => {
     // handle when play done queue
     if (!nextSong && !isReplayCurr && !isRandomCurr) {
       setId(playerIds[0] as string)
-      setCurrentTrack({ ...queue[0] } as SongType)
+      setCurrentTrack({ ...queue[0] })
       setCurrentTrackIndex(0)
       return
     }
@@ -160,7 +160,7 @@ export const Player = ({ song, songUrl }: PlayerProps) => {
 
     // default change next song
     setId(nextSong as string)
-    setCurrentTrack({ ...queue[nextTrackIndex] } as SongType)
+    setCurrentTrack({ ...queue[nextTrackIndex] })
     setCurrentTrackIndex(nextTrackIndex)
     calNextTrackIndex()
     selectedPlayer.setSelected(true)
@@ -175,11 +175,11 @@ export const Player = ({ song, songUrl }: PlayerProps) => {
     const previousSong = playerIds[currentIndex - 1]
 
     if (!previousSong) {
-      setId(playerIds[playerIds.length - 1] as string)
+      setId(playerIds[playerIds.length - 1])
       return
     }
 
-    setCurrentTrack({ ...queue[currentTrackIndex - 1] } as SongType)
+    setCurrentTrack({ ...queue[currentTrackIndex - 1] })
     setCurrentTrackIndex(currentTrackIndex - 1)
     selectedPlayer.setSelected(true)
     setId(previousSong)

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useTransition } from 'react'
 import { toast } from 'react-hot-toast'
 
 // import { useUser } from '@/hooks/use-user'
@@ -12,6 +12,7 @@ import { Button } from '@/components/ui/button'
 import { Modal } from '@/components/ui/modal'
 import { useCurrentUser } from '@/hooks/use-current-user'
 import { useModal } from '@/store/use-modal-store'
+import { createStripeUrl } from '@/actions/subscription'
 
 type SubscribeModalProps = {
   products: ProductWithPrice[]
@@ -29,6 +30,7 @@ const formatPrice = (price: Price): string => {
 
 export const SubscribeModal = ({ products }: SubscribeModalProps) => {
   const { isOpen, type } = useModal()
+  const [isPending, startTransition] = useTransition()
 
   const isModalOpen = isOpen && type === 'subscribe'
 
@@ -42,30 +44,16 @@ export const SubscribeModal = ({ products }: SubscribeModalProps) => {
     if (!open) close()
   }
 
-  const handleCheckout: (price: Price) => Promise<void> = async (
-    price: Price
-  ) => {
-    setPriceIdLoading(price.id)
-
-    if (!user) {
-      setPriceIdLoading(undefined)
-      toast.error('Must be logged in')
-      return
-    }
-
-    try {
-      const { sessionId } = await postData({
-        url: 'api/create-checkout-session',
-        data: { price },
-      })
-
-      const stripe = await getStripe()
-      stripe?.redirectToCheckout({ sessionId })
-    } catch (error) {
-      toast.error((error as Error).message)
-    } finally {
-      setPriceIdLoading(undefined)
-    }
+  const onUpgrade = () => {
+    startTransition(() => {
+      createStripeUrl()
+        .then(response => {
+          if (response.data) {
+            window.location.href = response.data
+          }
+        })
+        .catch(() => toast.error('Something went wrong'))
+    })
   }
 
   if (products.length) {
@@ -83,8 +71,8 @@ export const SubscribeModal = ({ products }: SubscribeModalProps) => {
           return product.prices.map(price => (
             <Button
               key={price.id}
-              onClick={() => handleCheckout(price)}
-              disabled={price.id === priceIdLoading}
+              onClick={onUpgrade}
+              disabled={isPending}
               className="mb-4 "
             >
               {`Subscribe for ${formatPrice(price)} a ${price.interval}`}

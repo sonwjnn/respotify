@@ -15,8 +15,6 @@ type UserPageProps = {
   }
 }
 
-export const revalidate = 0
-
 const UserPage = async ({ params }: UserPageProps) => {
   // const playlists = await getOtherUserPlaylists(params.id)
   const subscription = await getSubscription()

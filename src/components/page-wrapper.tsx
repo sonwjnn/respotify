@@ -6,6 +6,7 @@ import { useHeader } from '@/store/use-header'
 import { useNavbar } from '@/store/use-navbar'
 
 import { ScrollArea } from '@/components/ui/scroll-area'
+import { useInView } from 'react-intersection-observer'
 
 type PageWrapperProps = {
   hasPlayBtn?: boolean
@@ -15,6 +16,10 @@ type PageWrapperProps = {
 export const PageWrapper = ({ children }: PageWrapperProps) => {
   const { setOpacity, setPlayBtnVisible, setUsernameVisible } = useNavbar()
   const { height } = useHeader()
+
+  const { ref: pivotTrackingRef, inView: isTracking } = useInView({
+    threshold: 0,
+  })
 
   useEffect(() => {
     setPlayBtnVisible(false)
@@ -49,6 +54,11 @@ export const PageWrapper = ({ children }: PageWrapperProps) => {
       className="relative h-full w-full rounded-lg bg-[#F1F2F4] dark:bg-neutral-900"
       onScroll={handleScroll}
     >
+      <div
+        ref={pivotTrackingRef}
+        className="absolute -z-50"
+        style={{ top: '100px' }}
+      />
       {children}
     </ScrollArea>
   )

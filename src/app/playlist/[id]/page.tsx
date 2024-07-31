@@ -19,8 +19,6 @@ type PlaylistPageProps = {
   }
 }
 
-export const revalidate = 0
-
 const PlaylistPage = async ({ params }: PlaylistPageProps) => {
   const playlistData = getPlaylistById(params.id)
   const playlistSongsData = getSongsByPlaylistId(params.id)

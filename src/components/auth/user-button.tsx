@@ -22,9 +22,12 @@ import { useCurrentUser } from '@/hooks/use-current-user'
 import { LogoutButton } from './logout-button'
 import { useModal } from '@/store/use-modal-store'
 
-export const UserButton = () => {
+export const UserButton = ({
+  hasActiveSubscription,
+}: {
+  hasActiveSubscription: boolean
+}) => {
   const { isOpen } = useModal()
-  // const { user, subscription, userDetails } = useUser()
   const user = useCurrentUser()
 
   const [isDropdown, setDropdown] = useState(false)
@@ -36,8 +39,6 @@ export const UserButton = () => {
       setDropdown(false)
     }
   }
-
-  const subscription = false
 
   return (
     <DropdownMenu
@@ -77,7 +78,7 @@ export const UserButton = () => {
             <RiVipCrownLine
               size={18}
               className={`mr-2 ${
-                subscription ? 'text-yellow-500' : 'text-neutral-400'
+                hasActiveSubscription ? 'text-yellow-500' : 'text-neutral-400'
               }`}
             />
             Account

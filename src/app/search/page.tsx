@@ -14,8 +14,6 @@ type SearchPageProps = {
   }
 }
 
-export const revalidate = 0
-
 const SearchPage = async ({ searchParams }: SearchPageProps) => {
   const songsData = getSongsByTitle(searchParams.title || '')
   const subscriptionData = getSubscription()

@@ -1,22 +1,23 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useTransition } from 'react'
 import { toast } from 'react-hot-toast'
 
 import { Button } from '@/components/ui/button'
 import { postData } from '@/lib/helpers'
 import { useCurrentUser } from '@/hooks/use-current-user'
 import { useModal } from '@/store/use-modal-store'
+import { createStripeUrl } from '@/actions/subscription'
 
 export const AccountContent = () => {
+  const [loading, setLoading] = useState(false)
+  const [isPending, startTransition] = useTransition()
   const { open } = useModal()
 
   const router = useRouter()
 
-  // const { isLoading, subscription, user } = useUser()
   const user = useCurrentUser()
-  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     if (!user) {

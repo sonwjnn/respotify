@@ -1,12 +1,11 @@
 'use client'
 
-import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
 
 // import { useUser } from '@/hooks/use-user'
-import { MusicNote } from '@/public/icons'
 import { cn } from '@/lib/utils'
 import { useCurrentUser } from '@/hooks/use-current-user'
+import { ImageLazy } from '@/components/ui/image'
 
 type LikedItemProps = {
   image: string
@@ -38,14 +37,8 @@ export const LikedItem = ({ image, name, href, count }: LikedItemProps) => {
           )}
         >
           <div onClick={onClick} className="flex items-center gap-x-3">
-            <div className="relative min-h-[48px] min-w-[48px] overflow-hidden rounded-md">
-              <Image
-                fill
-                src={image}
-                sizes="100%"
-                alt="Media-Item"
-                className="object-cover"
-              />
+            <div className="relative size-[48px] overflow-hidden rounded-md">
+              <ImageLazy src={image} alt="Media-Item" />
             </div>
             <div className="flex flex-col gap-y-1 overflow-hidden">
               <p className="truncate text-zinc-600 dark:text-white">{name}</p>

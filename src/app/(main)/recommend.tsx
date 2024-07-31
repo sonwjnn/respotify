@@ -9,6 +9,7 @@ import { PlaylistType } from '@/types/types'
 import { PlayButton } from '@/components/play-button'
 import { useCurrentUser } from '@/hooks/use-current-user'
 import { useModal } from '@/store/use-modal-store'
+import { ImageLazy } from '@/components/ui/image'
 
 type RecommendProps = {
   data: PlaylistType
@@ -45,14 +46,8 @@ export const Recommend = ({ data, isHover, setHover }: RecommendProps) => {
       onMouseLeave={() => setBgColor(bgBase)}
       onClick={onClick}
     >
-      <div className="relative min-h-[64px] min-w-[64px] shadow-base">
-        <Image
-          className="object-cover"
-          fill
-          src={data.imagePath || '/images/playlist.svg'}
-          alt="Image"
-          sizes="100%"
-        />
+      <div className="relative size-[80px] shadow-base">
+        <ImageLazy src={data.imagePath || '/images/playlist.svg'} alt="Image" />
       </div>
       <p className="truncate py-5 pr-2 text-base font-bold text-zinc-600 dark:text-white">
         {data.title}

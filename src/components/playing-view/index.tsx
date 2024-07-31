@@ -1,24 +1,23 @@
 'use client'
 
-import Image from 'next/image'
 import { useState } from 'react'
 
 import { usePlayer } from '@/store/use-player'
 import { usePlayingView } from '@/store/use-playing-view'
-import { CloseIcon, MusicNote } from '@/public/icons'
-import { SongType } from '@/types/types'
+import { CloseIcon } from '@/public/icons'
 
 import { LikeButton } from '@/components/like-button'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { NextSong } from '@/components/playing-view/next-song'
 import { PlayingViewResizer } from '@/components/playing-view/playing-view-resizer'
+import { ImageLazy } from '../ui/image'
 
 export const PlayingView = () => {
   const { collapsed } = usePlayingView()
   const { currentTrack, queue, nextTrackIndex } = usePlayer()
 
   // find next song
-  const nextSong = { ...queue[nextTrackIndex] } as SongType
+  const nextSong = { ...queue[nextTrackIndex] }
 
   const [isScroll, setScroll] = useState<boolean>(false)
 
@@ -66,12 +65,9 @@ export const PlayingView = () => {
           </div>
           <div className="flex flex-col gap-4 p-4 pt-0">
             <div className="relative aspect-square h-full w-full overflow-hidden rounded-lg shadow-base">
-              <Image
-                className="object-cover"
+              <ImageLazy
                 src={currentTrack?.imagePath || '/images/song.svg'}
-                fill
                 alt="Img"
-                sizes="100%"
               />
             </div>
 
@@ -83,7 +79,7 @@ export const PlayingView = () => {
               <div className={'flex flex-1 flex-col overflow-hidden '}>
                 <h2
                   className={
-                    'datk:text-white m-0 truncate pb-2 text-2xl font-bold text-zinc-600 hover:underline hover:decoration-2'
+                    'm-0 truncate pb-2 text-2xl font-bold text-zinc-600 hover:underline hover:decoration-2 dark:text-white'
                   }
                 >
                   {currentTrack?.title}

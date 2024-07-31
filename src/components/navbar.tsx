@@ -1,7 +1,7 @@
 'use client'
 
 import { usePalette } from 'color-thief-react'
-import { useParams, useRouter } from 'next/navigation'
+import { useParams, usePathname, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { RxCaretLeft, RxCaretRight } from 'react-icons/rx'
 import { twMerge } from 'tailwind-merge'
@@ -14,7 +14,6 @@ import { usePlayer } from '@/store/use-player'
 import { useSelectedPlayer } from '@/store/use-selected-player'
 // import { useUser } from '@/hooks/use-user'
 import { PlaylistType, SongType } from '@/types/types'
-import { buckets } from '@/data/ui'
 
 import { PlayButton } from '@/components/play-button'
 import { PremiumButton } from '@/components/premium-button'
@@ -184,7 +183,7 @@ export const Navbar = (props: NavbarProps) => {
                 <PremiumButton hasActiveSubscription={hasActiveSubscription} />
               )}
 
-              <UserButton />
+              <UserButton hasActiveSubscription={hasActiveSubscription} />
             </div>
           ) : (
             <>

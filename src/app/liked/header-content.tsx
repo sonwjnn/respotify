@@ -1,8 +1,7 @@
 'use client'
 
-import Image from 'next/image'
-
 import { useMainLayout } from '@/store/use-main-layout'
+import { ImageLazy } from '@/components/ui/image'
 
 export const HeaderContent = () => {
   const { width } = useMainLayout()
@@ -15,15 +14,7 @@ export const HeaderContent = () => {
         } flex h-[232px] w-[232px] items-center justify-center rounded-sm bg-[#282828] text-white shadow-base`}
       >
         <div className="relative aspect-square h-full w-full overflow-hidden rounded-sm">
-          <Image
-            className="
-            object-cover
-          "
-            src="/images/liked.png"
-            fill
-            alt="liked img"
-            sizes="100%"
-          />
+          <ImageLazy src="/images/liked.png" alt="liked img" />
         </div>
       </div>
       <div className="mt-4 flex flex-col gap-y-2 md:mt-0">

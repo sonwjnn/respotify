@@ -8,6 +8,7 @@ import { PlaylistType } from '@/types/types'
 import { cn } from '@/lib/utils'
 import { useCurrentUser } from '@/hooks/use-current-user'
 import { useModal } from '@/store/use-modal-store'
+import { ImageLazy } from '@/components/ui/image'
 
 type HeaderContentProps = {
   data?: PlaylistType[]
@@ -38,16 +39,7 @@ export const HeaderContent = ({ data }: HeaderContentProps) => {
         </div>
 
         <div className="relative  aspect-square h-full w-full overflow-hidden rounded-full">
-          <Image
-            className="
-            object-cover
-          "
-            src={user?.image || '/images/user.svg'}
-            fill
-            alt="user image"
-            sizes="100%"
-            priority={true}
-          />
+          <ImageLazy src={user?.image || '/images/user.svg'} alt="user image" />
         </div>
       </div>
       <div className="mt-4 flex  flex-col gap-y-3 md:mt-0 md:gap-y-6">

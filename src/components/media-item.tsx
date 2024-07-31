@@ -14,6 +14,7 @@ import { getDurationSong } from '@/utils/duration-convertor'
 import { LikeButton } from '@/components/like-button'
 import { MediaDropdown } from '@/components/media-dropdown'
 import { AddSongPlaylist } from '@/components/add-song-playlist'
+import { ImageLazy } from './ui/image'
 
 export const MediaItem = ({
   type = 'default',
@@ -84,13 +85,7 @@ export const MediaItem = ({
         {type !== 'album' && (
           <div className="relative aspect-square h-10 w-10 shrink-0 overflow-hidden">
             {song.imagePath ? (
-              <Image
-                fill
-                src={song.imagePath}
-                sizes="100%"
-                alt="Media-Item"
-                className="object-cover"
-              />
+              <ImageLazy src={song.imagePath} alt="Media-Item" />
             ) : (
               <div className="flex h-full w-full items-center justify-center bg-zinc-300 text-white dark:bg-neutral-800">
                 <SingleMusicNote />

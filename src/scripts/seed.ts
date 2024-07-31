@@ -1,3 +1,4 @@
+import { getGenerateImages } from '@/data/images'
 import * as schema from '@/db/schema'
 import { neon } from '@neondatabase/serverless'
 import 'dotenv/config'
@@ -13,18 +14,17 @@ const main = async () => {
 
     const userId = '4073b79d-2c78-4d67-9124-f8e1e60770d5'
 
+    await db.delete(schema.likedPlaylists)
+    await db.delete(schema.likedSongs)
     await db.delete(schema.playlistSongs)
     await db.delete(schema.songs)
     await db.delete(schema.playlists)
-    await db.delete(schema.likedPlaylists)
-    await db.delete(schema.likedSongs)
     await db.delete(schema.subscriptions)
 
-    const songsIds = Array.from({ length: 13 }, () => uuidv4())
+    const duplicateCount = 8
 
-    await db.insert(schema.songs).values([
+    const songs = [
       {
-        id: songsIds[1],
         title: 'Dacing With Your Ghost',
         author: 'Sasha Alex Sloan',
         userId,
@@ -34,7 +34,6 @@ const main = async () => {
         createdAt: new Date(),
       },
       {
-        id: songsIds[2],
         title: 'Head In The Clouds',
         author: 'Hayd',
         userId,
@@ -44,7 +43,6 @@ const main = async () => {
         createdAt: new Date(),
       },
       {
-        id: songsIds[3],
         title: 'Falling',
         author: 'Harry Styles',
         userId,
@@ -54,7 +52,6 @@ const main = async () => {
         createdAt: new Date(),
       },
       {
-        id: songsIds[4],
         title: 'I Love U 3000 II',
         author: '88rising',
         userId,
@@ -64,7 +61,6 @@ const main = async () => {
         createdAt: new Date(),
       },
       {
-        id: songsIds[5],
         title: 'You Are The Reason',
         author: 'Alex Porat',
         userId,
@@ -74,7 +70,6 @@ const main = async () => {
         createdAt: new Date(),
       },
       {
-        id: songsIds[6],
         title: 'Killing Me Softly',
         author: 'Joseph Vincent',
         userId,
@@ -85,7 +80,6 @@ const main = async () => {
         createdAt: new Date(),
       },
       {
-        id: songsIds[7],
         title: "Can't Help Falling In Love",
         author: 'Alyssa Baker',
         userId,
@@ -96,7 +90,6 @@ const main = async () => {
         createdAt: new Date(),
       },
       {
-        id: songsIds[8],
         title: 'Hero',
         author: 'Cash Cash feat. Christina Perri',
         userId,
@@ -106,7 +99,6 @@ const main = async () => {
         createdAt: new Date(),
       },
       {
-        id: songsIds[9],
         title: 'Like My Father',
         author: 'Jax',
         userId,
@@ -116,7 +108,6 @@ const main = async () => {
         createdAt: new Date(),
       },
       {
-        id: songsIds[10],
         title: 'Diamonds',
         author: 'Rihanna',
         userId,
@@ -126,7 +117,6 @@ const main = async () => {
         createdAt: new Date(),
       },
       {
-        id: songsIds[11],
         title: 'Rainy Days',
         author: 'Alf Wardhana',
         userId,
@@ -136,7 +126,6 @@ const main = async () => {
         createdAt: new Date(),
       },
       {
-        id: songsIds[12],
         title: 'Virgo',
         author: 'Jadu Jadu',
         userId,
@@ -145,16 +134,121 @@ const main = async () => {
         duration: 61000,
         createdAt: new Date(),
       },
-    ])
+    ]
 
-    const playlistId = uuidv4()
+    const songsIds = Array.from({ length: songs.length * duplicateCount }, () =>
+      uuidv4()
+    )
+
+    const duplicateArray = (array: any[], times: number) => {
+      return Array.from({ length: times }).flatMap((_, i) =>
+        array.map((item, index) => {
+          const position = index + i * array.length
+
+          return {
+            ...item,
+            id: songsIds[position],
+          }
+        })
+      )
+    }
+
+    await db.insert(schema.songs).values(duplicateArray(songs, duplicateCount))
+
+    const playlistIds = Array.from({ length: 11 }, () => uuidv4())
+
+    const playlistImages = await getGenerateImages({
+      count: 11,
+    })
 
     await db.insert(schema.playlists).values([
       {
-        id: playlistId,
-        title: 'Nhạc tiếng anh chill nhẹ',
-        description: 'Playlist cho ielts 8.0',
-        bgColor: '#e3a882',
+        id: playlistIds[1],
+        title: 'English playlist',
+        description: 'A collection of English songs for IELTS 8.0',
+        imagePath: playlistImages[1].urls.thumb,
+        bgColor: '#9ca3af',
+        userId,
+        createdAt: new Date(),
+      },
+      {
+        id: playlistIds[2],
+        title: 'Chill Vibes',
+        description: 'A collection of chill vibes for relaxation.',
+        imagePath: playlistImages[2].urls.thumb,
+        bgColor: '#271819',
+        userId,
+        createdAt: new Date(),
+      },
+      {
+        id: playlistIds[3],
+        title: 'Workout Mix',
+        description: 'Energetic tracks to boost your workout.',
+        imagePath: playlistImages[3].urls.thumb,
+        bgColor: '#3f3eba',
+        userId,
+        createdAt: new Date(),
+      },
+      {
+        id: playlistIds[4],
+        title: 'Morning Coffee',
+        description: 'Perfect tunes to start your day with a cup of coffee.',
+        imagePath: playlistImages[4].urls.thumb,
+        bgColor: '#bd151b',
+        userId,
+        createdAt: new Date(),
+      },
+      {
+        id: playlistIds[5],
+        title: 'Late Night Study',
+        description: 'Quiet and calm music for late night study sessions.',
+        imagePath: playlistImages[5].urls.thumb,
+        bgColor: '#525252',
+        userId,
+        createdAt: new Date(),
+      },
+      {
+        id: playlistIds[6],
+        title: 'Road Trip',
+        description: 'Best tracks for long drives and road trips.',
+        imagePath: playlistImages[6].urls.thumb,
+        bgColor: '#65a30d',
+        userId,
+        createdAt: new Date(),
+      },
+      {
+        id: playlistIds[7],
+        title: 'Weekend Relax',
+        description: 'Relaxing music to unwind on the weekends.',
+        imagePath: playlistImages[7].urls.thumb,
+        bgColor: '#16a34a',
+        userId,
+        createdAt: new Date(),
+      },
+      {
+        id: playlistIds[8],
+        title: 'Party Hits',
+        description: 'Top hits to get the party started.',
+        imagePath: playlistImages[8].urls.thumb,
+        bgColor: '#0ea5e9',
+        userId,
+        createdAt: new Date(),
+      },
+      {
+        id: playlistIds[9],
+        title: 'Golden Oldies',
+        description: 'A collection of timeless classics.',
+        imagePath: playlistImages[9].urls.thumb,
+        bgColor: '#db2777',
+        userId,
+        createdAt: new Date(),
+      },
+      {
+        id: playlistIds[10],
+        title: 'Top Charts',
+        description: 'The most popular songs right now.',
+        imagePath: playlistImages[10].urls.thumb,
+        bgColor: '#7c3aed',
         userId,
         createdAt: new Date(),
       },
@@ -162,63 +256,212 @@ const main = async () => {
 
     await db.insert(schema.playlistSongs).values([
       {
-        playlistId,
+        playlistId: playlistIds[1],
         songId: songsIds[1],
         createdAt: new Date(),
       },
       {
-        playlistId,
+        playlistId: playlistIds[1],
         songId: songsIds[2],
         createdAt: new Date(),
       },
       {
-        playlistId,
+        playlistId: playlistIds[1],
+
         songId: songsIds[3],
         createdAt: new Date(),
       },
       {
-        playlistId,
+        playlistId: playlistIds[1],
         songId: songsIds[4],
         createdAt: new Date(),
       },
       {
-        playlistId,
+        playlistId: playlistIds[1],
+
         songId: songsIds[5],
         createdAt: new Date(),
       },
       {
-        playlistId,
+        playlistId: playlistIds[1],
         songId: songsIds[6],
         createdAt: new Date(),
       },
       {
-        playlistId,
+        playlistId: playlistIds[1],
+
         songId: songsIds[7],
         createdAt: new Date(),
       },
       {
-        playlistId,
+        playlistId: playlistIds[1],
         songId: songsIds[8],
         createdAt: new Date(),
       },
       {
-        playlistId,
+        playlistId: playlistIds[1],
         songId: songsIds[9],
         createdAt: new Date(),
       },
       {
-        playlistId,
+        playlistId: playlistIds[1],
         songId: songsIds[10],
         createdAt: new Date(),
       },
       {
-        playlistId,
+        playlistId: playlistIds[1],
         songId: songsIds[11],
         createdAt: new Date(),
       },
       {
-        playlistId,
+        playlistId: playlistIds[1],
         songId: songsIds[12],
+        createdAt: new Date(),
+      },
+      {
+        playlistId: playlistIds[2],
+        songId: songsIds[1],
+        createdAt: new Date(),
+      },
+      {
+        playlistId: playlistIds[2],
+        songId: songsIds[2],
+        createdAt: new Date(),
+      },
+      {
+        playlistId: playlistIds[2],
+
+        songId: songsIds[3],
+        createdAt: new Date(),
+      },
+      {
+        playlistId: playlistIds[2],
+        songId: songsIds[4],
+        createdAt: new Date(),
+      },
+      {
+        playlistId: playlistIds[2],
+
+        songId: songsIds[5],
+        createdAt: new Date(),
+      },
+      {
+        playlistId: playlistIds[2],
+        songId: songsIds[6],
+        createdAt: new Date(),
+      },
+
+      {
+        playlistId: playlistIds[3],
+
+        songId: songsIds[7],
+        createdAt: new Date(),
+      },
+      {
+        playlistId: playlistIds[3],
+        songId: songsIds[8],
+        createdAt: new Date(),
+      },
+      {
+        playlistId: playlistIds[3],
+        songId: songsIds[9],
+        createdAt: new Date(),
+      },
+      {
+        playlistId: playlistIds[3],
+        songId: songsIds[10],
+        createdAt: new Date(),
+      },
+      {
+        playlistId: playlistIds[3],
+        songId: songsIds[11],
+        createdAt: new Date(),
+      },
+      {
+        playlistId: playlistIds[3],
+        songId: songsIds[12],
+        createdAt: new Date(),
+      },
+
+      {
+        playlistId: playlistIds[4],
+
+        songId: songsIds[3],
+        createdAt: new Date(),
+      },
+      {
+        playlistId: playlistIds[4],
+        songId: songsIds[4],
+        createdAt: new Date(),
+      },
+      {
+        playlistId: playlistIds[4],
+
+        songId: songsIds[5],
+        createdAt: new Date(),
+      },
+      {
+        playlistId: playlistIds[4],
+        songId: songsIds[6],
+        createdAt: new Date(),
+      },
+
+      {
+        playlistId: playlistIds[4],
+
+        songId: songsIds[7],
+        createdAt: new Date(),
+      },
+
+      {
+        playlistId: playlistIds[5],
+        songId: songsIds[2],
+        createdAt: new Date(),
+      },
+      {
+        playlistId: playlistIds[5],
+
+        songId: songsIds[3],
+        createdAt: new Date(),
+      },
+      {
+        playlistId: playlistIds[5],
+        songId: songsIds[4],
+        createdAt: new Date(),
+      },
+      {
+        playlistId: playlistIds[6],
+
+        songId: songsIds[5],
+        createdAt: new Date(),
+      },
+      {
+        playlistId: playlistIds[6],
+        songId: songsIds[6],
+        createdAt: new Date(),
+      },
+
+      {
+        playlistId: playlistIds[6],
+
+        songId: songsIds[7],
+        createdAt: new Date(),
+      },
+
+      {
+        playlistId: playlistIds[6],
+        songId: songsIds[2],
+        createdAt: new Date(),
+      },
+      {
+        playlistId: playlistIds[6],
+
+        songId: songsIds[3],
+        createdAt: new Date(),
+      },
+      {
+        playlistId: playlistIds[6],
+        songId: songsIds[4],
         createdAt: new Date(),
       },
     ])

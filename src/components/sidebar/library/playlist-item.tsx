@@ -1,6 +1,5 @@
 'use client'
 
-import Image from 'next/image'
 import { useParams, useRouter } from 'next/navigation'
 
 import { usePlayer } from '@/store/use-player'
@@ -8,6 +7,7 @@ import { SoundIconSolid } from '@/public/icons'
 import { PlaylistWithUser } from '@/types/types'
 import { cn } from '@/lib/utils'
 import { useTheme } from 'next-themes'
+import { ImageLazy } from '@/components/ui/image'
 
 type PlaylistItemProps = {
   data: PlaylistWithUser
@@ -41,13 +41,10 @@ export const PlaylistItem = ({ data }: PlaylistItemProps) => {
       onClick={onClick}
     >
       <div className="flex min-w-0 items-center gap-x-3">
-        <div className="relative min-h-[48px] min-w-[48px] overflow-hidden rounded-md">
-          <Image
-            fill
+        <div className="relative aspect-square size-[48px] overflow-hidden rounded-md">
+          <ImageLazy
             src={data.imagePath || '/images/playlist.svg'}
-            sizes="100%"
             alt="Media-Item"
-            className="object-cover"
           />
         </div>
         <div className="flex flex-col gap-y-1 overflow-hidden ">

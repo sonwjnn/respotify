@@ -28,15 +28,16 @@ import {
 } from '@/components/ui/form'
 import { LoginSchema } from '@/schemas'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
-import { login } from '@/actions/login'
 import { useModal } from '@/store/use-modal-store'
+import { DEFAULT_LOGIN_REDIRECT } from '@/routes'
+import toast from 'react-hot-toast'
 
 export const LoginForm = () => {
   const { open, close } = useModal()
-  const [isPending, startTransition] = useTransition()
+  const [loading, setLoading] = useState(false)
+  const [loadingLogin, setLoadingLogin] = useState(false)
   const [loadingGithub, setLoadingGithub] = useState(false)
   const [loadingGoogle, setLoadingGoogle] = useState(false)
 
@@ -59,28 +60,20 @@ export const LoginForm = () => {
   })
 
   const onCredentialSignIn = (values: z.infer<typeof LoginSchema>) => {
-    setError('')
-    setSuccess('')
+    setLoading(true)
+    setLoadingLogin(true)
 
-    startTransition(() => {
-      login(values, callbackUrl)
-        .then(data => {
-          if (data?.error) {
-            console.log(data.error)
-            setError(data.error)
-          }
-
-          if (data?.success) {
-            form.reset()
-            setSuccess(data.success)
-            close()
-          }
-        })
-        .catch(() => setError('Something went wrong!'))
+    signIn('credentials', {
+      email: values.email,
+      password: values.password,
+      callbackUrl: callbackUrl || DEFAULT_LOGIN_REDIRECT,
+    }).catch(() => {
+      toast.error('Something went wrong!')
     })
   }
 
   const onProviderSignIn = (provider: 'github' | 'google') => {
+    setLoading(true)
     setLoadingGithub(provider === 'github')
     setLoadingGoogle(provider === 'google')
 
@@ -96,7 +89,7 @@ export const LoginForm = () => {
         </CardDescription>
       </CardHeader>
       {!!error && (
-        <div className="bg-destructive/15 mb-6 flex items-center gap-x-2 rounded-md p-3 text-sm text-destructive">
+        <div className="mb-6 flex items-center gap-x-2 rounded-md bg-destructive/15 p-3 text-sm text-destructive">
           <TriangleAlert className="size-4" />
           <p>Invalid email or password</p>
         </div>
@@ -116,7 +109,7 @@ export const LoginForm = () => {
                   <FormControl>
                     <Input
                       type="email"
-                      disabled={isPending}
+                      disabled={loading}
                       placeholder="sonwin@example.com"
                       {...field}
                     />
@@ -134,7 +127,7 @@ export const LoginForm = () => {
                   <FormLabel>Password</FormLabel>
                   <FormControl>
                     <Input
-                      disabled={isPending}
+                      disabled={loading}
                       type="password"
                       placeholder="********"
                       {...field}
@@ -148,10 +141,10 @@ export const LoginForm = () => {
               className="w-full"
               type="submit"
               size="lg"
-              disabled={isPending}
+              disabled={loading}
             >
-              {isPending ? (
-                <Loader2 className="size-5 left-2.5 top-2.5 mr-2 animate-spin" />
+              {loadingLogin ? (
+                <Loader2 className="left-2.5 top-2.5 mr-2 size-5 animate-spin" />
               ) : (
                 'Continue'
               )}
@@ -166,12 +159,12 @@ export const LoginForm = () => {
             size="lg"
             variant="outline"
             className="relative w-full"
-            disabled={isPending}
+            disabled={loading}
           >
             {loadingGoogle ? (
-              <Loader2 className="size-5 absolute left-2.5 top-2.5 mr-2 animate-spin" />
+              <Loader2 className="absolute left-2.5 top-2.5 mr-2 size-5 animate-spin" />
             ) : (
-              <FcGoogle className="size-5 absolute left-2.5 top-2.5 mr-2" />
+              <FcGoogle className="absolute left-2.5 top-2.5 mr-2 size-5" />
             )}
             Continue with Google
           </Button>
@@ -179,13 +172,13 @@ export const LoginForm = () => {
             onClick={() => onProviderSignIn('github')}
             size="lg"
             variant="outline"
-            disabled={isPending}
+            disabled={loading}
             className="relative w-full"
           >
             {loadingGithub ? (
-              <Loader2 className="size-5 absolute left-2.5 top-2.5 mr-2 animate-spin" />
+              <Loader2 className="absolute left-2.5 top-2.5 mr-2 size-5 animate-spin" />
             ) : (
-              <FaGithub className="size-5 absolute left-2.5 top-2.5 mr-2" />
+              <FaGithub className="absolute left-2.5 top-2.5 mr-2 size-5" />
             )}
             Continue with Github
           </Button>
@@ -194,7 +187,7 @@ export const LoginForm = () => {
           Don&apos;t have an account?{' '}
           <span
             onClick={() => open('auth', { authType: 'register' })}
-            className="text-sky-700 hover:underline cursor-pointer"
+            className="cursor-pointer text-sky-700 hover:underline"
           >
             Sign up
           </span>

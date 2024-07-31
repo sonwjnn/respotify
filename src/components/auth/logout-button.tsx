@@ -1,6 +1,5 @@
 'use client'
-
-import { logout } from '@/actions/logout'
+import { signOut } from 'next-auth/react'
 import { cn } from '@/lib/utils'
 
 interface LogoutButtonProps {
@@ -10,7 +9,7 @@ interface LogoutButtonProps {
 
 export const LogoutButton = ({ children, className }: LogoutButtonProps) => {
   const onClick = () => {
-    logout()
+    signOut()
   }
 
   return (

@@ -10,6 +10,7 @@ import { cn } from '@/lib/utils'
 import { getDurationSong } from '@/utils/duration-convertor'
 import { useCurrentUser } from '@/hooks/use-current-user'
 import { useModal } from '@/store/use-modal-store'
+import { ImageLazy } from '@/components/ui/image'
 
 export const HeaderContent = () => {
   const { open } = useModal()
@@ -58,15 +59,9 @@ export const HeaderContent = () => {
             'relative aspect-square h-full w-full overflow-hidden rounded-sm'
           )}
         >
-          <Image
-            className="
-            object-cover
-          "
+          <ImageLazy
             src={data?.imagePath || '/images/playlist.svg'}
-            fill
             alt="playlist image"
-            sizes="100%"
-            priority={true}
           />
         </div>
       </div>
