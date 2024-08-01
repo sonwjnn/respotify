@@ -48,7 +48,6 @@ export const UserButton = () => {
             className="flex items-center justify-center"
             onClick={() => setDropdown(!isDropdown)}
           >
-            {/* eslint-disable-next-line tailwindcss/migration-from-tailwind-2 */}
             <div className="flex cursor-pointer items-center justify-center gap-x-2 rounded-full bg-white bg-opacity-30 p-1 transition hover:bg-opacity-20 hover:brightness-110 ">
               <div className="relative h-9 w-9 cursor-pointer overflow-hidden rounded-full bg-white">
                 <Image
