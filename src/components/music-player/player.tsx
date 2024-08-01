@@ -56,7 +56,6 @@ export const Player = ({ song, songUrl }: PlayerProps) => {
     },
     onend: () => {
       setPlaying(false)
-      // eslint-disable-next-line @typescript-eslint/no-use-before-define
       onPlayNext()
     },
     onpause: () => setPlaying(false),

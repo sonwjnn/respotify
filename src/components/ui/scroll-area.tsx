@@ -42,7 +42,6 @@ const ScrollArea = React.forwardRef<
     {...props}
   >
     <ScrollAreaPrimitive.Viewport
-      // eslint-disable-next-line tailwindcss/no-custom-classname
       className="!disable-table h-full w-full rounded-[inherit]"
       {...props}
     >

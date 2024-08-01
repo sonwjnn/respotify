@@ -21,7 +21,6 @@ type HeaderProps = {
   type?: string
 }
 
-// eslint-disable-next-line react/display-name
 export const Header = memo(
   ({ children, className, data, bgColor, type }: HeaderProps) => {
     const user = useCurrentUser()

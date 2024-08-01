@@ -13,7 +13,6 @@ type GreetingProps = {
   playlists: PlaylistType[]
 }
 
-// eslint-disable-next-line react/display-name
 export const Greeting = memo(({ playlists }: GreetingProps) => {
   const [currentHour, setCurrentHour] = useState(new Date().getHours())
   const [isHover, setHover] = useState(false)
