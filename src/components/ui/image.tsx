@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { useInView } from 'react-intersection-observer'
 import Skeleton from 'react-loading-skeleton'
@@ -30,7 +31,7 @@ export const ImageLazy = ({
 
   useEffect(() => {
     if (mounted) {
-      const img = new Image()
+      const img = new window.Image()
       img.src = src
       img.onload = () => {
         setLoading(false)
@@ -50,12 +51,15 @@ export const ImageLazy = ({
           ></div>
         )}
       </div>
-      <img
+      <Image
         src={mounted ? src : ''}
         alt={alt}
         style={{
           display: isLoading ? 'none' : '',
         }}
+        width={0}
+        height={0}
+        sizes="100vw"
         className="size-full animate-brighten-up object-cover"
       />
     </div>

@@ -5,7 +5,8 @@ import { currentUser } from '@/lib/auth'
 import { stripe } from '@/lib/stripe'
 import { absoluteUrl } from '@/lib/utils'
 
-const returnUrl = absoluteUrl('/account') //TODO: when we deploy => https://my-dummy-website.com
+// const returnUrl = absoluteUrl('/account') //TODO: when we deploy => https://my-dummy-website.com
+const returnUrl = absoluteUrl('https://respotify-topaz.vercel.app/account')
 
 export const createStripeUrl = async () => {
   const user = await currentUser()
