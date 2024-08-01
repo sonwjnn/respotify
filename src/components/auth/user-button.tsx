@@ -22,11 +22,7 @@ import { useCurrentUser } from '@/hooks/use-current-user'
 import { LogoutButton } from './logout-button'
 import { useModal } from '@/store/use-modal-store'
 
-export const UserButton = ({
-  hasActiveSubscription,
-}: {
-  hasActiveSubscription: boolean
-}) => {
+export const UserButton = () => {
   const { isOpen } = useModal()
   const user = useCurrentUser()
 
@@ -78,7 +74,7 @@ export const UserButton = ({
             <RiVipCrownLine
               size={18}
               className={`mr-2 ${
-                hasActiveSubscription ? 'text-yellow-500' : 'text-neutral-400'
+                user?.isSubscribed ? 'text-yellow-500' : 'text-neutral-400'
               }`}
             />
             Account

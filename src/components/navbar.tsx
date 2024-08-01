@@ -1,7 +1,7 @@
 'use client'
 
 import { usePalette } from 'color-thief-react'
-import { useParams, usePathname, useRouter } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { RxCaretLeft, RxCaretRight } from 'react-icons/rx'
 import { twMerge } from 'tailwind-merge'
@@ -41,7 +41,6 @@ type NavbarProps = {
   bgColor?: string
   hasPlayBtn?: boolean
   hasUsername?: boolean
-  hasActiveSubscription?: boolean
   title?: string
   showTitle?: boolean
 }
@@ -54,7 +53,6 @@ export const Navbar = (props: NavbarProps) => {
     data,
     darker = true,
     bgColor,
-    hasActiveSubscription = false,
     hasPlayBtn = false,
     hasUsername = false,
   } = props
@@ -179,11 +177,9 @@ export const Navbar = (props: NavbarProps) => {
         <div className="flex items-center justify-between   gap-x-4">
           {user ? (
             <div className="flex items-center gap-x-4">
-              {width >= 459 && (
-                <PremiumButton hasActiveSubscription={hasActiveSubscription} />
-              )}
+              {width >= 459 && <PremiumButton />}
 
-              <UserButton hasActiveSubscription={hasActiveSubscription} />
+              <UserButton />
             </div>
           ) : (
             <>

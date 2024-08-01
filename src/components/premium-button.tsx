@@ -8,13 +8,11 @@ import { postData } from '@/lib/helpers'
 
 import { Tooltip } from '@/components/ui/tooltip'
 import { Button } from '@/components/ui/button'
+import { useCurrentUser } from '@/hooks/use-current-user'
 
-export const PremiumButton = ({
-  hasActiveSubscription,
-}: {
-  hasActiveSubscription: boolean
-}) => {
+export const PremiumButton = () => {
   // const { isLoading, subscription } = useUser()
+  const user = useCurrentUser()
 
   const [loading, setLoading] = useState(false)
 
@@ -36,16 +34,16 @@ export const PremiumButton = ({
     setLoading(false)
   }
 
+  const isPremium = user?.isSubscribed
+
   return (
     <Tooltip
       text={
-        hasActiveSubscription
-          ? 'You are current premium'
-          : 'Subcribe premium for better'
+        isPremium ? 'You are current premium' : 'Subcribe premium for better'
       }
       asChild
     >
-      {hasActiveSubscription ? (
+      {isPremium ? (
         <Button
           variant="premium"
           disabled={loading}
@@ -83,7 +81,7 @@ export const PremiumButton = ({
         </Button>
       ) : (
         <Button
-          onClick={() => redirectToCustomerPortal()}
+          // onClick={() => redirectToCustomerPortal()}
           disabled={loading}
           className="px-5 py-2"
         >

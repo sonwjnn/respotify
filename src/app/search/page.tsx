@@ -4,7 +4,7 @@ import { Navbar } from '@/components/navbar'
 import { PageWrapper } from '@/components/page-wrapper'
 import { SearchInput } from '@/components/search-input'
 
-import { getSongsByTitle, getSubscription } from '@/db/queries'
+import { getSongsByTitle } from '@/db/queries'
 import { MediaList } from '@/components/media-list'
 import { Alert } from '@/components/alert'
 
@@ -16,11 +16,8 @@ type SearchPageProps = {
 
 const SearchPage = async ({ searchParams }: SearchPageProps) => {
   const songsData = getSongsByTitle(searchParams.title || '')
-  const subscriptionData = getSubscription()
 
-  const [songs, subscription] = await Promise.all([songsData, subscriptionData])
-
-  const isPro = !!subscription?.isActive
+  const [songs] = await Promise.all([songsData])
 
   if (!songs?.length) {
     return <Alert type="noData" text="No songs found" />
@@ -28,11 +25,7 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
 
   return (
     <PageWrapper>
-      <Navbar
-        bgColor={'#171717'}
-        darker={false}
-        hasActiveSubscription={isPro}
-      />
+      <Navbar bgColor={'#171717'} darker={false} />
       <Header type="search" bgColor="#171717">
         <div className="mb-2 flex w-full flex-col  gap-y-6">
           <h1 className="pt-10 text-3xl font-semibold text-zinc-600 dark:text-white">

@@ -5,6 +5,7 @@ import { getUserById } from '@/data/user'
 import { db } from '@/db/drizzle'
 import { DrizzleAdapter } from '@auth/drizzle-adapter'
 import NextAuth from 'next-auth'
+import { getSubscriptionByUserId } from './db/queries'
 
 export const {
   handlers: { GET, POST },
@@ -67,6 +68,7 @@ export const {
         // session.user.isTwoFactorEnabled = token.isTwoFactorEnabled as boolean
         session.user.email = token.email as string
         session.user.isOAuth = token.isOAuth as boolean
+        session.user.isSubscribed = token.isSubscribed as boolean
       }
 
       return session
@@ -80,7 +82,12 @@ export const {
 
       const existingAccount = await getAccountByUserId(existingUser.id)
 
+      const existingSubscription = await getSubscriptionByUserId(
+        existingUser.id
+      )
+
       token.isOAuth = !!existingAccount
+      token.isSubscribed = !!existingSubscription?.isActive
       token.name = existingUser.name
       token.email = existingUser.email
       // token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled

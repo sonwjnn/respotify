@@ -159,3 +159,13 @@ export const getSubscription = cache(async () => {
 
   return { ...data, isActive: checkIsActive(data) }
 })
+
+export const getSubscriptionByUserId = cache(async (userId: string) => {
+  const data = await db.query.subscriptions.findFirst({
+    where: eq(subscriptions.userId, userId),
+  })
+
+  if (!data) return null
+
+  return { ...data, isActive: checkIsActive(data) }
+})

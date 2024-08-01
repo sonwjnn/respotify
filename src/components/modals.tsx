@@ -6,6 +6,7 @@ import { AuthModal } from '@/components/modals/auth-modal'
 import { EditPlaylistModal } from '@/components/modals/edit-playlist-modal'
 import { EditUserModal } from '@/components/modals/edit-user-modal'
 import { UploadSongModal } from '@/components/modals/upload-song-modal'
+import { SubscribeModal } from '@/components/modals/subcribe-modal'
 
 type ModalsProps = {
   // products: ProductWithPrice[]
@@ -26,7 +27,7 @@ export const Modals = () => {
       <EditPlaylistModal />
       <UploadSongModal />
       <AuthModal />
-      {/* <SubscribeModal products={products} /> */}
+      <SubscribeModal />
     </>
   )
 }

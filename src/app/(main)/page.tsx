@@ -5,23 +5,17 @@ import { Navbar } from '@/components/navbar'
 import { PageWrapper } from '@/components/page-wrapper'
 
 import { MainContent } from './main-content'
-import { getPlaylists, getSongs, getSubscription } from '@/db/queries'
+import { getPlaylists, getSongs } from '@/db/queries'
 
 const MainPage = async () => {
   const songsData = getSongs()
   const playlistsData = getPlaylists()
-  const subscriptionsData = getSubscription()
 
-  const [songs, playlists, subscription] = await Promise.all([
-    songsData,
-    playlistsData,
-    subscriptionsData,
-  ])
+  const [songs, playlists] = await Promise.all([songsData, playlistsData])
 
-  const isPro = !!subscription?.isActive
   return (
     <PageWrapper>
-      <Navbar type="home" hasActiveSubscription={isPro} />
+      <Navbar type="home" />
       <Header type="home">
         <div className="mb-2 w-full">
           <Greeting playlists={playlists} />
