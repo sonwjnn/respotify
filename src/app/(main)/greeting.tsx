@@ -1,6 +1,6 @@
 'use client'
 
-import { memo, useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 import { useHeader } from '@/store/use-header'
 import { useMainLayout } from '@/store/use-main-layout'
@@ -13,7 +13,7 @@ type GreetingProps = {
   playlists: PlaylistType[]
 }
 
-export const Greeting = memo(({ playlists }: GreetingProps) => {
+export const Greeting = ({ playlists }: GreetingProps) => {
   const [currentHour, setCurrentHour] = useState(new Date().getHours())
   const [isHover, setHover] = useState(false)
   const { width } = useMainLayout()
@@ -68,4 +68,4 @@ export const Greeting = memo(({ playlists }: GreetingProps) => {
       </div>
     </div>
   )
-})
+}
