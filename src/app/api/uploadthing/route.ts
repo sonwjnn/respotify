@@ -1,5 +1,5 @@
 import { createRouteHandler } from 'uploadthing/next'
-
+import { NextResponse } from 'next/server'
 import { ourFileRouter } from './core'
 import { UTApi } from 'uploadthing/server'
 
@@ -14,5 +14,5 @@ export async function DELETE(request: Request) {
   const utapi = new UTApi()
   await utapi.deleteFiles(newUrl)
 
-  return Response.json({ message: 'ok' })
+  return new NextResponse('ok', { status: 200 })
 }
