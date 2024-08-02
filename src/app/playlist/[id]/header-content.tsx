@@ -12,7 +12,7 @@ import { useCurrentUser } from '@/hooks/use-current-user'
 import { useModal } from '@/store/use-modal-store'
 import { ImageLazy } from '@/components/ui/image'
 
-export const HeaderContent = () => {
+export const HeaderContent = ({ likedCount }: { likedCount: number }) => {
   const { open } = useModal()
 
   const { playlist: data, playlistSongs } = usePlaylist()
@@ -85,9 +85,7 @@ export const HeaderContent = () => {
             </p>
           )}
           <div className="flex gap-x-2 text-sm text-white">
-            <p>{`${data?.user?.name || 'No name'} - ${
-              'data?.likes' || 0
-            } likes - ${playlistSongs?.length} songs
+            <p>{`${data?.user?.name || 'No name'} - ${likedCount} likes - ${playlistSongs?.length} songs
             `}</p>
             <p className="text-desc">{`${totalDuration()}`}</p>
           </div>

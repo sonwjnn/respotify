@@ -113,6 +113,13 @@ export const getPlaylistById = cache(async (id: string) => {
   return data
 })
 
+export const getLikedPlaylistCount = cache(async (id: string) => {
+  const data = await db.query.likedPlaylists.findMany({
+    where: eq(likedPlaylists.playlistId, id),
+  })
+  return data.length
+})
+
 export const getUserPlaylists = cache(async () => {
   const self = await getSelf()
 

@@ -92,6 +92,7 @@ export const deleteLikedPlaylist = cache(async (playlistId: string) => {
     )
 
   revalidatePath('/')
+  revalidatePath(`/playlist/${playlistId}`)
 })
 
 export const createLikedPlaylist = cache(async (playlistId: string) => {
@@ -102,7 +103,7 @@ export const createLikedPlaylist = cache(async (playlistId: string) => {
   }
 
   const existingPlaylist = await db.query.playlists.findFirst({
-    where: and(eq(playlists.id, playlistId), eq(playlists.userId, user.id)),
+    where: and(eq(playlists.id, playlistId)),
     with: {
       user: true,
     },
@@ -117,6 +118,9 @@ export const createLikedPlaylist = cache(async (playlistId: string) => {
     playlistId,
     createdAt: new Date(),
   })
+
+  revalidatePath('/')
+  revalidatePath(`/playlist/${playlistId}`)
 })
 
 export const updatePlaylist = cache(

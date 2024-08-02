@@ -5,7 +5,11 @@ import { Navbar } from '@/components/navbar'
 
 import { PlaylistContent } from './playlist-content'
 import { HeaderContent } from './header-content'
-import { getPlaylistById, getSongsByPlaylistId } from '@/db/queries'
+import {
+  getLikedPlaylistCount,
+  getPlaylistById,
+  getSongsByPlaylistId,
+} from '@/db/queries'
 
 type PlaylistPageProps = {
   params: {
@@ -16,10 +20,12 @@ type PlaylistPageProps = {
 const PlaylistPage = async ({ params }: PlaylistPageProps) => {
   const playlistData = getPlaylistById(params.id)
   const playlistSongsData = getSongsByPlaylistId(params.id)
+  const likedPlaylistCountData = getLikedPlaylistCount(params.id)
 
-  const [playlist, playlistSongs] = await Promise.all([
+  const [playlist, playlistSongs, likedPlaylistCount] = await Promise.all([
     playlistData,
     playlistSongsData,
+    likedPlaylistCountData,
   ])
 
   if (!playlist) {
@@ -30,7 +36,7 @@ const PlaylistPage = async ({ params }: PlaylistPageProps) => {
     <div className="h-full w-full">
       <Navbar type="playlist" data={playlist} hasPlayBtn />
       <Header data={playlist} type="playlist">
-        <HeaderContent />
+        <HeaderContent likedCount={likedPlaylistCount} />
       </Header>
       <PlaylistContent playlist={playlist} playlistSongs={playlistSongs} />
       <Footer />

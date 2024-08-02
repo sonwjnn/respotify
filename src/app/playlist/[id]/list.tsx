@@ -65,12 +65,14 @@ export const List = () => {
           isPlaying={isPlaying}
         />
         {/* <MediaDropdown /> */}
-        {user?.id !== playlist?.userId ? (
+        {user?.id !== playlist?.userId && (
           <div className="z-10 flex h-14 w-14 items-center justify-center">
             <LikeButton size={36} />
           </div>
-        ) : null}
-        <Dots data={playlist as PlaylistType} />
+        )}
+        {user?.id === playlist?.userId && (
+          <Dots data={playlist as PlaylistType} />
+        )}
       </div>
 
       <MediaList songs={songs} type="playlist" />
