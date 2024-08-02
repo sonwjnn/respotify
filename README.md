@@ -6,34 +6,17 @@
 
 <br>
 
-<div align="center">
-  <img alt="Version" src="https://img.shields.io/badge/version-0.1.0-blue.svg?cacheSeconds=2592000" />
-  <img src="https://img.shields.io/badge/yarn-%3E%3D1.22.19-blue.svg" />
-  <img src="https://img.shields.io/badge/node-%3E%3Dv18.16.0-blue.svg" />
-  <a href="https://github.com/sonwjnn/sonwin-spotify-clone#readme" target="_blank">
-    <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
-  </a>
-  <a href="https://github.com/sonwjnn/sonwin-spotify-clone/graphs/commit-activity" target="_blank">
-    <img alt="Maintenance" src="https://img.shields.io/badge/Maintained%3F-yes-green.svg" />
-  </a>
-  <a href="https://github.com/sonwjnn/sonwin-spotify-clone/blob/master/LICENSE" target="_blank">
-    <img alt="License: MIT" src="https://img.shields.io/github/license/sonwjnn/sonwin-spotify-clone" />
-  </a>
-</div>
 
-### ✨ [Demo](https://sonwin-spotify-clone.vercel.app/)
 
-<p align="center">
-    <img align="center" width="100%" src="https://github.com/sonwjnn/sonwin-spotify-clone/blob/master/public/images/demo/showcase_1.png" /> 
-</p>
+### ✨ [Demo](https://respotify-topaz.vercel.app/)
 
-</br>
-
-<p align="center">
-    <img align="center" width="100%" src="https://github.com/sonwjnn/sonwin-spotify-clone/blob/master/public/images/demo/showcase_2.png" />   
-</p>
-
-For DEMO, use [Stripe Testing Cards](https://stripe.com/docs/testing)
+<div align="center"><table><tr><td align="center">Preview 1</td><td align="center">Preview 2</td></tr><tr><td>
+<img src="https://github.com/sonwjnn/respotify/blob/master/public/images/demo/1.png?raw=true"/></td><td>
+<img src="https://github.com/sonwjnn/respotify/blob/master/public/images/demo/2.png?raw=true"/></td></tr>
+<tr><td align="center">Preview 3</td><td align="center">Preview 4</td></tr><tr><td>
+<img src="https://github.com/sonwjnn/respotify/blob/master/public/images/demo/3.png?raw=true"/></td><td>
+<img src="https://github.com/sonwjnn/respotify/blob/master/public/images/demo/4.png?raw=true"/></td></tr>
+</table></div>
 
 ## Features
 
@@ -110,5 +93,5 @@ Give a ⭐️ if this project helped you!
 
 ## 📝 License
 
-Copyright © 2023 [Hoang Son](https://github.com/sonwjnn).<br />
+Copyright © 2024 [Hoang Son](https://github.com/sonwjnn).<br />
 This project is [MIT](https://github.com/sonwjnn/respotify/blob/master/LICENSE) licensed.
