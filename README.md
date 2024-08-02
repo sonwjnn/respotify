@@ -1,7 +1,7 @@
 <h1 align="center">FullStack Respotify 🎼🎹</h1>
 <div align="center">
   <strong>:high_brightness: The website to play a music :musical_note:</strong><br>
-  🌊 Respotify with Nextjs 14, Authjs, Server actions, Tailwindcss, NeonDB(PostgreSQL), Drizzle, Stripe.<br>
+  🌊 Respotify with Nextjs 14, Authjs, Server actions, TailwindCSS, NeonDB(PostgreSQL), Drizzle, Stripe.<br>
 </div>
 
 <br>
@@ -35,43 +35,63 @@
 
 For DEMO, use [Stripe Testing Cards](https://stripe.com/docs/testing)
 
-## Prerequisites
+## Features
 
-- yarn >=1.22.19
-- node >=v18.17.0
+🛠️ Built in Next.js 14
+💻 Uses server actions
+🔑 Authentication using Auth.js
+💿 CRUD operations for songs, playlists, and photos. Functions include listening, replaying, and shuffling music playlists
+🌜 Dark/Light mode
+🌅 Lazy loading images and component mounting on scroll
+🛒 Spotify Premium purchase via Stripe
+🖥️ Applies Drizzle for type ORM
+🌟 Clean, modern UI using shadcn-ui
+✉️ Login/Register with Credentials, Google or GitHub
+⌨️ 100% written in TypeScript
+🎁 ...much more
 
 ## Cloning the repository
 
 ```sh
-git clone https://github.com/sonwjnn/sonwin-spotify-clone.git
+git clone https://github.com/sonwjnn/respotify.git
 ```
 
 ## Install
 
 ```sh
-yarn install
+bun install
 ```
 
 ## Setup .env file
 
 ```sh
-NEXT_PUBLIC_SUPABASE_URL=
-NEXT_PUBLIC_SUPABASE_ANON_KEY=
-SUPABASE_SERVICE_ROLE_KEY=
+DATABASE_URL=
+NEXT_PUBLIC_APP_URL=
+NEXT_PUBLIC_VERCEL_URL=
 
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=
-STRIPE_SECRET_KEY=
+GITHUB_CLIENT_ID=
+GITHUB_CLIENT_SECRET=
+
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+
+UPLOADTHING_SECRET=
+UPLOADTHING_APP_ID=
+
+AUTH_SECRET=
+
+NEXT_PUBLIC_UNSPLASH_ACCESS_KEY=
+NEXT_PUBLIC_UNSPLASH_SECRET_KEY=
+NEXT_PUBLIC_UNSPLASH_CLIENT_ID=
+
 STRIPE_WEBHOOK_SECRET=
+STRIPE_API_KEY=
 ```
-
-## Add SQL Tables
-
-Use `database.sql` file, create songs and liked_songs table ...
 
 ## Usage
 
 ```sh
-yarn dev
+bun dev
 ```
 
 ## Author
@@ -82,7 +102,7 @@ yarn dev
 
 ## 🤝 Contributing
 
-Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/sonwjnn/sonwin-spotify-clone/issues). You can also take a look at the [contributing guide](https://github.com/sonwjnn/sonwin-spotify-clone/blob/master/CONTRIBUTING.md).
+Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/sonwjnn/respotify/issues). You can also take a look at the [contributing guide](https://github.com/sonwjnn/respotify/blob/master/CONTRIBUTING.md).
 
 ## Show your support
 
@@ -91,4 +111,4 @@ Give a ⭐️ if this project helped you!
 ## 📝 License
 
 Copyright © 2023 [Hoang Son](https://github.com/sonwjnn).<br />
-This project is [MIT](https://github.com/sonwjnn/sonwin-spotify-clone/blob/master/LICENSE) licensed.
+This project is [MIT](https://github.com/sonwjnn/respotify/blob/master/LICENSE) licensed.
