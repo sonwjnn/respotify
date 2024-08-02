@@ -37,18 +37,18 @@ For DEMO, use [Stripe Testing Cards](https://stripe.com/docs/testing)
 
 ## Features
 
-🛠️ Built in Next.js 14
-💻 Uses server actions
-🔑 Authentication using Auth.js
-💿 CRUD operations for songs, playlists, and photos. Functions include listening, replaying, and shuffling music playlists
-🌜 Dark/Light mode
-🌅 Lazy loading images and component mounting on scroll
-🛒 Spotify Premium purchase via Stripe
-🖥️ Applies Drizzle for type ORM
-🌟 Clean, modern UI using shadcn-ui
-✉️ Login/Register with Credentials, Google or GitHub
-⌨️ 100% written in TypeScript
-🎁 ...much more
+- 🛠️ Built in Next.js 14
+- 💻 Uses server actions
+- 🔑 Authentication using Auth.js
+- 💿 CRUD operations for songs, playlists, and photos. Functions include listening, replaying, and shuffling music playlists
+- 🌜 Dark/Light mode
+- 🌅 Lazy loading images and component mounting on scroll
+- 🛒 Spotify Premium purchase via Stripe
+- 🖥️ Applies Drizzle for type ORM
+- 🌟 Clean, modern UI using shadcn-ui
+- ✉️ Login/Register with Credentials, Google or GitHub
+- ⌨️ 100% written in TypeScript
+- 🎁 ...much more
 
 ## Cloning the repository
 
