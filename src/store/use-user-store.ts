@@ -1,17 +1,11 @@
 import { create } from 'zustand'
 
-import type { PlaylistWithUser, SongType, UserDetails } from '@/types/types'
-import { playlists, songs } from '@/db/schema'
+import type { PlaylistWithUser, SongType } from '@/types/types'
 
 type UserStore = {
-  userDetails: UserDetails | null
   likedSongs: SongType[]
   playlists: PlaylistWithUser[]
   likedPlaylists: PlaylistWithUser[]
-  setUserDetails: (userDetails: UserDetails | null) => void
-  setFullName: (full_name: string) => void
-  setAvatarUrl: (avatar_url: string) => void
-  setBgColor: (bgColor: string) => void
   setLikedSongs: (songs: SongType[]) => void
   setLikedPlaylists: (playlists: PlaylistWithUser[]) => void
   setPlaylists: (playlists: PlaylistWithUser[]) => void
@@ -30,21 +24,6 @@ export const useUserStore = create<UserStore>()((set, get) => ({
   likedSongs: [],
   likedPlaylists: [],
   playlists: [],
-  setUserDetails: (userDetails: UserDetails | null) => set({ userDetails }),
-  setFullName: (full_name: string) => {
-    const { userDetails } = get()
-    set({ userDetails: { ...userDetails, full_name } as UserDetails })
-  },
-  setAvatarUrl: (avatar_url: string) => {
-    const { userDetails } = get()
-    set({
-      userDetails: { ...userDetails, avatar_url } as UserDetails,
-    })
-  },
-  setBgColor: (bgColor: string) => {
-    const { userDetails } = get()
-    set({ userDetails: { ...userDetails, bg_color: bgColor } as UserDetails })
-  },
   setLikedSongs: songs => set({ likedSongs: songs }),
   setLikedPlaylists: playlists => set({ likedPlaylists: playlists }),
   setPlaylists: playlists => set({ playlists }),

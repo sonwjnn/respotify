@@ -4,26 +4,27 @@ import { useTransition } from 'react'
 import { toast } from 'react-hot-toast'
 
 import { usePlaylist } from '@/store/use-playlist'
-import type { PlaylistType, SongType } from '@/types/types'
+import type { SongType } from '@/types/types'
 
 import { Spinner } from '@/components/spinner'
 import { Tooltip } from '@/components/ui/tooltip'
 import { AiOutlinePlus } from 'react-icons/ai'
 import { createSongOfPlaylist } from '@/actions/song'
+import { useParams } from 'next/navigation'
 
 type AddSongPlaylistProps = {
   song: SongType
-  playlist: PlaylistType
 }
 
-export const AddSongPlaylist = ({ song, playlist }: AddSongPlaylistProps) => {
+export const AddSongPlaylist = ({ song }: AddSongPlaylistProps) => {
+  const params = useParams()
   const { addPlaylistSong } = usePlaylist()
 
   const [isPending, startTransition] = useTransition()
 
   const handleLike = async () => {
     startTransition(() => {
-      createSongOfPlaylist(song.id, playlist.id)
+      createSongOfPlaylist(song.id, params?.playlistId as string)
         .then(response => {
           if (response?.error) {
             return toast.error(response.error)

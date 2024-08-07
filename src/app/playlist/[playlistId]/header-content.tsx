@@ -1,6 +1,5 @@
 'use client'
 
-import Image from 'next/image'
 import { useCallback } from 'react'
 import { FiEdit2 } from 'react-icons/fi'
 
@@ -11,23 +10,28 @@ import { getDurationSong } from '@/utils/duration-convertor'
 import { useCurrentUser } from '@/hooks/use-current-user'
 import { useModal } from '@/store/use-modal-store'
 import { ImageLazy } from '@/components/ui/image'
+import { PlaylistWithUser } from '@/types/types'
 
-export const HeaderContent = ({ likedCount }: { likedCount: number }) => {
+type Props = {
+  playlist: PlaylistWithUser
+  likedCount: number
+}
+
+export const HeaderContent = ({ playlist, likedCount }: Props) => {
   const { open } = useModal()
 
-  const { playlist: data, playlistSongs } = usePlaylist()
+  const { playlistSongs } = usePlaylist()
   const { width } = useMainLayout()
-  // const { user, subscription } = useUser()
   const user = useCurrentUser()
 
-  const onClick = (): void => {
-    if (user?.id !== data?.userId) return
+  const onClick = () => {
+    if (user?.id !== playlist?.userId) return
 
     if (!user) {
       return
     }
 
-    open('editPlaylist')
+    open('editPlaylist', { playlist })
   }
 
   const totalDuration = useCallback(() => {
@@ -48,7 +52,7 @@ export const HeaderContent = ({ likedCount }: { likedCount: number }) => {
         )}
         onClick={onClick}
       >
-        {user?.id === data?.userId ? (
+        {user?.id === playlist?.userId ? (
           <div className="absolute inset-0 z-10 flex cursor-pointer flex-col items-center justify-center gap-y-2 rounded-sm bg-[rgba(0,0,0,.7)] opacity-0 transition group-hover:opacity-100">
             <FiEdit2 size={36} color="#ffffff" />
             <p className="text-base text-white">Choose photo</p>
@@ -60,7 +64,7 @@ export const HeaderContent = ({ likedCount }: { likedCount: number }) => {
           )}
         >
           <ImageLazy
-            src={data?.imagePath || '/images/playlist.svg'}
+            src={playlist?.imagePath || '/images/playlist.svg'}
             alt="playlist image"
           />
         </div>
@@ -71,21 +75,21 @@ export const HeaderContent = ({ likedCount }: { likedCount: number }) => {
           onClick={onClick}
           className={cn(
             'line-clamp-3 text-center text-7xl font-bold text-white md:text-left',
-            user?.id === data?.userId && 'cursor-pointer hover:underline',
+            user?.id === playlist?.userId && 'cursor-pointer hover:underline',
             width <= 1012 && '!text-5xl',
             width <= 901 && '!text-3xl'
           )}
         >
-          {data?.title || 'Playlist Title'}
+          {playlist?.title || 'Playlist Title'}
         </div>
         <div className="flex flex-col items-center gap-y-2 md:items-start ">
-          {data?.description && (
+          {playlist?.description && (
             <p className="hidden text-sm text-desc  md:block">
-              {data.description}
+              {playlist?.description}
             </p>
           )}
           <div className="flex gap-x-2 text-sm text-white">
-            <p>{`${data?.user?.name || 'No name'} - ${likedCount} likes - ${playlistSongs?.length} songs
+            <p>{`${playlist?.user?.name || 'No name'} - ${likedCount} likes - ${playlistSongs?.length} songs
             `}</p>
             <p className="text-desc">{`${totalDuration()}`}</p>
           </div>

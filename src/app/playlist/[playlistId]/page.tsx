@@ -13,19 +13,19 @@ import {
 
 type PlaylistPageProps = {
   params: {
-    id: string
+    playlistId: string
   }
 }
 
 const PlaylistPage = async ({ params }: PlaylistPageProps) => {
-  const playlistData = getPlaylistById(params.id)
-  const playlistSongsData = getSongsByPlaylistId(params.id)
-  const likedPlaylistCountData = getLikedPlaylistCount(params.id)
+  const playlistData = getPlaylistById(params.playlistId)
+  const likedPlaylistCountData = getLikedPlaylistCount(params.playlistId)
+  const playlistSongsData = getSongsByPlaylistId(params.playlistId)
 
-  const [playlist, playlistSongs, likedPlaylistCount] = await Promise.all([
+  const [playlist, likedPlaylistCount, playlistSongs] = await Promise.all([
     playlistData,
-    playlistSongsData,
     likedPlaylistCountData,
+    playlistSongsData,
   ])
 
   if (!playlist) {
@@ -36,7 +36,7 @@ const PlaylistPage = async ({ params }: PlaylistPageProps) => {
     <div className="h-full w-full">
       <Navbar type="playlist" data={playlist} hasPlayBtn />
       <Header data={playlist} type="playlist">
-        <HeaderContent likedCount={likedPlaylistCount} />
+        <HeaderContent likedCount={likedPlaylistCount} playlist={playlist} />
       </Header>
       <PlaylistContent playlist={playlist} playlistSongs={playlistSongs} />
       <Footer />

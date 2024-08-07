@@ -104,6 +104,8 @@ export const createSongOfPlaylist = cache(
       songId,
       createdAt: new Date(),
     })
+
+    revalidatePath(`/playlist/${playlistId}`)
   }
 )
 
@@ -129,6 +131,7 @@ export const deleteSongOfPlaylist = cache(
           eq(playlistSongs.playlistId, playlistId)
         )
       )
+    revalidatePath(`/playlist/${playlistId}`)
   }
 )
 

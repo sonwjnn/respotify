@@ -20,7 +20,7 @@ export const QueueContent = () => {
             Now playing
           </div>
           <div className="px-6 pb-2">
-            <MediaItem song={currentTrack} isActived index={1} />
+            <MediaItem song={currentTrack} isActived index={1} type="queue" />
           </div>
           {queue?.filter(item => item)?.length > 1 && (
             <div className="">
@@ -29,7 +29,6 @@ export const QueueContent = () => {
               </div>
               <MediaList
                 type="queue"
-                inclHeader={false}
                 songs={
                   isRandom
                     ? queueNormalized.filter(

@@ -18,31 +18,27 @@ import { useConfirm } from '@/hooks/use-confirm'
 import { useCurrentUser } from '@/hooks/use-current-user'
 import { deleteSongOfPlaylist } from '@/actions/song'
 import { cn } from '@/lib/utils'
+import { useParams } from 'next/navigation'
 
 type MediaDropdownProps = {
   song: SongType
-  playlist: PlaylistType
   className?: string
 }
 
-export const MediaDropdown = ({
-  song,
-  playlist,
-  className,
-}: MediaDropdownProps) => {
+export const MediaDropdown = ({ song, className }: MediaDropdownProps) => {
   const [ConfirmDialog, confirm] = useConfirm(
     'Are you sure?',
     'You are about to delete this song from playlist'
   )
 
-  const user = useCurrentUser()
-  const { removePlaylistSong, setDuration } = usePlaylist()
+  const params = useParams()
+  const { removePlaylistSong } = usePlaylist()
   const [isDropdown, setDropdown] = useState(false)
   const [isPending, startTransition] = useTransition()
 
   const onRemove = () => {
     startTransition(() => {
-      deleteSongOfPlaylist(song.id, playlist.id)
+      deleteSongOfPlaylist(song.id, params?.playlistId as string)
         .then(response => {
           if (response?.error) {
             return toast.error(response.error as string)
@@ -102,16 +98,14 @@ export const MediaDropdown = ({
             // hidden={uploadModal.isOpen}
             side="top"
           >
-            {user?.id === playlist.userId ? (
-              <DropdownMenuItem
-                onSelect={handleRemove}
-                className="dropdown-menu-item text-white"
-                disabled={isPending}
-              >
-                <DeleteIcon color="#991b1b" />
-                Remove from this playlist
-              </DropdownMenuItem>
-            ) : null}
+            <DropdownMenuItem
+              onSelect={handleRemove}
+              className="dropdown-menu-item text-white"
+              disabled={isPending}
+            >
+              <DeleteIcon color="#991b1b" />
+              Remove from this playlist
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenuPortal>
       </DropdownMenu>

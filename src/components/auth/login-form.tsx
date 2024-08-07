@@ -94,7 +94,7 @@ export const LoginForm = () => {
           <p>Invalid email or password</p>
         </div>
       )}
-      <CardContent className="space-y-5 px-0 pb-0">
+      <CardContent className="space-y-5 px-0 pb-0 ">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onCredentialSignIn)}

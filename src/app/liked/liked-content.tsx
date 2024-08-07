@@ -9,7 +9,6 @@ import { Button } from '@/components/ui/button'
 import { useOnPlay } from '@/hooks/use-on-play'
 import { usePlayer } from '@/store/use-player'
 import { usePlayingView } from '@/store/use-playing-view'
-// import { useUser } from '@/hooks/use-user'
 import { useUserStore } from '@/store/use-user-store'
 import { SingleMusicNote } from '@/public/icons'
 import { useCurrentUser } from '@/hooks/use-current-user'
@@ -21,7 +20,6 @@ type LikedContentProp = {
 export const LikedContent = ({ bgColor }: LikedContentProp) => {
   const router = useRouter()
   const { likedSongs: songs } = useUserStore()
-  // const { isLoading, user } = useUser()
   const user = useCurrentUser()
   const onPlay = useOnPlay(songs)
   const player = usePlayer()
@@ -68,7 +66,7 @@ export const LikedContent = ({ bgColor }: LikedContentProp) => {
     )
   }
 
-  const handleClickPlay = (): void => {
+  const handleClickPlay = () => {
     if (player.playlistPlayingId !== params && songs?.length) {
       player.setPlaylistActiveId('liked')
       if (songs[0]) {
@@ -94,7 +92,7 @@ export const LikedContent = ({ bgColor }: LikedContentProp) => {
         />
         {/* <MediaDropdown /> */}
       </div>
-      <MediaList songs={songs} />
+      <MediaList songs={songs} type="liked" />
     </>
   )
 }

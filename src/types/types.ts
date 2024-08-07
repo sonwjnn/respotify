@@ -1,47 +1,26 @@
 import { playlists, songs, users } from '@/db/schema'
 import type Stripe from 'stripe'
 
-export type UserDetails = {
-  id: string
-  first_name: string
-  last_name: string
-  full_name?: string
-  avatar_url?: string
-  billing_address?: Stripe.Address
-  payment_method?: Stripe.PaymentMethod[Stripe.PaymentMethod.Type]
-  bg_color?: string
-}
+export type PageType =
+  | 'home'
+  | 'playlist'
+  | 'search'
+  | 'artist'
+  | 'album'
+  | 'queue'
+  | 'liked'
 
 export type PlaylistType = typeof playlists.$inferSelect
 export type PlaylistWithUser = typeof playlists.$inferSelect & {
   user: typeof users.$inferSelect
 }
+
+export type PlaylistWithSongWithUser = typeof playlists.$inferSelect & {
+  songs: (typeof songs.$inferSelect)[]
+  user: typeof users.$inferSelect
+}
+
 export type SongType = typeof songs.$inferSelect
-
-// export type Song = {
-//   id: string
-//   user_id: string
-//   author: string
-//   title: string
-//   song_path: string
-//   image_path: string
-//   duration: number
-//   created_at: string
-// }
-
-// export type Playlist = {
-//   id: string
-//   user_id: string
-//   song_ids?: string[]
-//   title: string
-//   description?: string
-//   image_path: string
-//   users?: UserDetails
-//   bg_color?: string
-//   created_at: string
-//   likes?: number
-//   duration?: number
-// }
 
 export type Product = {
   id: string

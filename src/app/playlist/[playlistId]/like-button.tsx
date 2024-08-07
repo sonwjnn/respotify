@@ -20,7 +20,7 @@ export const LikeButton = ({ size = 25, className }: LikeButtonProps) => {
   const { likedPlaylists, removeLikedPlaylist, addLikedPlaylist } =
     useUserStore()
 
-  const { playlist, setLikes } = usePlaylist()
+  const { playlist } = usePlaylist()
 
   const [isLiked, setIsLiked] = useState<boolean>(false)
   const [isPending, startTransition] = useTransition()

@@ -113,6 +113,27 @@ export const getPlaylistById = cache(async (id: string) => {
   return data
 })
 
+export const getPlaylistWithSongs = cache(async (id: string) => {
+  const data = await db.query.playlists.findFirst({
+    where: eq(playlists.id, id),
+    with: {
+      user: true,
+    },
+  })
+
+  if (!data) return null
+
+  const songs = await db.query.playlistSongs.findMany({
+    where: eq(playlistSongs.playlistId, id),
+    with: {
+      song: true,
+    },
+    orderBy: (playlistSongs, { desc }) => [desc(playlistSongs.createdAt)],
+  })
+
+  return { ...data, songs: songs.map(item => ({ ...item.song })) }
+})
+
 export const getLikedPlaylistCount = cache(async (id: string) => {
   const data = await db.query.likedPlaylists.findMany({
     where: eq(likedPlaylists.playlistId, id),

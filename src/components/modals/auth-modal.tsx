@@ -1,6 +1,5 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
 import { Dialog, DialogContent } from '@/components/ui/dialog'
 
 import { LoginForm } from '../auth/login-form'
@@ -24,7 +23,7 @@ export const AuthModal = () => {
 
   return (
     <Dialog open={isModalOpen} onOpenChange={close}>
-      <DialogContent className="w-auto border-none bg-transparent p-0">
+      <DialogContent className="max-w-[450px] border-none bg-transparent p-0">
         <AuthContent />
       </DialogContent>
     </Dialog>

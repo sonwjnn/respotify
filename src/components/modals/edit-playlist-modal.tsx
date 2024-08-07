@@ -8,7 +8,6 @@ import { toast } from 'react-hot-toast'
 import { LuImage } from 'react-icons/lu'
 
 import { usePlaylist } from '@/store/use-playlist'
-import { useUserStore } from '@/store/use-user-store'
 import { DeleteIcon } from '@/public/icons'
 import { cn } from '@/lib/utils'
 
@@ -16,26 +15,23 @@ import { Spinner } from '@/components/spinner'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Modal } from '@/components/ui/modal'
-import { updatePlaylist as updatePlaylistAction } from '@/actions/playlist'
+import { updatePlaylist } from '@/actions/playlist'
 import { PlaylistSchema } from '@/schemas'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Form, FormControl, FormField, FormItem, FormMessage } from '../ui/form'
 import { useModal } from '@/store/use-modal-store'
+import { useParams } from 'next/navigation'
 
 export const EditPlaylistModal = () => {
-  const {
-    playlist,
-    setDescription,
-    setImagePath,
-    setTitle,
-    setBgColor: setBgColorStore,
-  } = usePlaylist()
-  const { isOpen, close, type } = useModal()
+  const params = useParams()
+
+  const { setBgColor: setBgColorStore } = usePlaylist()
+  const { isOpen, close, type, data } = useModal()
 
   const isModalOpen = isOpen && type === 'editPlaylist'
 
-  const { updatePlaylist } = useUserStore()
+  const { playlist } = data
 
   const [file, setFile] = useState<string>(playlist?.imagePath || '')
   const [bgColor, setBgColor] = useState<string>('')
@@ -84,14 +80,11 @@ export const EditPlaylistModal = () => {
     if (!playlist || !playlist.id) return
     // const imageFile = values.playlist_img?.[0]
     startTransition(() => {
-      updatePlaylistAction(values, playlist.id)
+      updatePlaylist(values, playlist.id)
         .then(data => {
-          if ('error' in data) {
+          if (data?.error) {
             toast.error(data.error as string)
           } else {
-            setTitle(data.title)
-            setDescription(data.description || '')
-            setImagePath(data.imagePath || '/images/playlist.svg')
             setBgColorStore(bgColor)
             toast.success('Playlist edited!')
             close()
@@ -101,17 +94,11 @@ export const EditPlaylistModal = () => {
     })
   }
 
-  useEffect(() => {
-    if (playlist) {
-      updatePlaylist(playlist)
-    }
-  }, [playlist])
-
   const onRemove = (e: any): void => {
     e.preventDefault()
     setRemove(true)
-    form.setValue('image', '')
-    setFile('')
+    form.setValue('image', '/images/playlist.svg')
+    setFile('/images/playlist.svg')
   }
 
   return (

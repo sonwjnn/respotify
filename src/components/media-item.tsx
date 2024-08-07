@@ -7,7 +7,6 @@ import { useState } from 'react'
 import { useMainLayout } from '@/store/use-main-layout'
 import { usePlayer } from '@/store/use-player'
 import { PlayIcon, SingleMusicNote } from '@/public/icons'
-import type { MediaItemProps } from '@/types/track'
 import { cn } from '@/lib/utils'
 import { getDurationSong } from '@/utils/duration-convertor'
 
@@ -15,16 +14,29 @@ import { LikeButton } from '@/components/like-button'
 import { MediaDropdown } from '@/components/media-dropdown'
 import { AddSongPlaylist } from '@/components/add-song-playlist'
 import { ImageLazy } from './ui/image'
+import { PageType, PlaylistType, SongType } from '@/types/types'
+import { useCurrentUser } from '@/hooks/use-current-user'
+
+type Props = {
+  type: PageType
+  song: SongType
+  playlist?: PlaylistType | undefined
+  index?: number
+  isSelected?: boolean
+  isActived?: boolean
+  hasAddTrackBtn?: boolean
+}
 
 export const MediaItem = ({
-  type = 'default',
+  type,
   index,
-  song,
   playlist,
+  song,
   isSelected,
   isActived,
   hasAddTrackBtn = false,
-}: MediaItemProps) => {
+}: Props) => {
+  const user = useCurrentUser()
   const { width } = useMainLayout()
   const player = usePlayer()
 
@@ -38,6 +50,8 @@ export const MediaItem = ({
     }
     return isActived
   }
+
+  const canDropdown = playlist?.userId === user?.id
 
   return (
     <div
@@ -143,9 +157,9 @@ export const MediaItem = ({
 
         {playlist && width > 480 ? (
           hasAddTrackBtn ? (
-            <AddSongPlaylist song={song} playlist={playlist} />
+            <AddSongPlaylist song={song} />
           ) : (
-            <MediaDropdown song={song} playlist={playlist} />
+            <>{canDropdown && <MediaDropdown song={song} />}</>
           )
         ) : null}
       </div>

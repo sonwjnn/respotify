@@ -159,19 +159,25 @@ export const updatePlaylist = cache(
     const oldImagePath = existingPlaylist.imagePath
 
     // Delete old image
-    if (oldImagePath && oldImagePath !== '/images/playlist.svg') {
-      await fetch('api/uploadthing', {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          url: existingPlaylist.imagePath,
-        }),
-      })
+    if (
+      oldImagePath &&
+      oldImagePath !== '/images/playlist.svg' &&
+      oldImagePath !== image
+    ) {
+      try {
+        await fetch('api/uploadthing', {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            url: existingPlaylist.imagePath,
+          }),
+        })
+      } catch {}
     }
 
-    const [data] = await db
+    await db
       .update(playlists)
       .set({
         title,
@@ -184,10 +190,8 @@ export const updatePlaylist = cache(
           eq(playlists.userId, user.id)
         )
       )
-      .returning()
 
-    // revalidatePath('/')
-
-    return data
+    revalidatePath('/')
+    revalidatePath(`/playlist/${playlistId}`)
   }
 )

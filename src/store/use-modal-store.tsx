@@ -1,3 +1,4 @@
+import { PlaylistWithUser } from '@/types/types'
 import { create } from 'zustand'
 
 export type ModalType =
@@ -9,6 +10,7 @@ export type ModalType =
 
 type ModalData = {
   authType?: 'login' | 'register'
+  playlist?: PlaylistWithUser
 }
 
 type ModalStore = {
