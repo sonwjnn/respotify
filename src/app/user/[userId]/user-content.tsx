@@ -4,7 +4,7 @@ import { usePalette } from 'color-thief-react'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
-import { List } from '@/app/user/[id]/playlists/list'
+import { List } from '@/app/user/[userId]/playlists/list'
 import { useMainLayout } from '@/store/use-main-layout'
 // import { useUser } from '@/hooks/use-user'
 import { SingleMusicNote } from '@/public/icons'

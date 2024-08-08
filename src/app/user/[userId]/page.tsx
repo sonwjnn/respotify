@@ -6,20 +6,19 @@ import { PageWrapper } from '@/components/page-wrapper'
 
 import { UserContent } from './user-content'
 import { HeaderContent } from './header-content'
-import { PlaylistType } from '@/types/types'
+import { getPlaylistsByUserId } from '@/db/queries'
 
 type UserPageProps = {
   params: {
-    id: string
+    userId: string
   }
 }
 
 const UserPage = async ({ params }: UserPageProps) => {
-  // const playlists = await getOtherUserPlaylists(params.id)
+  const playlists = await getPlaylistsByUserId(params.userId)
 
-  const playlists = [] as PlaylistType[]
-  if (!playlists) {
-    return <Alert type="notfound" />
+  if (!playlists.length) {
+    return <Alert type="noData" text="No playlists found." />
   }
 
   return (
@@ -28,7 +27,7 @@ const UserPage = async ({ params }: UserPageProps) => {
       <Header type="user">
         <HeaderContent data={playlists} />
       </Header>
-      <UserContent data={playlists} id={params.id} />
+      <UserContent data={playlists} id={params.userId} />
       <Footer />
     </PageWrapper>
   )

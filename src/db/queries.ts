@@ -192,3 +192,17 @@ export const getSubscriptionByUserId = cache(async (userId: string) => {
 
   return { ...data, isActive: checkIsActive(data) }
 })
+
+export const getPlaylistsByUserId = cache(async (userId: string) => {
+  const data = await db.query.playlists.findMany({
+    where: eq(playlists.userId, userId),
+    with: {
+      user: true,
+    },
+    orderBy: (playlists, { desc }) => [desc(playlists.createdAt)],
+  })
+
+  if (!data) return []
+
+  return data
+})

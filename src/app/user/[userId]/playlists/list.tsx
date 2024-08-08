@@ -1,3 +1,5 @@
+'use client'
+
 import { Card } from './card'
 import { useMainLayout } from '@/store/use-main-layout'
 import { PlaylistType } from '@/types/types'

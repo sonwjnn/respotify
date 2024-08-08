@@ -1,27 +1,23 @@
-import type { NextPage } from 'next'
-
 import { Alert } from '@/components/alert'
 import { Footer } from '@/components/footer'
 import { Header } from '@/components/header'
 import { Navbar } from '@/components/navbar'
 import { PageWrapper } from '@/components/page-wrapper'
 
-import { PlaylistType } from '@/types/types'
 import { List } from './list'
+import { getPlaylistsByUserId } from '@/db/queries'
 
-type UserPlaylistPageProps = {
+type Props = {
   params: {
-    id: string
+    userId: string
   }
 }
 
-const UserPlaylistPage: NextPage<UserPlaylistPageProps> = async ({
-  params,
-}: UserPlaylistPageProps) => {
-  // const playlists = await getOtherUserPlaylists(params.id)
-  const playlists = [] as PlaylistType[]
+const UserPlaylistPage = async ({ params }: Props) => {
+  const playlists = await getPlaylistsByUserId(params.userId)
+
   if (!playlists.length) {
-    return <Alert type="notfound" />
+    return <Alert type="noData" text="No playlists found!" />
   }
   return (
     <PageWrapper>
