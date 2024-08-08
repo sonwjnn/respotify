@@ -4,54 +4,55 @@ import { useEffect, useState, useTransition } from 'react'
 import { toast } from 'react-hot-toast'
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai'
 
-import { usePlaylist } from '@/store/use-playlist'
-import { useUserStore } from '@/store/use-user-store'
-
 import { Tooltip } from '@/components/ui/tooltip'
 import { createLikedPlaylist, deleteLikedPlaylist } from '@/actions/playlist'
 import { cn } from '@/lib/utils'
+import { useParams } from 'next/navigation'
+import { PlaylistType } from '@/types/types'
 
 type LikeButtonProps = {
   size?: number
   className?: string
+  likedPlaylists: PlaylistType[]
 }
 
-export const LikeButton = ({ size = 25, className }: LikeButtonProps) => {
-  const { likedPlaylists, removeLikedPlaylist, addLikedPlaylist } =
-    useUserStore()
-
-  const { playlist } = usePlaylist()
+export const LikeButton = ({
+  size = 25,
+  className,
+  likedPlaylists,
+}: LikeButtonProps) => {
+  const params = useParams()
 
   const [isLiked, setIsLiked] = useState<boolean>(false)
   const [isPending, startTransition] = useTransition()
 
   useEffect(() => {
     const isPlaylistLiked = likedPlaylists.some(
-      item => item.id === playlist?.id
+      item => item.id === params?.playlistId
     )
     setIsLiked(isPlaylistLiked)
   }, [likedPlaylists])
 
   const handleLike = () => {
     startTransition(() => {
-      if (!playlist || !playlist?.id) return
+      const playlistId = params?.playlistId as string
+
+      if (!playlistId) return
 
       if (isLiked) {
-        deleteLikedPlaylist(playlist.id)
+        deleteLikedPlaylist(playlistId)
           .then(() => {
             setIsLiked(false)
-            removeLikedPlaylist(playlist?.id)
             toast.success('Playlist liked!')
           })
           .catch(() => toast.error('Something went wrong!'))
       } else {
-        createLikedPlaylist(playlist.id)
+        createLikedPlaylist(playlistId)
           .then(data => {
             if (data?.error) {
               return toast.error(data.error)
             }
             setIsLiked(true)
-            addLikedPlaylist(playlist)
             toast.success('Playlist liked!')
           })
           .catch(() => toast.error('Something went wrong!'))

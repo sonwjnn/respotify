@@ -71,6 +71,10 @@ export const createLikedSong = cache(async (songId: string) => {
     songId,
     createdAt: new Date(),
   })
+
+  revalidatePath('/')
+  revalidatePath('/liked')
+  revalidatePath('/queue')
 })
 
 export const deleteLikedSong = cache(async (songId: string) => {
@@ -83,6 +87,10 @@ export const deleteLikedSong = cache(async (songId: string) => {
   await db
     .delete(likedSongs)
     .where(and(eq(likedSongs.songId, songId), eq(likedSongs.userId, user.id)))
+
+  revalidatePath('/')
+  revalidatePath('/liked')
+  revalidatePath('/queue')
 })
 
 export const createSongOfPlaylist = cache(

@@ -8,13 +8,12 @@ import { cn } from '@/lib/utils'
 import { UploadDropdown } from '@/components/upload-dropdown'
 import { PlaylistList } from '@/components/sidebar/library/playlist-list'
 import { LikedItem } from '@/components/sidebar/library/liked-item'
-// import { useUser } from '@/hooks/use-user'
-import { useUserStore } from '@/store/use-user-store'
 import Link from 'next/link'
-import { Sheet, SheetContent } from '../ui/sheet'
+import { Sheet, SheetContent } from '@/components/ui/sheet'
 import { useSidebarSheet } from '@/store/use-sidebar-sheet'
 import { useCurrentUser } from '@/hooks/use-current-user'
 import { useModal } from '@/store/use-modal-store'
+import { PlaylistWithUser, SongType } from '@/types/types'
 
 type NavItemProps = {
   icon: IconType
@@ -23,13 +22,17 @@ type NavItemProps = {
   href: string
 }
 
-export const SidebarSheet = () => {
+type Props = {
+  playlists: PlaylistWithUser[]
+  likedSongs: SongType[]
+}
+
+export const SidebarSheet = ({ playlists, likedSongs }: Props) => {
   const { open: openModal } = useModal()
-  // const { user, subscription } = useUser()
   const user = useCurrentUser()
-  const { playlists, likedSongs, likedPlaylists } = useUserStore()
 
   const { isOpen, onClose } = useSidebarSheet()
+
   const pathname = usePathname()
 
   const [isScroll, setScroll] = useState<boolean>(false)
@@ -53,10 +56,13 @@ export const SidebarSheet = () => {
   )
 
   const handleClick = (): void => {
-    openModal('auth')
-    // if (!subscription) {
-    //   subcribeModal.onOpen()
-    // }
+    if (!user) {
+      open('auth')
+      return
+    }
+    if (!user?.isSubscribed) {
+      open('subscribe')
+    }
   }
 
   const handleScroll = (e: React.UIEvent<HTMLDivElement, UIEvent>): void => {
@@ -132,16 +138,14 @@ export const SidebarSheet = () => {
                   </div>
                 </div>
 
-                {/* eslint-disable-next-line no-nested-ternary */}
-                {/* {!user || !subscription ? ( */}
-                {!user || !false ? (
+                {!user || !user?.isSubscribed ? (
                   <div
                     onClick={handleClick}
                     className=" my-8 line-clamp-2 flex w-full cursor-pointer items-center justify-center px-4 text-center text-neutral-400 transition hover:text-white"
                   >
                     Log in and subscribe to view your playlists.
                   </div>
-                ) : !playlists.length && !likedPlaylists.length ? (
+                ) : !playlists.length ? (
                   <div
                     onClick={handleClick}
                     className={` my-8 line-clamp-2 flex w-full cursor-pointer items-center justify-center px-4 text-center text-neutral-400 transition hover:text-white`}
@@ -150,7 +154,7 @@ export const SidebarSheet = () => {
                   </div>
                 ) : (
                   <>
-                    <PlaylistList data={[...playlists, ...likedPlaylists]} />
+                    <PlaylistList data={playlists} />
                     <div className="px-3 pb-2">
                       <LikedItem
                         image="/images/liked.png"

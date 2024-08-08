@@ -6,7 +6,7 @@ import { Navbar } from '@/components/navbar'
 import { PlaylistContent } from './playlist-content'
 import { HeaderContent } from './header-content'
 import {
-  getLikedPlaylistCount,
+  getLikedPlaylists,
   getPlaylistById,
   getSongsByPlaylistId,
 } from '@/db/queries'
@@ -19,12 +19,12 @@ type PlaylistPageProps = {
 
 const PlaylistPage = async ({ params }: PlaylistPageProps) => {
   const playlistData = getPlaylistById(params.playlistId)
-  const likedPlaylistCountData = getLikedPlaylistCount(params.playlistId)
+  const likedPlaylistsData = getLikedPlaylists()
   const playlistSongsData = getSongsByPlaylistId(params.playlistId)
 
-  const [playlist, likedPlaylistCount, playlistSongs] = await Promise.all([
+  const [playlist, likedPlaylists, playlistSongs] = await Promise.all([
     playlistData,
-    likedPlaylistCountData,
+    likedPlaylistsData,
     playlistSongsData,
   ])
 
@@ -36,9 +36,17 @@ const PlaylistPage = async ({ params }: PlaylistPageProps) => {
     <div className="h-full w-full">
       <Navbar type="playlist" data={playlist} hasPlayBtn />
       <Header data={playlist} type="playlist">
-        <HeaderContent likedCount={likedPlaylistCount} playlist={playlist} />
+        <HeaderContent
+          likedPlaylists={likedPlaylists}
+          playlist={playlist}
+          songs={playlistSongs}
+        />
       </Header>
-      <PlaylistContent playlist={playlist} playlistSongs={playlistSongs} />
+      <PlaylistContent
+        playlist={playlist}
+        likedPlaylists={likedPlaylists}
+        playlistSongs={playlistSongs}
+      />
       <Footer />
     </div>
   )

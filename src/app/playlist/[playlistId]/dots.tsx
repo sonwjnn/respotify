@@ -14,7 +14,6 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { Tooltip } from '@/components/ui/tooltip'
-import { useUserStore } from '@/store/use-user-store'
 import { DeleteIcon } from '@/public/icons'
 import { PlaylistType } from '@/types/types'
 import { useConfirm } from '@/hooks/use-confirm'
@@ -37,8 +36,6 @@ export const Dots = ({ data, className }: DotsProps) => {
   )
   const user = useCurrentUser()
 
-  const { removeLikedPlaylist, removePlaylist } = useUserStore()
-
   const [isDropdown, setDropdown] = useState(false)
   const [isPending, startTransition] = useTransition()
   const router = useRouter()
@@ -51,8 +48,6 @@ export const Dots = ({ data, className }: DotsProps) => {
           if (response?.error) {
             return toast.error(response.error)
           }
-
-          removePlaylist(data.id)
 
           if (pathname.includes(`playlist/${data.id}`)) {
             router.replace('/')
@@ -76,8 +71,6 @@ export const Dots = ({ data, className }: DotsProps) => {
           if (response?.error) {
             return toast.error(response.error)
           }
-
-          removeLikedPlaylist(data.id)
         })
         .catch(() => toast.error('Something went wrong!'))
     })

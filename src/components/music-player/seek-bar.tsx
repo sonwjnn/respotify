@@ -57,3 +57,23 @@ export const SeekBar = ({
     </div>
   )
 }
+
+export const DisabledSeekbar = () => {
+  return (
+    <div className="flex items-center justify-center gap-x-1">
+      <div className="w-10 text-right text-xs text-zinc-700 dark:text-neutral-400">
+        {getDurationSong({
+          milliseconds: 0,
+        })}
+      </div>
+
+      <Slider className="mx-1 h-4 w-[60%] lg:w-full" />
+
+      <div className="w-10 text-left text-xs text-zinc-700 dark:text-neutral-400">
+        {getDurationSong({
+          milliseconds: 0,
+        })}
+      </div>
+    </div>
+  )
+}

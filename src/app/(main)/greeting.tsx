@@ -9,11 +9,11 @@ import { cn } from '@/lib/utils'
 
 import { Recommend } from './recommend'
 
-type GreetingProps = {
+type Props = {
   playlists: PlaylistType[]
 }
 
-export const Greeting = ({ playlists }: GreetingProps) => {
+export const Greeting = ({ playlists }: Props) => {
   const [currentHour, setCurrentHour] = useState(new Date().getHours())
   const [isHover, setHover] = useState(false)
   const { width } = useMainLayout()

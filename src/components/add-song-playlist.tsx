@@ -3,7 +3,6 @@
 import { useTransition } from 'react'
 import { toast } from 'react-hot-toast'
 
-import { usePlaylist } from '@/store/use-playlist'
 import type { SongType } from '@/types/types'
 
 import { Spinner } from '@/components/spinner'
@@ -18,7 +17,6 @@ type AddSongPlaylistProps = {
 
 export const AddSongPlaylist = ({ song }: AddSongPlaylistProps) => {
   const params = useParams()
-  const { addPlaylistSong } = usePlaylist()
 
   const [isPending, startTransition] = useTransition()
 
@@ -30,7 +28,6 @@ export const AddSongPlaylist = ({ song }: AddSongPlaylistProps) => {
             return toast.error(response.error)
           }
 
-          addPlaylistSong(song)
           toast.success('Added!')
         })
         .catch(() => toast.error('Something went wrong!'))

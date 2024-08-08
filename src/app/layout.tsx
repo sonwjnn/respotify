@@ -3,7 +3,6 @@ import './globals.css'
 import localFont from 'next/font/local'
 
 import { MainContent } from '@/components/main-content'
-import { MusicPlayer } from '@/components/music-player'
 import { Modals } from '@/components/modals'
 import { Toaster } from '@/providers/toaster'
 import { Sheets } from '@/components/sheets'
@@ -43,18 +42,15 @@ export default async function RootLayout({
 }>) {
   const session = await auth()
 
-  const userSongsData = getUserSongs()
   const userPlaylistsData = getUserPlaylists()
   const likedSongsData = getLikedSongs()
   const likedPlaylistsData = getLikedPlaylists()
 
-  const [userSongs, userPlaylists, likedSongs, likedPlaylists] =
-    await Promise.all([
-      userSongsData,
-      userPlaylistsData,
-      likedSongsData,
-      likedPlaylistsData,
-    ])
+  const [userPlaylists, likedSongs, likedPlaylists] = await Promise.all([
+    userPlaylistsData,
+    likedSongsData,
+    likedPlaylistsData,
+  ])
 
   return (
     <SessionProvider session={session}>
@@ -63,16 +59,17 @@ export default async function RootLayout({
           <Providers>
             <Toaster />
             <Modals />
-            <Sheets />
-            <MainContent
-              songs={userSongs}
+            <Sheets
+              playlists={[...userPlaylists, ...likedPlaylists]}
               likedSongs={likedSongs}
+            />
+            <MainContent
               playlists={userPlaylists}
               likedPlaylists={likedPlaylists}
+              likedSongs={likedSongs}
             >
               {children}
             </MainContent>
-            <MusicPlayer />
           </Providers>
         </body>
       </html>

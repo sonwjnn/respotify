@@ -21,7 +21,7 @@ export const PlayingViewResizer = memo(
     maxWidth = 500,
     className,
   }: PlayingViewResizerProps) => {
-    const isMobile = useMedia('(max-width: 768px)')
+    const isMobile = useMedia('(max-width: 768px)', false)
 
     const isResizingRef = useRef(false)
     const playingViewRef = useRef<ElementRef<'aside'>>(null)

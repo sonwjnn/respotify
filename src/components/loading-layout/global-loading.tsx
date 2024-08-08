@@ -1,5 +1,3 @@
-'use client'
-
 import { SyncLoader } from 'react-spinners'
 
 import { Box } from '@/components/ui/box'

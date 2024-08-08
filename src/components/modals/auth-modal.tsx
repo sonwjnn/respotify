@@ -2,7 +2,7 @@
 
 import { Dialog, DialogContent } from '@/components/ui/dialog'
 
-import { LoginForm } from '../auth/login-form'
+import { LoginForm } from '@/components/auth/login-form'
 import { useModal } from '@/store/use-modal-store'
 import { RegisterForm } from '@/components/auth/register-form'
 

@@ -1,72 +1,67 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-
-import { usePlayer } from '@/store/use-player'
-import { useUserStore } from '@/store/use-user-store'
 import { cn } from '@/lib/utils'
 
-import { GlobalLoading } from '@/components/loading-layout/global-loading'
 import { PlayingView } from '@/components/playing-view'
 import { Sidebar } from '@/components/sidebar'
 import { MainLayout } from '@/components/main-content/main-layout'
-import { useCurrentUser } from '@/hooks/use-current-user'
 import { songs } from '@/db/schema'
 import { PlaylistWithUser } from '@/types/types'
+import { MusicPlayer } from '@/components/music-player'
+import { GlobalLoading } from '@/components/loading-layout/global-loading'
+import { useEffect, useState } from 'react'
+import { useUserStore } from '@/store/use-user-store'
 
-type MainContentProps = {
+type Props = {
   children: React.ReactNode
-  songs: (typeof songs.$inferSelect)[] | null
-  playlists: PlaylistWithUser[] | null
-  likedSongs: (typeof songs.$inferSelect)[] | null
-  likedPlaylists: PlaylistWithUser[] | null
+  playlists: PlaylistWithUser[]
+  likedPlaylists: PlaylistWithUser[]
+  likedSongs: (typeof songs.$inferSelect)[]
 }
 
 export const MainContent = ({
   children,
+  likedPlaylists,
   playlists,
   likedSongs,
-  likedPlaylists,
-}: MainContentProps) => {
-  const player = usePlayer()
-  const user = useCurrentUser()
-  const { setPlaylists, setLikedSongs, setLikedPlaylists } = useUserStore()
-
+}: Props) => {
   const [mounted, setMounted] = useState(false)
+  const { setLikedSongs } = useUserStore()
+
   useEffect(() => {
     setMounted(true)
   }, [])
-  useEffect(() => {
-    setPlaylists(playlists || [])
-  }, [playlists, setPlaylists])
 
   useEffect(() => {
-    setLikedPlaylists(likedPlaylists || [])
-  }, [likedPlaylists, setLikedPlaylists])
-
-  useEffect(() => {
-    setLikedSongs(likedSongs || [])
+    setLikedSongs(likedSongs)
   }, [likedSongs, setLikedSongs])
 
   if (!mounted) {
     return <GlobalLoading />
   }
-
   return (
-    <div
-      className={cn(`flex h-full flex-row`, {
-        'h-[calc(100%-80px)]': user && player.activeId,
-      })}
-    >
-      <Sidebar />
+    <>
+      <div
+        className={cn(
+          `flex h-full flex-row`,
+          // user && player.activeId && 'h-[calc(100%-80px)]'
+          'h-[calc(100%-80px)]'
+        )}
+      >
+        <Sidebar
+          playlists={[...playlists, ...likedPlaylists]}
+          likedSongs={likedSongs}
+        />
 
-      <MainLayout>
-        <main className="relative h-full grow overflow-y-auto bg-white py-2 dark:bg-black">
-          {children}
-        </main>
-      </MainLayout>
+        <MainLayout>
+          <main className="relative h-full grow overflow-y-auto bg-white py-2 dark:bg-black">
+            {children}
+          </main>
+        </MainLayout>
 
-      <PlayingView />
-    </div>
+        <PlayingView />
+      </div>
+      <MusicPlayer />
+    </>
   )
 }

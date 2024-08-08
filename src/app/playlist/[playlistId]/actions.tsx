@@ -15,10 +15,11 @@ import { useCurrentUser } from '@/hooks/use-current-user'
 
 type ActionsProps = {
   playlist: PlaylistWithUser
+  likedPlaylists: PlaylistWithUser[]
   songs: SongType[]
 }
 
-export const Actions = ({ playlist, songs }: ActionsProps) => {
+export const Actions = ({ playlist, songs, likedPlaylists }: ActionsProps) => {
   const user = useCurrentUser()
   const onPlay = useOnPlay(songs)
   const {
@@ -50,6 +51,9 @@ export const Actions = ({ playlist, songs }: ActionsProps) => {
     }
   }
 
+  const isOtherUser = user?.id !== playlist?.userId
+  const isCurrentUser = user?.id === playlist?.userId
+
   return (
     <div className="relative flex w-full gap-x-6 p-5 px-10">
       <div
@@ -62,12 +66,12 @@ export const Actions = ({ playlist, songs }: ActionsProps) => {
         isPlaying={isPlaying}
       />
       {/* <MediaDropdown /> */}
-      {user?.id !== playlist?.userId && (
+      {isOtherUser && (
         <div className="z-10 flex h-14 w-14 items-center justify-center">
-          <LikeButton size={36} />
+          <LikeButton likedPlaylists={likedPlaylists} size={36} />
         </div>
       )}
-      {user?.id === playlist?.userId && <Dots data={playlist} />}
+      {isCurrentUser && <Dots data={playlist} />}
     </div>
   )
 }

@@ -82,3 +82,26 @@ export const Controls = ({ onPlayPrevious, onPlayNext }: ControlsProps) => {
     </div>
   )
 }
+
+export const DisabledControls = () => {
+  return (
+    <div className="flex items-center justify-center gap-x-6 pb-1">
+      <div className="cursor-pointer  text-zinc-700 transition dark:text-neutral-400 dark:hover:text-white">
+        <ShuffleIcon />
+      </div>
+      <div className="cursor-pointer text-zinc-700 transition dark:text-neutral-400 dark:hover:text-white">
+        <SkipBackIcon />
+      </div>
+      <PlayButton
+        className="h-[36px] w-[36px] translate-y-0 bg-green-500 p-2 opacity-100 dark:bg-white"
+        iconSize={18}
+      />
+      <div className="cursor-pointer text-zinc-700 transition dark:text-neutral-400 dark:hover:text-white">
+        <SkipForwardIcon />
+      </div>
+      <div className="cursor-pointer text-zinc-700 transition dark:text-neutral-400 dark:hover:text-white">
+        <RepeatIcon />
+      </div>
+    </div>
+  )
+}

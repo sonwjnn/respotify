@@ -7,7 +7,6 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 import { LuImage } from 'react-icons/lu'
 
-import { usePlaylist } from '@/store/use-playlist'
 import { DeleteIcon } from '@/public/icons'
 import { cn } from '@/lib/utils'
 
@@ -19,14 +18,16 @@ import { updatePlaylist } from '@/actions/playlist'
 import { PlaylistSchema } from '@/schemas'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Form, FormControl, FormField, FormItem, FormMessage } from '../ui/form'
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from '@/components/ui/form'
 import { useModal } from '@/store/use-modal-store'
-import { useParams } from 'next/navigation'
 
 export const EditPlaylistModal = () => {
-  const params = useParams()
-
-  const { setBgColor: setBgColorStore } = usePlaylist()
   const { isOpen, close, type, data } = useModal()
 
   const isModalOpen = isOpen && type === 'editPlaylist'
@@ -85,7 +86,8 @@ export const EditPlaylistModal = () => {
           if (data?.error) {
             toast.error(data.error as string)
           } else {
-            setBgColorStore(bgColor)
+            //TODO: set bgcolor when edit playlist image
+            // setBgColorStore(bgColor)
             toast.success('Playlist edited!')
             close()
           }

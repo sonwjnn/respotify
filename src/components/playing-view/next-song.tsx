@@ -7,7 +7,7 @@ import Skeleton from 'react-loading-skeleton'
 import { usePlayer } from '@/store/use-player'
 import { PlayIcon, SingleMusicNote } from '@/public/icons'
 import { SongType } from '@/types/types'
-import { ImageLazy } from '../ui/image'
+import { ImageLazy } from '@/components/ui/image'
 
 type NextSongProps = {
   song: SongType | undefined

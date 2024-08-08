@@ -1,9 +1,7 @@
-import Image from 'next/image'
-
 import { SongType } from '@/types/types'
 
 import { LikeButton } from '@/components/like-button'
-import { ImageLazy } from '../ui/image'
+import { ImageLazy } from '@/components/ui/image'
 
 type SongDetailsProps = {
   data: SongType

@@ -6,8 +6,8 @@ import { useSelectedPlayer } from '@/store/use-selected-player'
 import { SongType } from '@/types/types'
 
 import { PlayButton } from '@/components/play-button'
-import { Controls } from '@/components/music-player/controls'
-import { SeekBar } from '@/components/music-player/seek-bar'
+import { Controls, DisabledControls } from '@/components/music-player/controls'
+import { DisabledSeekbar, SeekBar } from '@/components/music-player/seek-bar'
 import { SongDetails } from '@/components/music-player/song-detail'
 import { VolumeBar } from '@/components/music-player/volume-bar'
 
@@ -215,6 +215,34 @@ export const Player = ({ song, songUrl }: PlayerProps) => {
           onClick={handlePlay}
           isPlaying={isPlaying}
         />
+      </div>
+
+      <div className="hidden w-[30%] justify-end pr-2   md:flex">
+        <VolumeBar />
+      </div>
+      {/* Right */}
+    </div>
+  )
+}
+
+export const DisabledPlayer = () => {
+  return (
+    <div className="pointer-events-none flex h-full select-none justify-between">
+      {/* Left */}
+      <div className="flex w-[50%] justify-start md:w-[30%] "></div>
+      {/* Left */}
+
+      {/* Center */}
+      <div className="hidden h-full w-[40%] max-w-[722px] gap-y-1 md:flex md:flex-col">
+        <DisabledControls />
+
+        <DisabledSeekbar />
+      </div>
+      {/* Center */}
+
+      {/* Right */}
+      <div className="flex items-center justify-end md:hidden ">
+        <PlayButton className="h-14 w-14 translate-y-0 bg-green-500 opacity-100 dark:bg-white " />
       </div>
 
       <div className="hidden w-[30%] justify-end pr-2   md:flex">

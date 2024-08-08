@@ -30,7 +30,7 @@ import { RegisterSchema } from '@/schemas'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
-import { Input } from '../ui/input'
+import { Input } from '@/components/ui/input'
 import { useModal } from '@/store/use-modal-store'
 
 export const RegisterForm = () => {
@@ -85,7 +85,7 @@ export const RegisterForm = () => {
         </CardDescription>
       </CardHeader>
       {error && (
-        <div className="bg-destructive/15 mb-6 flex items-center gap-x-2 rounded-md p-3 text-sm text-destructive">
+        <div className="mb-6 flex items-center gap-x-2 rounded-md bg-destructive/15 p-3 text-sm text-destructive">
           <TriangleAlert className="size-4" />
           <p>Something went wrong</p>
         </div>
@@ -158,7 +158,7 @@ export const RegisterForm = () => {
               disabled={isPending}
             >
               {isPending ? (
-                <Loader2 className="size-5 left-2.5 top-2.5 mr-2 animate-spin" />
+                <Loader2 className="left-2.5 top-2.5 mr-2 size-5 animate-spin" />
               ) : (
                 'Continue'
               )}
@@ -175,9 +175,9 @@ export const RegisterForm = () => {
             className="relative w-full"
           >
             {loadingGoogle ? (
-              <Loader2 className="size-5 absolute left-2.5 top-2.5 mr-2 animate-spin" />
+              <Loader2 className="absolute left-2.5 top-2.5 mr-2 size-5 animate-spin" />
             ) : (
-              <FcGoogle className="size-5 absolute left-2.5 top-2.5 mr-2" />
+              <FcGoogle className="absolute left-2.5 top-2.5 mr-2 size-5" />
             )}
             Continue with Google
           </Button>
@@ -189,9 +189,9 @@ export const RegisterForm = () => {
             className="relative w-full"
           >
             {loadingGithub ? (
-              <Loader2 className="size-5 absolute left-2.5 top-2.5 mr-2 animate-spin" />
+              <Loader2 className="absolute left-2.5 top-2.5 mr-2 size-5 animate-spin" />
             ) : (
-              <FaGithub className="size-5 absolute left-2.5 top-2.5 mr-2" />
+              <FaGithub className="absolute left-2.5 top-2.5 mr-2 size-5" />
             )}
             Continue with Github
           </Button>
@@ -200,7 +200,7 @@ export const RegisterForm = () => {
           Already have an account?{' '}
           <span
             onClick={() => open('auth', { authType: 'login' })}
-            className="text-sky-700 hover:underline cursor-pointer"
+            className="cursor-pointer text-sky-700 hover:underline"
           >
             Sign in
           </span>

@@ -58,7 +58,6 @@ export const Navbar = (props: NavbarProps) => {
   } = props
 
   const router = useRouter()
-  // const { user, userDetails } = useUser()
   const user = useCurrentUser()
   const player = usePlayer()
   const params = useParams()
@@ -174,7 +173,7 @@ export const Navbar = (props: NavbarProps) => {
 
         <MobileToggle />
 
-        <div className="flex items-center justify-between   gap-x-4">
+        <div className="flex items-center justify-between gap-x-4">
           {user ? (
             <div className="flex items-center gap-x-4">
               {width >= 459 && <PremiumButton />}

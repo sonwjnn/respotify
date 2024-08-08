@@ -54,7 +54,7 @@ export const getLikedSongs = cache(async () => {
   const self = await getSelf()
 
   if (!self || !self.id) {
-    return null
+    return []
   }
 
   const data = await db.query.likedSongs.findMany({
@@ -81,7 +81,7 @@ export const getLikedPlaylists = cache(async () => {
   const self = await getSelf()
 
   if (!self || !self.id) {
-    return null
+    return []
   }
 
   const data = await db.query.likedPlaylists.findMany({
@@ -134,18 +134,11 @@ export const getPlaylistWithSongs = cache(async (id: string) => {
   return { ...data, songs: songs.map(item => ({ ...item.song })) }
 })
 
-export const getLikedPlaylistCount = cache(async (id: string) => {
-  const data = await db.query.likedPlaylists.findMany({
-    where: eq(likedPlaylists.playlistId, id),
-  })
-  return data.length
-})
-
 export const getUserPlaylists = cache(async () => {
   const self = await getSelf()
 
   if (!self || !self.id) {
-    return null
+    return []
   }
 
   const data = await db.query.playlists.findMany({
@@ -155,6 +148,8 @@ export const getUserPlaylists = cache(async () => {
     },
     orderBy: (playlists, { desc }) => [desc(playlists.createdAt)],
   })
+
+  if (!data) return []
 
   return data
 })

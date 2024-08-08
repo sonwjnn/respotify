@@ -11,11 +11,9 @@ import {
   DropdownMenuPortal,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { usePlaylist } from '@/store/use-playlist'
 import { DeleteIcon } from '@/public/icons'
-import { PlaylistType, SongType } from '@/types/types'
+import { SongType } from '@/types/types'
 import { useConfirm } from '@/hooks/use-confirm'
-import { useCurrentUser } from '@/hooks/use-current-user'
 import { deleteSongOfPlaylist } from '@/actions/song'
 import { cn } from '@/lib/utils'
 import { useParams } from 'next/navigation'
@@ -32,7 +30,6 @@ export const MediaDropdown = ({ song, className }: MediaDropdownProps) => {
   )
 
   const params = useParams()
-  const { removePlaylistSong } = usePlaylist()
   const [isDropdown, setDropdown] = useState(false)
   const [isPending, startTransition] = useTransition()
 
@@ -44,7 +41,6 @@ export const MediaDropdown = ({ song, className }: MediaDropdownProps) => {
             return toast.error(response.error as string)
           }
 
-          removePlaylistSong(song.id)
           toast.success('Removed!')
         })
         .catch(() => toast.error('Something went wrong!'))

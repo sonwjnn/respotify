@@ -8,25 +8,26 @@ import { useEffect, useState } from 'react'
 import { MediaList } from '@/components/media-list'
 import { useDebounce } from '@/hooks/use-debounce'
 import { useMainLayout } from '@/store/use-main-layout'
-import { usePlaylist } from '@/store/use-playlist'
 import { SearchIcon } from '@/public/icons'
 import { getSongsByTitle } from '@/actions/song'
 import { Actions } from './actions'
 
 type PlaylistContentProps = {
   playlist: PlaylistWithUser
+  likedPlaylists: PlaylistWithUser[]
   playlistSongs: SongType[]
 }
 
 export const PlaylistContent = ({
   playlist,
   playlistSongs,
+  likedPlaylists,
 }: PlaylistContentProps) => {
   const user = useCurrentUser()
 
   const { width } = useMainLayout()
 
-  // const { playlistSongs } = usePlaylist()
+  // const { playlistSongs } =
 
   const [value, setValue] = useState<string>('')
   const [songs, setSongs] = useState<SongType[]>([])
@@ -57,7 +58,11 @@ export const PlaylistContent = ({
 
   return (
     <>
-      <Actions playlist={playlist} songs={playlistSongs} />
+      <Actions
+        playlist={playlist}
+        likedPlaylists={likedPlaylists}
+        songs={playlistSongs}
+      />
 
       <MediaList songs={playlistSongs} playlist={playlist} type="playlist" />
 

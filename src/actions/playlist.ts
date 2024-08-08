@@ -34,6 +34,10 @@ export const createPlaylist = cache(async () => {
     })
     .returning()
 
+  if (!data) {
+    return { error: 'Something went wrong' }
+  }
+
   revalidatePath('/')
 
   return data

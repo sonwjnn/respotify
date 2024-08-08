@@ -36,7 +36,6 @@ export const EditUserModal = () => {
 
   const isModalOpen = isOpen && type === 'editUser'
 
-  const { setBgColor: setBgColorStore } = useUserStore()
   const user = useCurrentUser()
   const { update } = useSession()
 
@@ -86,8 +85,7 @@ export const EditUserModal = () => {
       updateUser(values)
         .then(data => {
           if (data) {
-            setBgColorStore(bgColor)
-
+            // TODO: reset bg color
             toast.success('User edited!')
             update()
             close()

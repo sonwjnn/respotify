@@ -1,16 +1,22 @@
 'use client'
 
 import { SidebarSheet } from '@/components/sheets/sidebar-sheet'
+import { PlaylistWithUser, SongType } from '@/types/types'
 import { useMountedState } from 'react-use'
 
-export const Sheets = () => {
+type Props = {
+  playlists: PlaylistWithUser[]
+  likedSongs: SongType[]
+}
+
+export const Sheets = ({ playlists, likedSongs }: Props) => {
   const isMounted = useMountedState()
 
-  if (!isMounted()) return null
+  if (!isMounted) return null
 
   return (
     <>
-      <SidebarSheet />
+      <SidebarSheet playlists={playlists} likedSongs={likedSongs} />
     </>
   )
 }

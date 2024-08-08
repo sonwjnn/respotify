@@ -10,7 +10,7 @@ import { LikeButton } from '@/components/like-button'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { NextSong } from '@/components/playing-view/next-song'
 import { PlayingViewResizer } from '@/components/playing-view/playing-view-resizer'
-import { ImageLazy } from '../ui/image'
+import { ImageLazy } from '@/components/ui/image'
 
 export const PlayingView = () => {
   const { collapsed } = usePlayingView()
@@ -84,7 +84,7 @@ export const PlayingView = () => {
                 >
                   {currentTrack?.title}
                 </h2>
-                <span className={''}>
+                <span>
                   <p className="w-full truncate pb-4 text-base text-zinc-500 dark:text-neutral-400">
                     {currentTrack?.author}
                   </p>

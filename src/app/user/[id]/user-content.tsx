@@ -19,7 +19,6 @@ type UserContentProp = {
 
 export const UserContent = ({ data, id }: UserContentProp) => {
   const router = useRouter()
-  // const { isLoading, user, userDetails } = useUser()
   const user = useCurrentUser()
   const { theme } = useTheme()
   const [bgColorUser, setBgColorUser] = useState<string>('')

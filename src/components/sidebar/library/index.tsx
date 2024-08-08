@@ -3,8 +3,6 @@
 import { HiArrowLeft, HiArrowRight } from 'react-icons/hi'
 
 import { useSidebar } from '@/store/use-sidebar'
-// import { useUser } from '@/hooks/use-user'
-import { useUserStore } from '@/store/use-user-store'
 import { LibraryActiveIcon, LibraryIcon } from '@/public/icons'
 import { cn } from '@/lib/utils'
 
@@ -15,15 +13,21 @@ import { LikedItem } from '@/components/sidebar/library/liked-item'
 import { PlaylistList } from '@/components/sidebar/library/playlist-list'
 import { useCurrentUser } from '@/hooks/use-current-user'
 import { useModal } from '@/store/use-modal-store'
+import { PlaylistWithUser, SongType } from '@/types/types'
 
 type LibraryProps = {
+  playlists: PlaylistWithUser[]
+  likedSongs: SongType[]
   isScroll?: boolean
 }
 
-export const Library = ({ isScroll = false }: LibraryProps) => {
+export const Library = ({
+  playlists,
+  likedSongs,
+  isScroll = false,
+}: LibraryProps) => {
   const { open } = useModal()
   const user = useCurrentUser()
-  const { playlists, likedSongs, likedPlaylists } = useUserStore()
   const { isCollapsed, isMaxWidth, collapsed, resetMinWidth, resetMaxWidth } =
     useSidebar()
 
@@ -32,9 +36,9 @@ export const Library = ({ isScroll = false }: LibraryProps) => {
       open('auth')
       return
     }
-    // if (!subscription) {
-    //   subcribeModal.onOpen()
-    // }
+    if (!user?.isSubscribed) {
+      open('subscribe')
+    }
   }
 
   const handleScale = (): void => {
@@ -126,8 +130,6 @@ export const Library = ({ isScroll = false }: LibraryProps) => {
         ) : null}
       </div>
 
-      {/* eslint-disable-next-line no-nested-ternary */}
-      {/* {!user || !subscription ? ( */}
       {!user ? (
         <div
           onClick={handleClick}
@@ -138,7 +140,7 @@ export const Library = ({ isScroll = false }: LibraryProps) => {
         >
           Log in and subscribe to view your playlists.
         </div>
-      ) : !playlists.length && !likedPlaylists.length ? (
+      ) : !playlists.length ? (
         <div
           onClick={handleClick}
           className={cn(
@@ -151,10 +153,10 @@ export const Library = ({ isScroll = false }: LibraryProps) => {
       ) : (
         <>
           {isCollapsed ? (
-            <CollapseList playlists={[...playlists, ...likedPlaylists]} />
+            <CollapseList playlists={playlists} />
           ) : (
             <>
-              <PlaylistList data={[...playlists, ...likedPlaylists]} />
+              <PlaylistList data={playlists} />
               <div className="px-3 pb-2">
                 <LikedItem
                   image="/images/liked.png"

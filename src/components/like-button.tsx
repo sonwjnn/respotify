@@ -4,7 +4,6 @@ import { useEffect, useState, useTransition } from 'react'
 import { toast } from 'react-hot-toast'
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai'
 
-// import { useUser } from '@/hooks/use-user'
 import { useUserStore } from '@/store/use-user-store'
 import { SongType } from '@/types/types'
 

@@ -1,3 +1,4 @@
+import { PlaylistWithUser, SongType } from '@/types/types'
 import { create } from 'zustand'
 
 type SidebarSheetStore = {
@@ -8,6 +9,7 @@ type SidebarSheetStore = {
 
 export const useSidebarSheet = create<SidebarSheetStore>()(set => ({
   isOpen: false,
+  data: {},
   onOpen: () => set({ isOpen: true }),
   onClose: () => set({ isOpen: false }),
 }))

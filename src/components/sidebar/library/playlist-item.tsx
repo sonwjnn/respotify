@@ -20,7 +20,7 @@ export const PlaylistItem = ({ data }: PlaylistItemProps) => {
 
   const { playlistPlayingId, isPlaying } = usePlayer()
 
-  const { id } = useParams()
+  const params = useParams()
 
   const onClick = (): void => {
     router.push(`/playlist/${data.id}`)
@@ -29,13 +29,15 @@ export const PlaylistItem = ({ data }: PlaylistItemProps) => {
   const fullName = data.user?.name
   const isActived = playlistPlayingId === data.id
   const isDark = theme === 'dark'
+  const isActivedPlaylist = params?.playlistId === data.id
+
   return (
     <div
       className={cn(
         ` flex w-full cursor-pointer items-center justify-between rounded-md p-2 transition  `,
-        id === data.id.toString() &&
+        isActivedPlaylist &&
           'bg-zinc-700/20 hover:bg-zinc-700/30 active:bg-zinc-700/40 dark:bg-neutral-800 dark:hover:bg-neutral-700 dark:active:bg-neutral-800/75',
-        id !== data.id.toString() &&
+        !isActivedPlaylist &&
           'hover:bg-zinc-700/10 active:bg-zinc-700/20 dark:hover:bg-neutral-800/50 dark:active:bg-black'
       )}
       onClick={onClick}

@@ -14,7 +14,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '../ui/form'
+} from '@/components/ui/form'
 import { set, z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { SongSchema } from '@/schemas'

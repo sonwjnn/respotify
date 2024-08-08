@@ -7,8 +7,12 @@ import { useSidebarSheet } from '@/store/use-sidebar-sheet'
 const MobileToggle = () => {
   const { onOpen } = useSidebarSheet()
 
+  const onClick = () => {
+    onOpen()
+  }
+
   return (
-    <Button className="sm:hidden" onClick={() => onOpen()}>
+    <Button className="sm:hidden" onClick={onClick}>
       <LuAlignJustify />
     </Button>
   )

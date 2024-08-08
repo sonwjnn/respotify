@@ -1,26 +1,25 @@
 'use client'
 
-import { useCallback } from 'react'
+import { use, useCallback } from 'react'
 import { FiEdit2 } from 'react-icons/fi'
 
 import { useMainLayout } from '@/store/use-main-layout'
-import { usePlaylist } from '@/store/use-playlist'
 import { cn } from '@/lib/utils'
 import { getDurationSong } from '@/utils/duration-convertor'
 import { useCurrentUser } from '@/hooks/use-current-user'
 import { useModal } from '@/store/use-modal-store'
 import { ImageLazy } from '@/components/ui/image'
-import { PlaylistWithUser } from '@/types/types'
+import { PlaylistWithUser, SongType } from '@/types/types'
 
 type Props = {
   playlist: PlaylistWithUser
-  likedCount: number
+  likedPlaylists: PlaylistWithUser[]
+  songs: SongType[]
 }
 
-export const HeaderContent = ({ playlist, likedCount }: Props) => {
+export const HeaderContent = ({ playlist, likedPlaylists, songs }: Props) => {
   const { open } = useModal()
 
-  const { playlistSongs } = usePlaylist()
   const { width } = useMainLayout()
   const user = useCurrentUser()
 
@@ -35,13 +34,17 @@ export const HeaderContent = ({ playlist, likedCount }: Props) => {
   }
 
   const totalDuration = useCallback(() => {
-    const duration = playlistSongs.reduce((acc, song) => {
+    const duration = songs.reduce((acc, song) => {
       const duration = song?.duration || 0
       return acc + duration
     }, 0)
 
     return getDurationSong({ milliseconds: duration, type: 'long' })
-  }, [playlistSongs])
+  }, [songs])
+
+  const likedCount = useCallback(() => {
+    return likedPlaylists.filter(item => item.id === playlist.id).length
+  }, [likedPlaylists])
 
   return (
     <div className="flex flex-col  items-center gap-x-5  md:flex-row md:items-end">
@@ -89,7 +92,7 @@ export const HeaderContent = ({ playlist, likedCount }: Props) => {
             </p>
           )}
           <div className="flex gap-x-2 text-sm text-white">
-            <p>{`${playlist?.user?.name || 'No name'} - ${likedCount} likes - ${playlistSongs?.length} songs
+            <p>{`${playlist?.user?.name || 'No name'} - ${likedCount()} likes - ${songs?.length} songs
             `}</p>
             <p className="text-desc">{`${totalDuration()}`}</p>
           </div>
