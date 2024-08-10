@@ -5,7 +5,7 @@ import { useEffect } from 'react'
 
 import { Alert } from '@/components/alert'
 import { PageWrapper } from '@/components/page-wrapper'
-// import { useUser } from '@/hooks/use-user'
+
 import { useCurrentUser } from '@/hooks/use-current-user'
 
 type PlaylistLayoutProps = {

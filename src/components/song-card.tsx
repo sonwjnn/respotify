@@ -1,7 +1,7 @@
 'use client'
 
 import { usePlayer } from '@/store/use-player'
-import { SongType } from '@/types/types'
+import { SongType } from '@/types'
 
 import { PlayButton } from '@/components/play-button'
 import { useInView } from 'react-intersection-observer'

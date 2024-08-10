@@ -9,7 +9,7 @@ import { getDurationSong } from '@/utils/duration-convertor'
 import { useCurrentUser } from '@/hooks/use-current-user'
 import { useModal } from '@/store/use-modal-store'
 import { ImageLazy } from '@/components/ui/image'
-import { PlaylistWithUser, SongType } from '@/types/types'
+import { PlaylistWithUser, SongType } from '@/types'
 
 type Props = {
   playlist: PlaylistWithUser

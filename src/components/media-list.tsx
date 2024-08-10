@@ -10,7 +10,7 @@ import { usePlayer } from '@/store/use-player'
 import { ClockIcon } from '@/public/icons'
 import { cn } from '@/lib/utils'
 import { useClickAway } from 'react-use'
-import { PageType, PlaylistType, SongType } from '@/types/types'
+import { PageType, PlaylistType, SongType } from '@/types'
 
 type MediaListProps = {
   songs: SongType[]

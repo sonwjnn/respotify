@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { createJSONStorage, persist } from 'zustand/middleware'
 
-import { SongType } from '@/types/types'
+import { SongType } from '@/types'
 
 export type PlayOptions = {
   id?: string

@@ -14,7 +14,7 @@ import { LikeButton } from '@/components/like-button'
 import { MediaDropdown } from '@/components/media-dropdown'
 import { AddSongPlaylist } from '@/components/add-song-playlist'
 import { ImageLazy } from './ui/image'
-import { PageType, PlaylistType, SongType } from '@/types/types'
+import { PageType, PlaylistType, SongType } from '@/types'
 import { useCurrentUser } from '@/hooks/use-current-user'
 
 type Props = {

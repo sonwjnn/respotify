@@ -1,4 +1,4 @@
-import { PlaylistWithUser } from '@/types/types'
+import { PlaylistWithUser } from '@/types'
 import { create } from 'zustand'
 
 export type ModalType =

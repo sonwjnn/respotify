@@ -7,7 +7,7 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import { Library } from '@/components/sidebar/library'
 import { SidebarNav } from '@/components/sidebar/sidebar-nav'
 import { SidebarResizer } from '@/components/sidebar/sidebar-resizer'
-import { PlaylistWithUser, SongType } from '@/types/types'
+import { PlaylistWithUser, SongType } from '@/types'
 
 type SidebarProps = {
   playlists: PlaylistWithUser[]

@@ -4,7 +4,7 @@ import { useParams, useRouter } from 'next/navigation'
 
 import { usePlayer } from '@/store/use-player'
 import { SoundIconSolid } from '@/public/icons'
-import { PlaylistWithUser } from '@/types/types'
+import { PlaylistWithUser } from '@/types'
 import { cn } from '@/lib/utils'
 import { useTheme } from 'next-themes'
 import { ImageLazy } from '@/components/ui/image'

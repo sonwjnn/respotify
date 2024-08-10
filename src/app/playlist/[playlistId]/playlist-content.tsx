@@ -1,6 +1,6 @@
 'use client'
 
-import type { PlaylistWithUser, SongType } from '@/types/types'
+import type { PlaylistWithUser, SongType } from '@/types'
 
 import { useCurrentUser } from '@/hooks/use-current-user'
 import { Input } from '@/components/ui/input'

@@ -1,4 +1,4 @@
-import { PlaylistWithUser, SongType } from '@/types/types'
+import { PlaylistWithUser, SongType } from '@/types'
 import { create } from 'zustand'
 
 type SidebarSheetStore = {

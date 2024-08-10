@@ -12,7 +12,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { DeleteIcon } from '@/public/icons'
-import { SongType } from '@/types/types'
+import { SongType } from '@/types'
 import { useConfirm } from '@/hooks/use-confirm'
 import { deleteSongOfPlaylist } from '@/actions/song'
 import { cn } from '@/lib/utils'

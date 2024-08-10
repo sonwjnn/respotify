@@ -13,7 +13,7 @@ import { Sheet, SheetContent } from '@/components/ui/sheet'
 import { useSidebarSheet } from '@/store/use-sidebar-sheet'
 import { useCurrentUser } from '@/hooks/use-current-user'
 import { useModal } from '@/store/use-modal-store'
-import { PlaylistWithUser, SongType } from '@/types/types'
+import { PlaylistWithUser, SongType } from '@/types'
 
 type NavItemProps = {
   icon: IconType

@@ -1,4 +1,4 @@
-import { SongType } from '@/types/types'
+import { SongType } from '@/types'
 
 import { LikeButton } from '@/components/like-button'
 import { ImageLazy } from '@/components/ui/image'

@@ -3,7 +3,7 @@
 import { useTransition } from 'react'
 import { toast } from 'react-hot-toast'
 
-import type { SongType } from '@/types/types'
+import type { SongType } from '@/types'
 
 import { Spinner } from '@/components/spinner'
 import { Tooltip } from '@/components/ui/tooltip'

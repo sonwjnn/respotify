@@ -1,38 +1,13 @@
 'use client'
 
-import { useState } from 'react'
-import toast from 'react-hot-toast'
-
-// import { useUser } from '@/hooks/use-user'
-import { postData } from '@/lib/helpers'
-
 import { Tooltip } from '@/components/ui/tooltip'
 import { Button } from '@/components/ui/button'
 import { useCurrentUser } from '@/hooks/use-current-user'
+import { useRouter } from 'next/navigation'
 
 export const PremiumButton = () => {
-  // const { isLoading, subscription } = useUser()
   const user = useCurrentUser()
-
-  const [loading, setLoading] = useState(false)
-
-  const redirectToCustomerPortal: () => Promise<void> = async () => {
-    setLoading(true)
-
-    try {
-      const { url } = await postData({
-        url: '/api/create-portal-link',
-      })
-
-      window.location.assign(url)
-    } catch (error) {
-      if (error) {
-        toast.error((error as Error).message)
-        return
-      }
-    }
-    setLoading(false)
-  }
+  const router = useRouter()
 
   const isPremium = user?.isSubscribed
 
@@ -44,11 +19,7 @@ export const PremiumButton = () => {
       asChild
     >
       {isPremium ? (
-        <Button
-          variant="premium"
-          disabled={loading}
-          className="relative px-5 py-2"
-        >
+        <Button variant="premium" className="relative px-5 py-2">
           Premium
           <div className="absolute bottom-[-7px] left-[-9px] text-white">
             <svg
@@ -80,11 +51,7 @@ export const PremiumButton = () => {
           </div>
         </Button>
       ) : (
-        <Button
-          // onClick={() => redirectToCustomerPortal()}
-          disabled={loading}
-          className="px-5 py-2"
-        >
+        <Button onClick={() => router.push('/account')} className="px-5 py-2">
           Explore Premium
         </Button>
       )}

@@ -4,7 +4,6 @@ import { FaUserAlt } from 'react-icons/fa'
 import { RxCaretLeft, RxCaretRight } from 'react-icons/rx'
 import { twMerge } from 'tailwind-merge'
 
-// import { useUser } from '@/hooks/use-user'
 import { HomeIcon, SearchIcon } from '@/public/icons'
 
 import { Button } from '@/components/ui/button'

@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
-import { PlaylistType } from '@/types/types'
+import { PlaylistType } from '@/types'
 import { ImageLazy } from './ui/image'
 
 type CollapseListProps = {

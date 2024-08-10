@@ -6,9 +6,9 @@ import { useEffect, useState } from 'react'
 
 import { List } from '@/app/user/[userId]/playlists/list'
 import { useMainLayout } from '@/store/use-main-layout'
-// import { useUser } from '@/hooks/use-user'
+
 import { SingleMusicNote } from '@/public/icons'
-import { PlaylistType } from '@/types/types'
+import { PlaylistType } from '@/types'
 import { useCurrentUser } from '@/hooks/use-current-user'
 import { useTheme } from 'next-themes'
 

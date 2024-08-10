@@ -15,7 +15,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { Tooltip } from '@/components/ui/tooltip'
 import { DeleteIcon } from '@/public/icons'
-import { PlaylistType } from '@/types/types'
+import { PlaylistType } from '@/types'
 import { useConfirm } from '@/hooks/use-confirm'
 import { useCurrentUser } from '@/hooks/use-current-user'
 import { cn } from '@/lib/utils'

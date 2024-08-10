@@ -13,7 +13,7 @@ import { LikedItem } from '@/components/sidebar/library/liked-item'
 import { PlaylistList } from '@/components/sidebar/library/playlist-list'
 import { useCurrentUser } from '@/hooks/use-current-user'
 import { useModal } from '@/store/use-modal-store'
-import { PlaylistWithUser, SongType } from '@/types/types'
+import { PlaylistWithUser, SongType } from '@/types'
 
 type LibraryProps = {
   playlists: PlaylistWithUser[]

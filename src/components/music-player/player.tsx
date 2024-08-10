@@ -3,7 +3,7 @@ import useSound from 'use-sound'
 
 import { usePlayer } from '@/store/use-player'
 import { useSelectedPlayer } from '@/store/use-selected-player'
-import { SongType } from '@/types/types'
+import { SongType } from '@/types'
 
 import { PlayButton } from '@/components/play-button'
 import { Controls, DisabledControls } from '@/components/music-player/controls'

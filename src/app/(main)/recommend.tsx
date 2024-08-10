@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation'
 
 import { useHeader } from '@/store/use-header'
-import { PlaylistType } from '@/types/types'
+import { PlaylistType } from '@/types'
 
 import { PlayButton } from '@/components/play-button'
 import { useCurrentUser } from '@/hooks/use-current-user'

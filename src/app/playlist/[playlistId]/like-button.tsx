@@ -8,7 +8,7 @@ import { Tooltip } from '@/components/ui/tooltip'
 import { createLikedPlaylist, deleteLikedPlaylist } from '@/actions/playlist'
 import { cn } from '@/lib/utils'
 import { useParams } from 'next/navigation'
-import { PlaylistType } from '@/types/types'
+import { PlaylistType } from '@/types'
 
 type LikeButtonProps = {
   size?: number

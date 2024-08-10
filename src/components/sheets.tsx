@@ -1,7 +1,7 @@
 'use client'
 
 import { SidebarSheet } from '@/components/sheets/sidebar-sheet'
-import { PlaylistWithUser, SongType } from '@/types/types'
+import { PlaylistWithUser, SongType } from '@/types'
 import { useMountedState } from 'react-use'
 
 type Props = {

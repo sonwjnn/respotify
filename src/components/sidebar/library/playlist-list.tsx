@@ -1,6 +1,6 @@
 'use client'
 
-import { PlaylistWithUser } from '@/types/types'
+import { PlaylistWithUser } from '@/types'
 
 import { PlaylistItem } from '@/components/sidebar/library/playlist-item'
 

@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 
 import { usePlayer } from '@/store/use-player'
 import { MusicNote } from '@/public/icons'
-import { PlaylistType } from '@/types/types'
+import { PlaylistType } from '@/types'
 
 import { PlayButton } from '@/components/play-button'
 import { useCurrentUser } from '@/hooks/use-current-user'

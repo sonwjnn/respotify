@@ -1,4 +1,4 @@
-import { PlaylistWithUser, SongType } from '@/types/types'
+import { PlaylistWithUser, SongType } from '@/types'
 
 import { useParams } from 'next/navigation'
 import { useEffect, useState } from 'react'

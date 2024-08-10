@@ -7,7 +7,6 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 import { LuImage } from 'react-icons/lu'
 
-// import { useUser } from '@/hooks/use-user'
 import { useUserStore } from '@/store/use-user-store'
 import { DeleteIcon, MusicNote } from '@/public/icons'
 import { cn } from '@/lib/utils'

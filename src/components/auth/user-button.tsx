@@ -15,7 +15,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-// import { useUser } from '@/hooks/use-user'
+
 import { Tooltip } from '@/components/ui/tooltip'
 import { ThemeOptions } from '@/components/theme-options'
 import { useCurrentUser } from '@/hooks/use-current-user'

@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-import type { SongType } from '@/types/types'
+import type { SongType } from '@/types'
 
 type UserStore = {
   likedSongs: SongType[]

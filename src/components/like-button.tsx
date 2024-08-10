@@ -5,7 +5,7 @@ import { toast } from 'react-hot-toast'
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai'
 
 import { useUserStore } from '@/store/use-user-store'
-import { SongType } from '@/types/types'
+import { SongType } from '@/types'
 
 import { Tooltip } from '@/components/ui/tooltip'
 import { useCurrentUser } from '@/hooks/use-current-user'

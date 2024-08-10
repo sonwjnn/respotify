@@ -12,8 +12,8 @@ import { useNavbar } from '@/store/use-navbar'
 import { useOnPlay } from '@/hooks/use-on-play'
 import { usePlayer } from '@/store/use-player'
 import { useSelectedPlayer } from '@/store/use-selected-player'
-// import { useUser } from '@/hooks/use-user'
-import { PlaylistType, SongType } from '@/types/types'
+
+import { PlaylistType, SongType } from '@/types'
 
 import { PlayButton } from '@/components/play-button'
 import { PremiumButton } from '@/components/premium-button'

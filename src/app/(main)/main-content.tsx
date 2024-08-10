@@ -3,7 +3,7 @@
 import { SongCard } from '@/components/song-card'
 import { useMainLayout } from '@/store/use-main-layout'
 import { useOnPlay } from '@/hooks/use-on-play'
-import { SongType } from '@/types/types'
+import { SongType } from '@/types'
 import { Alert } from '@/components/alert'
 
 type MainContentProps = {

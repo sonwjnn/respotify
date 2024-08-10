@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { FiEdit2 } from 'react-icons/fi'
 
 import { useMainLayout } from '@/store/use-main-layout'
-import { PlaylistType } from '@/types/types'
+import { PlaylistType } from '@/types'
 import { cn } from '@/lib/utils'
 import { useCurrentUser } from '@/hooks/use-current-user'
 import { useModal } from '@/store/use-modal-store'

@@ -2,7 +2,6 @@
 
 import { usePathname, useRouter } from 'next/navigation'
 
-// import { useUser } from '@/hooks/use-user'
 import { cn } from '@/lib/utils'
 import { useCurrentUser } from '@/hooks/use-current-user'
 import { ImageLazy } from '@/components/ui/image'
