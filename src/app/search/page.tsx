@@ -15,13 +15,7 @@ type SearchPageProps = {
 }
 
 const SearchPage = async ({ searchParams }: SearchPageProps) => {
-  const songsData = getSongsByTitle(searchParams.title || '')
-
-  const [songs] = await Promise.all([songsData])
-
-  if (!songs?.length) {
-    return <Alert type="noData" text="No songs found" />
-  }
+  const songs = await getSongsByTitle(searchParams.title || '')
 
   return (
     <PageWrapper>
@@ -34,7 +28,12 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
           <SearchInput url="/search" />
         </div>
       </Header>
-      <MediaList type="search" songs={songs} />
+      {songs.length ? (
+        <MediaList type="search" songs={songs} />
+      ) : (
+        <Alert type="noData" text="No songs found!" />
+      )}
+
       <Footer />
     </PageWrapper>
   )

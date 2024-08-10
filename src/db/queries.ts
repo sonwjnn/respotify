@@ -43,9 +43,10 @@ export const getSongsByTitle = cache(async (title: string) => {
     return allSongs
   } else {
     const data = await db.query.songs.findMany({
-      where: ilike(songs.title, title),
+      where: ilike(songs.title, `%${title}%`),
       orderBy: (songs, { desc }) => [desc(songs.createdAt)],
     })
+
     return data
   }
 })
